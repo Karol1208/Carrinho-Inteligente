@@ -1,0 +1,39 @@
+2025-09-25 21:21:49,567 - INFO - Sistema inicializado com usuários de exemplo.
+2025-09-25 21:22:03,942 - INFO - Cartão validado: João Silva (12345)
+2025-09-25 21:22:05,004 - INFO - Cartão validado: João Silva (12345)
+2025-09-25 21:22:05,515 - INFO - Gaveta 1 aberta por João Silva (12345)
+2025-09-25 21:22:05,515 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-09-25 21:22:49,951 - INFO - Gaveta 1 fechada
+2025-09-25 21:22:49,952 - INFO - Possível devolução de peças da Gaveta 1
+2025-09-25 21:23:24,414 - INFO - Cartão validado: João Silva (12345)
+2025-09-25 21:23:24,931 - INFO - Gaveta 1 aberta por João Silva (12345)
+2025-09-25 21:23:24,941 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-09-25 21:24:04,354 - INFO - Cartão validado: Ana Lima (22222)
+2025-09-25 21:24:06,012 - INFO - Cartão validado: Ana Lima (22222)
+2025-09-25 21:24:06,515 - INFO - Gaveta 2 aberta por Ana Lima (22222)
+2025-09-25 21:24:06,515 - INFO - Possível retirada de peças da Gaveta 2 por Ana Lima
+2025-09-25 21:26:54,241 - INFO - Peça adicionada/atualizada: Alicate na Gaveta 3
+2025-09-25 21:27:07,373 - INFO - Cartão validado: Ana Lima (22222)
+2025-09-25 21:27:07,882 - INFO - Gaveta 3 aberta por Ana Lima (22222)
+2025-09-25 21:27:07,882 - INFO - Possível retirada de peças da Gaveta 3 por Ana Lima
+2025-09-25 21:33:29,588 - WARNING - Gaveta 1 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-09-25 21:34:09,596 - WARNING - Gaveta 2 aberta há mais de 10 minutos por Ana Lima. Favor fechar!
+2025-09-25 21:37:09,659 - WARNING - Gaveta 3 aberta há mais de 10 minutos por Ana Lima. Favor fechar!
+2025-09-25 21:40:07,144 - INFO - Gaveta 1 fechada
+2025-09-25 21:40:07,144 - INFO - Possível devolução de peças da Gaveta 1
+2025-09-25 21:40:07,476 - INFO - Gaveta 2 fechada
+2025-09-25 21:40:07,476 - INFO - Possível devolução de peças da Gaveta 2
+2025-09-25 21:40:07,797 - INFO - Gaveta 3 fechada
+2025-09-25 21:40:07,797 - INFO - Possível devolução de peças da Gaveta 3
+2025-09-25 21:40:15,566 - INFO - Sistema encerrado pelo usuário.
+2025-09-25 21:46:10,766 - INFO - Sistema inicializado com usuários de exemplo.
+2025-09-25 21:46:28,568 - INFO - Sistema encerrado pelo usuário.
+2025-09-25 21:58:45,588 - INFO - Sistema inicializado com usuários de exemplo.
+2025-09-25 21:59:47,037 - WARNING - Cartão inválido/não autorizado: 1234
+2025-09-25 21:59:51,022 - INFO - Cartão validado: João Silva (12345)
+2025-09-25 21:59:53,267 - INFO - Cartão validado: João Silva (12345)
+2025-09-25 21:59:53,780 - INFO - Gaveta 1 aberta por João Silva (12345)
+2025-09-25 21:59:53,782 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-09-25 22:00:15,836 - INFO - Gaveta 1 fechada
+2025-09-25 22:00:15,836 - INFO - Possível devolução de peças da Gaveta 1
+2025-09-25 22:00:15,896 - INFO - Sistema encerrado pelo usuário.
