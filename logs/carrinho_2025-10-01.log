@@ -45,3 +45,9 @@
 2025-10-01 21:43:45,463 - INFO - Sistema inicializado com usuários de exemplo.
 2025-10-01 21:44:02,086 - INFO - Cartão validado: Ana Lima (22222)
 2025-10-01 21:44:44,567 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 23:43:41,727 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 23:50:14,898 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 23:50:29,641 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 23:50:42,101 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 23:50:47,424 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 00:06:53,153 - INFO - Nenhum usuário autenticado. Encerrando o sistema.

@@ -1,0 +1,70 @@
+2025-10-02 00:06:58,371 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 00:07:04,740 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:07:04,812 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 00:07:47,590 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 00:08:33,619 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 00:08:34,130 - INFO - Gaveta 2 aberta por Ana Lima (22222)
+2025-10-02 00:08:34,130 - INFO - Possível retirada de peças da Gaveta 2 por Ana Lima
+2025-10-02 00:08:41,130 - INFO - Retirada registrada: 1 unidades da peça 3 por usuário 22222
+2025-10-02 00:09:12,813 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:13:47,600 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 00:13:54,317 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 00:14:03,906 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:14:03,981 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 00:15:36,179 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:15:43,652 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:15:44,153 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-02 00:15:44,153 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-02 00:16:00,831 - INFO - Retirada registrada: 1 unidades da peça 4 por usuário 12345
+2025-10-02 00:25:14,832 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 00:25:54,350 - WARNING - Gaveta 2 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-02 00:29:56,038 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 00:30:00,687 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 00:30:08,275 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:30:08,366 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 00:31:05,243 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 00:31:14,387 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:41:25,749 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 00:41:31,310 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 00:41:37,501 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:41:37,581 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 00:44:32,600 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 00:44:37,915 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 00:44:48,861 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:44:48,935 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 00:46:57,182 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:47:03,415 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 00:47:03,922 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-02 00:47:03,922 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-02 00:49:52,460 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 00:50:03,302 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:02:26,321 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 01:02:26,585 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:05:50,792 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 01:05:58,044 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:06:06,565 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:06:19,820 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:07:48,548 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:10:52,533 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 01:10:58,353 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:11:04,393 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:11:24,267 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:26:37,490 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 01:26:42,333 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:28:28,995 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 01:28:35,184 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:32:19,721 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 01:32:23,754 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:36:54,946 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 01:36:55,009 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 01:39:39,025 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 01:39:46,036 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:40:11,752 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 01:40:11,827 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 01:46:30,443 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 01:46:35,087 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 01:47:32,717 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 01:47:32,795 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 01:47:53,240 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 18:25:42,725 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 18:27:37,931 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
