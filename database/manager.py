@@ -19,6 +19,7 @@ class DatabaseManager:
                 id TEXT PRIMARY KEY,
                 nome TEXT NOT NULL,
                 cargo TEXT NOT NULL,
+                perfil TEXT NOT NULL DEFAULT 'aluno',
                 ativo BOOLEAN NOT NULL DEFAULT 1,
                 data_cadastro TEXT NOT NULL
             )
@@ -49,9 +50,11 @@ class DatabaseManager:
             CREATE TABLE IF NOT EXISTS pecas (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 nome TEXT NOT NULL,
+                categoria TEXT,
                 descricao TEXT,
                 gaveta_id INTEGER NOT NULL,
                 quantidade_disponivel INTEGER NOT NULL DEFAULT 0,
+                tipo TEXT,
                 ativo BOOLEAN NOT NULL DEFAULT 1,
                 FOREIGN KEY (gaveta_id) REFERENCES gavetas_config (id)
             )
@@ -66,30 +69,50 @@ class DatabaseManager:
                 quantidade_devolvida INTEGER NOT NULL DEFAULT 0,
                 timestamp_retirada TEXT NOT NULL,
                 timestamp_devolucao TEXT,
-                status TEXT NOT NULL DEFAULT 'pendente',  -- 'pendente', 'devolvida', 'perdida'
+                status TEXT NOT NULL DEFAULT 'pendente',
                 FOREIGN KEY (usuario_id) REFERENCES usuarios (id),
                 FOREIGN KEY (peca_id) REFERENCES pecas (id)
             )
         ''')
 
+        # Inserir gavetas padrão
         for i in range(1, 6):
             cursor.execute('''
                 INSERT OR IGNORE INTO gavetas_config (id, nome, descricao, ativo)
                 VALUES (?, ?, ?, ?)
             ''', (i, f'Gaveta {i}', f'Conteúdo da Gaveta {i}', 1))
 
+        # Inserir peças exemplo
         pecas_exemplo = [
-            ("Parafuso M6", "Parafusos para fixação geral", 1, 100),
-            ( "Chave de Fenda", "Ferramenta para parafusos", 2, 10),
-            ( "Freio a Disco", "Peça de segurança veicular", 3, 20),
-            ( "Óleo Lubrificante", "Lubrificação de motores", 4, 50),
-            ( "Bateria 12V", "Alimentação elétrica", 5, 5),
+            ("Multímetro - ET1002", "Multímetro", "Medição Elétrica", 1, 12, "Diagnóstico"),
+            ("Multímetro - ET1005", "Multímetro", "Medição Elétrica", 1, 1, "Diagnóstico"),
+            ("Alicate Amperímetro e Multímetro - 10684", "Alicate", "Medição Elétrica", 2, 1, "Diagnóstico"),
+            ("Termômetro - MT 350A", "Termômetro", "Medição Térmica", 2, 1, "Diagnóstico"),
+            ("Osciloscópio", "Osciloscópio", "Medição Eletrônica", 3, 1, "Diagnóstico"),
+            ("Chave T 6 mm", "Chaves", "6 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 850 mm", "Chaves", "850 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 860 mm", "Chaves", "860 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 870 mm", "Chaves", "870 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 880 mm", "Chaves", "880 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 890 mm", "Chaves", "890 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 900 mm", "Chaves", "900 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 910 mm", "Chaves", "910 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 920 mm", "Chaves", "920 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 930 mm", "Chaves", "930 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 940 mm", "Chaves", "940 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 950 mm", "Chaves", "950 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 960 mm", "Chaves", "960 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 970 mm", "Chaves", "970 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 980 mm", "Chaves", "980 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 990 mm", "Chaves", "990 mm", 4, 7, "ferramenta manual"),
+            ("Chave T 1000 mm", "Chaves", "1000 mm", 4, 7, "ferramenta manual"),
         ]
-        for nome, descricao, gaveta_id, qtd in pecas_exemplo:
+
+        for nome, categoria, descricao, gaveta_id, qtd, tipo in pecas_exemplo:
             cursor.execute('''
-                INSERT OR IGNORE INTO pecas (nome, descricao, gaveta_id, quantidade_disponivel)
-                VALUES (?, ?, ?, ?)
-            ''', (nome, descricao, gaveta_id, qtd))
+                INSERT OR IGNORE INTO pecas (nome, categoria, descricao, gaveta_id, quantidade_disponivel, tipo)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (nome, categoria, descricao, gaveta_id, qtd, tipo))
 
         conn.commit()
         conn.close()
@@ -98,9 +121,9 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT OR REPLACE INTO usuarios (id, nome, cargo, ativo, data_cadastro)
-            VALUES (?, ?, ?, ?, ?)
-        ''', (usuario.id, usuario.nome, usuario.cargo, int(usuario.ativo),
+            INSERT OR REPLACE INTO usuarios (id, nome, cargo, perfil, ativo, data_cadastro)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (usuario.id, usuario.nome, usuario.cargo, usuario.perfil, int(usuario.ativo),
               usuario.data_cadastro or datetime.datetime.now().isoformat()))
         conn.commit()
         conn.close()
@@ -108,25 +131,25 @@ class DatabaseManager:
     def obter_usuario(self, usuario_id: str) -> Optional[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
+        cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
         result = cursor.fetchone()
         conn.close()
         if result:
             return UsuarioCartao(
                 id=result[0], nome=result[1], cargo=result[2],
-                ativo=bool(result[3]), data_cadastro=result[4]
+                perfil=result[3], ativo=bool(result[4]), data_cadastro=result[5]
             )
         return None
 
     def listar_usuarios(self) -> List[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, ativo, data_cadastro FROM usuarios WHERE ativo = 1')
+        cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE ativo = 1')
         results = cursor.fetchall()
         conn.close()
         return [UsuarioCartao(
-            id=row[0], nome=row[1], cargo=row[2],
-            ativo=bool(row[3]), data_cadastro=row[4]
+            id=row[0], nome=row[1], cargo=row[2], perfil=row[3],
+            ativo=bool(row[4]), data_cadastro=row[5]
         ) for row in results]
 
     def registrar_evento(self, evento: EventoGaveta):
@@ -156,10 +179,18 @@ class DatabaseManager:
     def adicionar_peca(self, peca: Peca):
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('''
-            INSERT OR REPLACE INTO pecas (id, nome, descricao, gaveta_id, quantidade_disponivel, ativo)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', (peca.id, peca.nome, peca.descricao, peca.gaveta_id, peca.quantidade_disponivel, int(peca.ativo)))
+        if peca.id == 0:
+            # Inserir nova peça
+            cursor.execute('''
+                INSERT INTO pecas (nome, categoria, descricao, gaveta_id, quantidade_disponivel, tipo, ativo)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (peca.nome, peca.categoria, peca.descricao, peca.gaveta_id, peca.quantidade_disponivel, peca.tipo, int(peca.ativo)))
+        else:
+            # Atualizar peça existente
+            cursor.execute('''
+                UPDATE pecas SET nome=?, categoria=?, descricao=?, gaveta_id=?, quantidade_disponivel=?, tipo=?, ativo=?
+                WHERE id=?
+            ''', (peca.nome, peca.categoria, peca.descricao, peca.gaveta_id, peca.quantidade_disponivel, peca.tipo, int(peca.ativo), peca.id))
         conn.commit()
         conn.close()
 
@@ -167,25 +198,25 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT id, nome, descricao, gaveta_id, quantidade_disponivel, ativo
+            SELECT id, nome, categoria, descricao, gaveta_id, quantidade_disponivel, tipo, ativo
             FROM pecas WHERE gaveta_id = ? AND ativo = 1
         ''', (gaveta_id,))
         results = cursor.fetchall()
         conn.close()
         return [Peca(
-            id=row[0], nome=row[1], descricao=row[2], gaveta_id=row[3],
-            quantidade_disponivel=row[4], ativo=bool(row[5])
+            id=row[0], nome=row[1], categoria=row[2], descricao=row[3], gaveta_id=row[4],
+            quantidade_disponivel=row[5], tipo=row[6], ativo=bool(row[7])
         ) for row in results]
 
     def listar_todas_pecas(self) -> List[Peca]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, descricao, gaveta_id, quantidade_disponivel, ativo FROM pecas WHERE ativo = 1')
+        cursor.execute('SELECT id, nome, categoria, descricao, gaveta_id, quantidade_disponivel, tipo, ativo FROM pecas WHERE ativo = 1')
         results = cursor.fetchall()
         conn.close()
         return [Peca(
-            id=row[0], nome=row[1], descricao=row[2], gaveta_id=row[3],
-            quantidade_disponivel=row[4], ativo=bool(row[5])
+            id=row[0], nome=row[1], categoria=row[2], descricao=row[3], gaveta_id=row[4],
+            quantidade_disponivel=row[5], tipo=row[6], ativo=bool(row[7])
         ) for row in results]
 
     def registrar_retirada_peca(self, usuario_id: str, peca_id: int, quantidade: int):
@@ -207,25 +238,25 @@ class DatabaseManager:
         cursor = conn.cursor()
         timestamp = datetime.datetime.now().isoformat()
         cursor.execute('''
-            UPDATE retiradas_pecas 
-            SET quantidade_devolvida = ?, timestamp_devolucao = ?, 
-                status = CASE 
-                    WHEN quantidade_retirada = quantidade_devolvida THEN 'devolvida' 
-                    ELSE 'parcial' 
-                END
-            WHERE id = ?
-        ''', (quantidade_devolvida, timestamp, retirada_id))
-        cursor.execute('''
-            SELECT peca_id, quantidade_retirada FROM retiradas_pecas WHERE id = ?
+            SELECT quantidade_retirada, quantidade_devolvida FROM retiradas_pecas WHERE id = ?
         ''', (retirada_id,))
         row = cursor.fetchone()
-        if row:
-            peca_id = row[0]
-            qtd_original = row[1]
-            qtd_pendente = qtd_original - quantidade_devolvida
-            cursor.execute('''
-                UPDATE pecas SET quantidade_disponivel = quantidade_disponivel + ? WHERE id = ?
-            ''', (quantidade_devolvida, peca_id))
+        if not row:
+            conn.close()
+            return
+        qtd_retirada, qtd_devolvida_atual = row
+        nova_qtd_devolvida = qtd_devolvida_atual + quantidade_devolvida
+        status = 'devolvida' if nova_qtd_devolvida >= qtd_retirada else 'parcial'
+        cursor.execute('''
+            UPDATE retiradas_pecas
+            SET quantidade_devolvida = ?, timestamp_devolucao = ?, status = ?
+            WHERE id = ?
+        ''', (nova_qtd_devolvida, timestamp, status, retirada_id))
+        cursor.execute('''
+            UPDATE pecas SET quantidade_disponivel = quantidade_disponivel + ? WHERE id = (
+                SELECT peca_id FROM retiradas_pecas WHERE id = ?
+            )
+        ''', (quantidade_devolvida, retirada_id))
         conn.commit()
         conn.close()
 
@@ -233,9 +264,9 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('''
-            SELECT id, usuario_id, peca_id, quantidade_retirada, quantidade_devolvida, 
+            SELECT id, usuario_id, peca_id, quantidade_retirada, quantidade_devolvida,
                    timestamp_retirada, timestamp_devolucao, status
-            FROM retiradas_pecas 
+            FROM retiradas_pecas
             WHERE usuario_id = ? AND status IN ('pendente', 'parcial')
             ORDER BY timestamp_retirada DESC
         ''', (usuario_id,))
@@ -250,12 +281,29 @@ class DatabaseManager:
     def obter_peca_por_id(self, peca_id: int) -> Optional[Peca]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, descricao, gaveta_id, quantidade_disponivel, ativo FROM pecas WHERE id = ? AND ativo = 1', (peca_id,))
+        cursor.execute('SELECT id, nome, categoria, descricao, gaveta_id, quantidade_disponivel, tipo, ativo FROM pecas WHERE id = ? AND ativo = 1', (peca_id,))
         result = cursor.fetchone()
         conn.close()
         if result:
             return Peca(
-                id=result[0], nome=result[1], descricao=result[2], gaveta_id=result[3],
-                quantidade_disponivel=result[4], ativo=bool(result[5])
+                id=result[0], nome=result[1], categoria=result[2], descricao=result[3], gaveta_id=result[4],
+                quantidade_disponivel=result[5], tipo=result[6], ativo=bool(result[7])
             )
         return None
+
+    def obter_retiradas_pendentes_por_peca(self, peca_id: int) -> List[RetiradaPeca]:
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('''
+            SELECT id, usuario_id, peca_id, quantidade_retirada, quantidade_devolvida,
+                   timestamp_retirada, timestamp_devolucao, status
+            FROM retiradas_pecas
+            WHERE peca_id = ? AND status IN ('pendente', 'parcial')
+        ''', (peca_id,))
+        rows = cursor.fetchall()
+        conn.close()
+        return [RetiradaPeca(
+            id=row[0], usuario_id=row[1], peca_id=row[2], quantidade_retirada=row[3],
+            quantidade_devolvida=row[4], timestamp_retirada=row[5],
+            timestamp_devolucao=row[6], status=row[7]
+        ) for row in rows]

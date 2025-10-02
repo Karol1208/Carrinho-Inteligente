@@ -1,0 +1,47 @@
+2025-10-01 20:07:54,746 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 20:09:32,710 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:09:52,128 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:09:52,638 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-01 20:09:52,638 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-01 20:13:40,833 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-01 20:13:48,803 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-01 20:13:49,309 - INFO - Gaveta 2 aberta por Ana Lima (22222)
+2025-10-01 20:13:49,309 - INFO - Possível retirada de peças da Gaveta 2 por Ana Lima
+2025-10-01 20:16:07,692 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:18:03,756 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-01 20:19:54,788 - WARNING - Gaveta 4 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-01 20:21:27,395 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 20:21:34,494 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 20:33:00,085 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 20:33:29,971 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 20:33:47,170 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-01 20:34:02,489 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-01 20:34:12,702 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:34:25,392 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 20:34:25,672 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 20:35:53,125 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:36:00,321 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:36:35,585 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 20:36:57,060 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 20:48:17,704 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 20:48:41,395 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 20:48:41,689 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:03:58,293 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-01 21:04:02,272 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:04:09,167 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 21:04:18,436 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 21:09:07,407 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:09:12,530 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 21:18:05,606 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 21:18:15,454 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:18:44,194 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 21:29:37,808 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 21:29:41,388 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:29:48,512 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 21:41:54,240 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 21:42:00,909 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:42:06,803 - INFO - Cartão validado: João Silva (12345)
+2025-10-01 21:43:40,159 - INFO - Sistema encerrado pelo usuário.
+2025-10-01 21:43:45,463 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-01 21:44:02,086 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-01 21:44:44,567 - INFO - Sistema encerrado pelo usuário.

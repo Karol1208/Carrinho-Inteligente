@@ -1,0 +1,13 @@
+2025-09-29 20:11:43,486 - INFO - Sistema inicializado com usuários de exemplo.
+2025-09-29 21:05:29,975 - INFO - Cartão validado: Pedro Costa (11111)
+2025-09-29 21:05:34,242 - INFO - Cartão validado: Pedro Costa (11111)
+2025-09-29 21:05:34,742 - INFO - Gaveta 1 aberta por Pedro Costa (11111)
+2025-09-29 21:05:34,742 - INFO - Possível retirada de peças da Gaveta 1 por Pedro Costa
+2025-09-29 21:05:47,642 - INFO - Gaveta 1 fechada
+2025-09-29 21:05:47,643 - INFO - Possível devolução de peças da Gaveta 1
+2025-09-29 21:16:26,834 - INFO - Cartão validado: Pedro Costa (11111)
+2025-09-29 21:16:27,341 - INFO - Gaveta 1 aberta por Pedro Costa (11111)
+2025-09-29 21:16:27,352 - INFO - Possível retirada de peças da Gaveta 1 por Pedro Costa
+2025-09-29 21:26:33,700 - WARNING - Gaveta 1 aberta há mais de 10 minutos por Pedro Costa. Favor fechar!
+2025-09-29 21:26:52,892 - INFO - Gaveta 1 fechada
+2025-09-29 21:26:52,892 - INFO - Possível devolução de peças da Gaveta 1

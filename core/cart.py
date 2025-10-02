@@ -2,15 +2,15 @@ import datetime
 import time
 import threading
 import logging
+import sqlite3
 from typing import List, Optional
 
 
-from models.entities import (
-    UsuarioCartao, EventoGaveta, Peca, RetiradaPeca
-)
+from models.entities import UsuarioCartao, EventoGaveta, Peca, RetiradaPeca
 from core.drawer import GavetaAvancada
 from database.manager import DatabaseManager
 from hardware.simulator import SimuladorHardware
+
 
 class CarrinhoInteligenteAvancado:
     def __init__(self, db_path: str = 'carrinho.db'):
@@ -21,8 +21,10 @@ class CarrinhoInteligenteAvancado:
         self.modo_manutencao = False
         self.alertas_ativos = []
 
+
         self.monitor_thread = threading.Thread(target=self.monitor_sistema, daemon=True)
         self.monitor_thread.start()
+
 
     def validar_cartao(self, codigo_cartao: str) -> Optional[UsuarioCartao]:
         if not codigo_cartao:
@@ -33,6 +35,7 @@ class CarrinhoInteligenteAvancado:
         else:
             logging.warning(f"Cartão inválido/não autorizado: {codigo_cartao}")
         return usuario
+
 
     def abrir_gaveta(self, gaveta_id: int, codigo_cartao: str) -> bool:
         usuario = self.validar_cartao(codigo_cartao)
@@ -63,6 +66,7 @@ class CarrinhoInteligenteAvancado:
         self.db.registrar_evento(evento)
         return sucesso
 
+
     def fechar_gaveta(self, gaveta_id: int, codigo_cartao: str = None) -> bool:
         gaveta = self.gavetas.get(gaveta_id)
         if not gaveta:
@@ -86,6 +90,7 @@ class CarrinhoInteligenteAvancado:
         self.db.registrar_evento(evento)
         return sucesso
 
+
     def registrar_tentativa_acesso(self, gaveta_id: int, codigo_cartao: str, acao: str, sucesso: bool, motivo: str = ""):
         logging.warning(f"Tentativa de acesso negada - Gaveta: {gaveta_id}, Cartão: {codigo_cartao}, Motivo: {motivo}")
         evento = EventoGaveta(
@@ -96,6 +101,7 @@ class CarrinhoInteligenteAvancado:
             sucesso=sucesso
         )
         self.db.registrar_evento(evento)
+
 
     def monitor_sistema(self):
         while self.sistema_ativo:
@@ -118,10 +124,12 @@ class CarrinhoInteligenteAvancado:
                     else:
                         self.hardware.definir_led_status(gaveta_id, 'verde')
 
+
                 self.verificar_status_hardware()
                 time.sleep(10)  # Verifica a cada 10 segundos
             except Exception as e:
                 logging.error(f"Erro no monitor do sistema: {e}")
+
 
     def verificar_status_hardware(self):
         for gaveta_id in self.gavetas:
@@ -131,18 +139,19 @@ class CarrinhoInteligenteAvancado:
                 self.adicionar_alerta(f"Inconsistência detectada na gaveta {gaveta_id}")
                 logging.warning(f"Status inconsistente - Gaveta {gaveta_id}: HW={hardware_aberta}, SW={software_aberta}")
 
+
     def adicionar_alerta(self, mensagem: str):
         alerta = {'mensagem': mensagem, 'timestamp': datetime.datetime.now().isoformat()}
         self.alertas_ativos.append(alerta)
         if len(self.alertas_ativos) > 20:
             self.alertas_ativos.pop(0)
 
+
     def listar_pecas_por_gaveta(self, gaveta_id: int) -> List[Peca]:
-        """Lista peças disponíveis na gaveta."""
         return self.db.listar_pecas_por_gaveta(gaveta_id)
 
+
     def registrar_retirada_peca(self, usuario_id: str, peca_id: int, quantidade: int) -> bool:
-        """Registra a retirada de uma peça e atualiza estoque."""
         if quantidade <= 0:
             logging.warning("Quantidade inválida para retirada.")
             return False
@@ -156,8 +165,8 @@ class CarrinhoInteligenteAvancado:
             self.adicionar_alerta(f"Retirada alta de {quantidade} unidades da peça {peca.nome} por {usuario_id}")
         return True
 
+
     def registrar_devolucao_peca(self, retirada_id: int, quantidade_devolvida: int) -> bool:
-        """Registra devolução parcial/total e atualiza status/estoque."""
         if quantidade_devolvida < 0:
             logging.warning("Quantidade inválida para devolução.")
             return False
@@ -173,19 +182,44 @@ class CarrinhoInteligenteAvancado:
         logging.info(f"Devolução registrada: {quantidade_devolvida} unidades para retirada {retirada_id}")
         return True
 
+
     def obter_pecas_pendentes_usuario(self, usuario_id: str) -> List[RetiradaPeca]:
-        """Obtém todas as retiradas pendentes (parciais ou totais) de um usuário."""
         return self.db.obter_retiradas_pendentes_usuario(usuario_id)
 
+
     def listar_todas_pecas(self) -> List[Peca]:
-        """Lista todas as peças ativas."""
         return self.db.listar_todas_pecas()
 
+
     def adicionar_peca(self, peca: Peca) -> bool:
-        """Adiciona ou atualiza uma peça no inventário."""
         if peca.quantidade_disponivel < 0:
             logging.warning("Quantidade inválida para peça.")
             return False
         self.db.adicionar_peca(peca)
         logging.info(f"Peça adicionada/atualizada: {peca.nome} na Gaveta {peca.gaveta_id}")
         return True
+   
+ 
+
+    def obter_retiradas_pendentes_usuario_por_peca(self, peca_id: int) -> List[RetiradaPeca]:
+        return self.db.obter_retiradas_pendentes_por_peca(peca_id)
+
+    def fechar_gaveta(self, gaveta_id: int, usuario_id: str = None) -> bool:
+        gaveta = self.gavetas.get(gaveta_id)
+        if not gaveta:
+            return False
+        if not gaveta.aberta:
+            return True
+        sucesso = False
+        if self.hardware.fechar_gaveta_hardware(gaveta_id):
+            sucesso = gaveta.fechar()
+        if sucesso:
+            evento = EventoGaveta(
+                gaveta_id=gaveta_id,
+                usuario_id=usuario_id or gaveta.usuario_atual or "sistema",
+                acao='fechar',
+                timestamp=datetime.datetime.now().isoformat(),
+                sucesso=True
+            )
+            self.db.registrar_evento(evento)
+        return sucesso

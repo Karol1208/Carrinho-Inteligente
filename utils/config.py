@@ -2,12 +2,11 @@ import os
 import datetime
 import logging
 
+
 def setup_logging():
-    """
-    Configura o logging para o projeto.
-    """
     if not os.path.exists('logs'):
         os.makedirs('logs')
+
 
     LOG_FILENAME = f'logs/carrinho_{datetime.date.today().isoformat()}.log'
     logging.basicConfig(
@@ -18,3 +17,4 @@ def setup_logging():
             logging.StreamHandler()
         ]
     )
+
