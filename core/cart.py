@@ -1,15 +1,14 @@
+import sqlite3
+import logging
 import datetime
+from typing import List, Optional, Dict
 import time
 import threading
-import logging
-import sqlite3
-from typing import List, Optional
-
-
+from dataclasses import dataclass
 from models.entities import UsuarioCartao, EventoGaveta, Peca, RetiradaPeca
 from core.drawer import GavetaAvancada
-from database.manager import DatabaseManager
 from hardware.simulator import SimuladorHardware
+from database.manager import DatabaseManager  
 
 
 class CarrinhoInteligenteAvancado:

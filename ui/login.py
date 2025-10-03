@@ -43,22 +43,18 @@ class TelaLogin:
         frame_titulo_principal = tk.Frame(main_frame, bg=CORES["fundo_principal"])
         frame_titulo_principal.pack(pady=20, padx=30, fill="x")
 
-        # --- AJUSTES DE TAMANHO E ESPAÇAMENTO AQUI ---
         try:
-            # 1. IMAGEM MAIOR AINDA (160x160 pixels)
             self.crdf_icon_img = ImageTk.PhotoImage(Image.open("crdf_icon.png").resize((160, 160), Image.LANCZOS))
-            # 2. ESPAÇAMENTO HORIZONTAL MENOR (padx=5)
             tk.Label(frame_titulo_principal, image=self.crdf_icon_img, bg=CORES["fundo_principal"]).pack(side="left", padx=5)
         except Exception as e:
             print(f"Aviso: Não foi possível carregar 'crdf_icon.png': {e}")
         
         frame_textos = tk.Frame(frame_titulo_principal, bg=CORES["fundo_principal"])
-        frame_textos.pack(side="left", expand=True, fill="x", padx=10) # Adicionei um padx aqui para não colar no ícone
+        frame_textos.pack(side="left", expand=True, fill="x", padx=10) 
         
         tk.Label(frame_textos, text="CRDF", font=("Segoe UI", 48, "bold"), fg="white", bg=CORES["fundo_principal"]).pack(anchor="w")
         tk.Label(frame_textos, text="Controle de Retirada e", font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(anchor="w")
         tk.Label(frame_textos, text="Devolução de Ferramentas", font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(anchor="w")
-        # --- FIM DOS AJUSTES ---
 
         self.frame_entrada_alternavel = tk.Frame(main_frame, bg=CORES["fundo_principal"])
         self.frame_entrada_alternavel.pack(pady=20, fill="x", expand=True)
@@ -102,6 +98,16 @@ class TelaLogin:
             self.frame_rfid_prompt.pack_forget()
             self.frame_texto_prompt.pack(pady=10)
             self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
+    def atualizar_modo_entrada(self):
+        if self.modo_rfid:
+            self.frame_texto_prompt.pack_forget()
+            self.frame_rfid_prompt.pack(pady=10)
+            self.btn_alternar.config(text="Ou, clique para Digitar o Código")
+            self.btn_login.pack_forget()
+        else:
+            self.frame_rfid_prompt.pack_forget()
+            self.frame_texto_prompt.pack(pady=10)
+            self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
             self.btn_login.pack(pady=20)
             self.entry_codigo.focus()
 
@@ -117,20 +123,26 @@ class TelaLogin:
         if usuario:
             self.usuario = usuario
             self.perfil = usuario.perfil
-            if hasattr(self, 'after_id'): self.root.after_cancel(self.after_id)
+            if hasattr(self, 'after_id'): 
+                self.root.after_cancel(self.after_id)
             self.root.destroy()
         elif not self.modo_rfid:
             messagebox.showerror("Erro de Acesso", "Cartão não autorizado ou inválido.")
             self.entry_codigo.delete(0, tk.END)
-            
+
     def verificar_leitor_rfid_periodicamente(self):
         if self.modo_rfid:
-            codigo_lido = self.carrinho.hardware.obter_cartao_lido()
-            if codigo_lido:
-                self.processar_validacao(codigo_lido)
+            try:
+                codigo_lido = self.carrinho.hardware.ler_rfid()
+                if codigo_lido:
+                    self.processar_validacao(codigo_lido)
+            except AttributeError:
+                pass 
         
         self.after_id = self.root.after(250, self.verificar_leitor_rfid_periodicamente)
 
     def executar(self):
+       
+        
         self.root.mainloop()
-        return self.usuario, self.perfil
+        return self.usuario, self.perfil  # Retorna usuário e perfil

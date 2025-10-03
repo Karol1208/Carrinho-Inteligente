@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
 
-
 @dataclass
 class UsuarioCartao:
     id: str
@@ -11,7 +10,6 @@ class UsuarioCartao:
     ativo: bool = True
     data_cadastro: str = None
 
-
 @dataclass
 class EventoGaveta:
     gaveta_id: int
@@ -19,7 +17,6 @@ class EventoGaveta:
     acao: str  # abrir, fechar
     timestamp: str
     sucesso: bool
-
 
 @dataclass
 class Peca:
@@ -30,8 +27,7 @@ class Peca:
     gaveta_id: int = 0
     quantidade_disponivel: int = 0
     tipo: str = ""
-    ativo: bool = True
-
+    ativo: bool = True  # Adicionado para consistência com usuários
 
 @dataclass
 class RetiradaPeca:
@@ -40,9 +36,6 @@ class RetiradaPeca:
     peca_id: int
     quantidade_retirada: int
     timestamp_retirada: str
-
-
-    quantidade_devolvida: int = 0
+    quantidade_devolvida: int = 0  # CORREÇÃO: Indentação corrigida
     timestamp_devolucao: Optional[str] = None
     status: str = "pendente"  # 'pendente', 'devolvida', 'parcial', 'perdida'
-

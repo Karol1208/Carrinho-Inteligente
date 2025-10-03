@@ -1,6 +1,5 @@
 import datetime
 
-
 class GavetaAvancada:
     def __init__(self, id: int, nome: str = None):
         self.id = id
@@ -8,13 +7,11 @@ class GavetaAvancada:
         self.aberta = False
         self.bloqueada = False
         self.ultima_abertura = None
-        self.usuario_atual = None
+        self.usuario_atual = None  # Adicionado para rastrear quem abriu
         self.tempo_limite_aberta = 300  # 5 minutos
-
 
     def pode_abrir(self) -> bool:
         return not self.bloqueada and not self.aberta
-
 
     def abrir(self, usuario_id: str) -> bool:
         if self.pode_abrir():
@@ -24,7 +21,6 @@ class GavetaAvancada:
             return True
         return False
 
-
     def fechar(self) -> bool:
         if self.aberta:
             self.aberta = False
@@ -33,9 +29,7 @@ class GavetaAvancada:
             return True
         return False
 
-
     def tempo_aberta(self) -> int:
         if self.aberta and self.ultima_abertura:
             return int((datetime.datetime.now() - self.ultima_abertura).total_seconds())
         return 0
-
