@@ -5,10 +5,11 @@ from typing import List, Optional, Dict
 import time
 import threading
 from dataclasses import dataclass
+from database.manager import DatabaseManager
 from models.entities import UsuarioCartao, EventoGaveta, Peca, RetiradaPeca
 from core.drawer import GavetaAvancada
 from hardware.simulator import SimuladorHardware
-from database.manager import DatabaseManager  
+
 
 
 class CarrinhoInteligenteAvancado:
@@ -197,28 +198,29 @@ class CarrinhoInteligenteAvancado:
         self.db.adicionar_peca(peca)
         logging.info(f"Peça adicionada/atualizada: {peca.nome} na Gaveta {peca.gaveta_id}")
         return True
-   
- 
-
+    
+    
     def obter_retiradas_pendentes_usuario_por_peca(self, peca_id: int) -> List[RetiradaPeca]:
         return self.db.obter_retiradas_pendentes_por_peca(peca_id)
+    
 
-    def fechar_gaveta(self, gaveta_id: int, usuario_id: str = None) -> bool:
-        gaveta = self.gavetas.get(gaveta_id)
-        if not gaveta:
+    def abrir_todas_gavetas_manutencao(self, usuario_id: str) -> bool:
+        """Abre todas as gavetas, bypassando a regra de uma por vez. Requer admin."""
+        usuario = self.db.obter_usuario(usuario_id)
+        if not usuario or usuario.perfil != 'admin':
+            logging.warning(f"Tentativa não autorizada de abrir todas as gavetas pelo usuário ID: {usuario_id}")
             return False
-        if not gaveta.aberta:
-            return True
-        sucesso = False
-        if self.hardware.fechar_gaveta_hardware(gaveta_id):
-            sucesso = gaveta.fechar()
-        if sucesso:
-            evento = EventoGaveta(
-                gaveta_id=gaveta_id,
-                usuario_id=usuario_id or gaveta.usuario_atual or "sistema",
-                acao='fechar',
-                timestamp=datetime.datetime.now().isoformat(),
-                sucesso=True
-            )
-            self.db.registrar_evento(evento)
-        return sucesso
+
+        logging.info(f"MODO MANUTENÇÃO: Admin {usuario.nome} abrindo todas as gavetas.")
+        sucesso_total = True
+        for gaveta_id, gaveta in self.gavetas.items():
+            if not gaveta.aberta:
+                if self.hardware.abrir_gaveta_hardware(gaveta_id):
+                    gaveta.abrir(usuario.id)
+                    self.db.registrar_evento(EventoGaveta(
+                        gaveta_id=gaveta_id, usuario_id=usuario.id, acao='abrir_admin',
+                        timestamp=datetime.datetime.now().isoformat(), sucesso=True
+                    ))
+                else:
+                    sucesso_total = False
+        return sucesso_total

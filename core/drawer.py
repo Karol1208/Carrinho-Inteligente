@@ -7,7 +7,7 @@ class GavetaAvancada:
         self.aberta = False
         self.bloqueada = False
         self.ultima_abertura = None
-        self.usuario_atual = None  # Adicionado para rastrear quem abriu
+        self.usuario_atual = None 
         self.tempo_limite_aberta = 300  # 5 minutos
 
     def pode_abrir(self) -> bool:

@@ -1,5 +1,3 @@
-# Em ui/login.py (VERSÃO COM ÍCONE PRÓXIMO E MAIOR)
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageTk
@@ -145,4 +143,4 @@ class TelaLogin:
        
         
         self.root.mainloop()
-        return self.usuario, self.perfil  # Retorna usuário e perfil
+        return self.usuario, self.perfil  

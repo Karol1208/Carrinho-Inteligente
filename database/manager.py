@@ -1,3 +1,4 @@
+import logging
 import sqlite3
 import datetime
 from typing import List, Optional
@@ -307,3 +308,58 @@ class DatabaseManager:
             quantidade_devolvida=row[4], timestamp_retirada=row[5],
             timestamp_devolucao=row[6], status=row[7]
         ) for row in rows]
+    
+
+    def limpar_historico(self):
+        """Apaga todos os registros da tabela de histórico."""
+        try:
+            conn = sqlite3.connect(self.db_path)
+            cursor = conn.cursor()
+            cursor.execute('DELETE FROM eventos') # O nome da sua tabela é 'eventos'
+            conn.commit()
+            conn.close()
+            # logging.info("Tabela de eventos (histórico) limpa com sucesso.")
+            return True
+        except sqlite3.Error as e:
+            # logging.error(f"Erro ao limpar a tabela de eventos: {e}")
+            return False
+        
+
+    def remover_peca(self, peca_id: int):
+        """Desativa uma peça no banco de dados (soft delete)."""
+        conn = self._get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute('UPDATE pecas SET ativo = 0 WHERE id = ?', (peca_id,))
+            conn.commit()
+            logging.info(f"Peça com ID {peca_id} foi desativada.")
+            return True
+        except sqlite3.Error as e:
+            logging.error(f"Erro ao desativar a peça com ID {peca_id}: {e}")
+            conn.rollback()
+            return False
+        finally:
+            conn.close()        
+
+
+    def obter_todas_retiradas_pendentes(self) -> List[RetiradaPeca]:
+        """Retorna uma lista de todas as retiradas com status 'pendente' ou 'parcial'."""
+        conn = self._get_connection()
+        try:
+            cursor = conn.cursor()
+            cursor.execute('''
+                SELECT id, usuario_id, peca_id, quantidade_retirada, quantidade_devolvida,
+                       timestamp_retirada, timestamp_devolucao, status
+                FROM retiradas_pecas
+                WHERE status IN ('pendente', 'parcial')
+                ORDER BY timestamp_retirada ASC
+            ''')
+            results = cursor.fetchall()
+            return [RetiradaPeca(
+                id=row[0], usuario_id=row[1], peca_id=row[2], quantidade_retirada=row[3],
+                quantidade_devolvida=row[4], timestamp_retirada=row[5],
+                timestamp_devolucao=row[6], status=row[7]
+            ) for row in results]
+        finally:
+            conn.close()
+

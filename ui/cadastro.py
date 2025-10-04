@@ -109,28 +109,25 @@ class TelaCadastroRFID:
         self.processar_cadastro(codigo)
 
     def processar_cadastro(self, codigo):
-        # Verifica se o ID já existe (não é novo usuário)
         usuario_existente = self.carrinho.validar_cartao(codigo)
         if usuario_existente:
             messagebox.showerror("Erro de Cadastro", f"ID de cartão '{codigo}' já cadastrado para o usuário '{usuario_existente.nome}'. Use outro token.", parent=self.root)
             self.entry_codigo.delete(0, tk.END)
             return
         
-        # Se novo, abre popup para coletar nome, cargo, perfil
         self.id_cartao_lido = codigo
         if hasattr(self, 'after_id'): 
             self.root.after_cancel(self.after_id)
         
         messagebox.showinfo("Sucesso", f"ID '{codigo}' válido para cadastro. Agora, preencha os detalhes do usuário.", parent=self.root)
-        self.mostrar_popup_detalhes_usuario()  # NOVO: Popup integrado aqui
+        self.mostrar_popup_detalhes_usuario() 
 
     def mostrar_popup_detalhes_usuario(self):
-        # Popup para nome, cargo, perfil (ID pré-preenchido)
-        popup = tk.Toplevel(self.root)  # Filho do modal de cadastro
+        popup = tk.Toplevel(self.root)  
         popup.title("Detalhes do Novo Usuário")
         popup.geometry("450x450")
         popup.resizable(False, False)
-        popup.transient(self.root)  # Modal em relação à tela de cadastro
+        popup.transient(self.root) 
         popup.grab_set()
         popup.configure(bg=CORES["fundo_secundario"])
 
@@ -153,7 +150,7 @@ class TelaCadastroRFID:
             if campo == "Perfil:":
                 combo_perfil = ttk.Combobox(form_frame, values=["admin", "aluno"], width=23, state="readonly")
                 combo_perfil.grid(row=i, column=1, sticky="ew", pady=8, padx=5)
-                combo_perfil.set("aluno")  # Default aluno
+                combo_perfil.set("aluno")  
                 entries[campo] = combo_perfil
             else:
                 entry = ttk.Entry(form_frame, width=25)
@@ -183,8 +180,8 @@ class TelaCadastroRFID:
                 self.carrinho.db.adicionar_usuario(usuario)
                 messagebox.showinfo("Cadastro Concluído!", f"Usuário '{nome}' cadastrado com sucesso!\nID: {id_cartao} | Perfil: {perfil}", parent=popup)
                 popup.destroy()
-                self.root.destroy()  # Fecha o modal de cadastro
-                # Atualiza lista na interface principal (se callback fornecido)
+                self.root.destroy()  
+                
                 if self.callback_atualizar_usuarios:
                     self.callback_atualizar_usuarios()
             except Exception as e:
@@ -211,22 +208,21 @@ class TelaCadastroRFID:
                 if codigo_lido:
                     self.processar_cadastro(codigo_lido)
             except AttributeError:
-                pass  # Hardware não configurado
+                pass  
         
         self.after_id = self.root.after(250, self.verificar_leitor_rfid_periodicamente)
 
     def executar(self):
-        # Ativa verificação RFID se modo RFID (descomente para auto-leitura)
-        # self.verificar_leitor_rfid_periodicamente()
+       
         
         if self.root_principal:
-            self.root.transient(self.root_principal)  # Modal em relação à janela principal
-            self.root.grab_set()  # Bloqueia interação com outras janelas
+            self.root.transient(self.root_principal)  
+            self.root.grab_set() 
         
         self.root.mainloop()
         
-        # Verificação para evitar destruição dupla
+      
         if self.root.winfo_exists():
             self.root.destroy()
         
-        return self.id_cartao_lido  # Retorna ID se precisar (opcional agora)
+        return self.id_cartao_lido  

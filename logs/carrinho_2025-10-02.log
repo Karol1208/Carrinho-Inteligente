@@ -68,3 +68,81 @@
 2025-10-02 01:47:53,240 - INFO - Sistema encerrado pelo usuário.
 2025-10-02 18:25:42,725 - INFO - Sistema inicializado com usuários de exemplo.
 2025-10-02 18:27:37,931 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-02 19:23:05,167 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 19:24:22,713 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 19:24:22,808 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 19:27:53,108 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 19:27:59,168 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 19:28:22,670 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 19:28:22,759 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 19:45:31,472 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 19:46:21,019 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 19:46:21,602 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 19:46:57,103 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 19:46:57,179 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 19:47:18,715 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 19:47:18,997 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 19:47:29,204 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 19:47:29,290 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:03:51,263 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 20:03:51,594 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:04:05,150 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:04:05,236 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:04:21,517 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:04:27,777 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:04:27,878 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:04:33,019 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:04:40,772 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 20:04:40,860 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:08:43,679 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:08:49,724 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:08:49,805 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:08:59,174 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:09:04,908 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 20:09:05,001 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:43:31,042 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:43:36,556 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:43:36,668 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:43:59,827 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:44:00,334 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-02 20:44:00,334 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-02 20:44:14,875 - INFO - Retirada registrada: 1 unidades da peça 47 por usuário 12345
+2025-10-02 20:44:35,564 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:44:39,453 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:44:54,129 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:44:57,280 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:44:59,020 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:45:01,467 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:45:50,663 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 20:46:05,873 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-02 20:47:13,105 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:47:20,940 - INFO - Cartão validado: Samuel (77777)
+2025-10-02 20:47:37,877 - WARNING - Cartão inválido/não autorizado: 55555
+2025-10-02 20:48:01,225 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 20:48:07,866 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 20:48:07,960 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 20:49:21,140 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 20:54:13,794 - ERROR - Erro em abrir_tela_cadastro_rfid: setting "." as master creates a transient/master cycle
+2025-10-02 21:04:33,827 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 21:04:34,188 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:04:41,268 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 21:04:41,377 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 21:07:38,664 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:07:44,476 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 21:07:44,572 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 21:07:57,851 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:08:21,847 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 21:08:21,937 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 21:34:12,806 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:34:18,995 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 21:34:19,098 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 21:38:42,523 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:38:48,409 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 21:38:48,511 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 21:49:10,876 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:49:16,393 - INFO - Cartão validado: João Silva (12345)
+2025-10-02 21:49:16,498 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-02 21:49:33,865 - WARNING - Cartão inválido/não autorizado: 88888
+2025-10-02 21:56:20,812 - INFO - Sistema encerrado pelo usuário.
+2025-10-02 21:56:25,186 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-02 21:56:27,155 - INFO - Nenhum usuário autenticado. Encerrando o sistema.

@@ -1,6 +1,4 @@
-# Em ui/theme.py
 
-# Paleta de Cores inspirada no modelo SENAI
 CORES = {
     "fundo_principal": "#2c3e50",    # Azul escuro (fundo)
     "fundo_secundario": "#34495e", # Azul um pouco mais claro (sidebar, cabeçalhos)
@@ -14,7 +12,6 @@ CORES = {
     "alerta": "#f39c12"             # Laranja para alertas
 }
 
-# Configurações de Fonte
 FONTES = {
     "titulo": ("Segoe UI", 24, "bold"),
     "subtitulo": ("Segoe UI", 14, "bold"),

@@ -1,0 +1,148 @@
+2025-10-03 19:09:25,360 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 19:09:32,703 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:09:32,816 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 19:10:50,321 - WARNING - Cartão inválido/não autorizado: 112233
+2025-10-03 19:13:50,306 - WARNING - Cartão inválido/não autorizado: 111222
+2025-10-03 19:15:11,175 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:15:11,676 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 19:15:11,676 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 19:15:26,482 - INFO - Retirada registrada: 1 unidades da peça 6 por usuário 12345
+2025-10-03 19:25:15,415 - WARNING - Gaveta 4 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-03 19:40:24,911 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 19:40:31,344 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 19:40:41,062 - INFO - Cartão validado: Ana (111222)
+2025-10-03 19:40:41,156 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 19:42:25,429 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 19:42:31,609 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:42:31,700 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 19:43:09,950 - WARNING - Cartão inválido/não autorizado: 444555
+2025-10-03 19:49:04,404 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 19:49:12,634 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 19:49:18,614 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:49:18,699 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 19:50:02,247 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 19:50:07,626 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:50:07,711 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 19:56:06,210 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:56:06,725 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 19:56:06,725 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 19:56:11,748 - INFO - Retirada registrada: 1 unidades da peça 6 por usuário 12345
+2025-10-03 19:59:07,015 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 19:59:07,530 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-03 19:59:07,530 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-03 19:59:16,773 - INFO - Retirada registrada: 1 unidades da peça 91 por usuário 12345
+2025-10-03 20:06:12,290 - WARNING - Gaveta 4 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-03 20:09:12,331 - WARNING - Gaveta 2 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-03 20:10:20,766 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 20:10:26,182 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 20:10:31,666 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 20:10:31,755 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 20:14:17,768 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 20:14:22,511 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 20:14:28,393 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 20:14:28,506 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 20:24:24,887 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 20:24:29,178 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 20:24:34,663 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 20:24:34,748 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 20:31:25,737 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 20:31:31,581 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 20:31:36,572 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 20:31:36,658 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:01:09,508 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:05:15,977 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:05:20,885 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:05:20,977 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:05:43,575 - INFO - Devolução registrada: 1 unidades para retirada 6
+2025-10-03 21:06:08,907 - INFO - Devolução registrada: 1 unidades para retirada 5
+2025-10-03 21:06:24,925 - INFO - Devolução registrada: 1 unidades para retirada 4
+2025-10-03 21:07:11,480 - INFO - Devolução registrada: 1 unidades para retirada 3
+2025-10-03 21:10:25,432 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:10:30,312 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:10:35,451 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:10:35,548 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:10:44,371 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:10:44,879 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 21:10:44,879 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 21:10:49,870 - INFO - Retirada registrada: 1 unidades da peça 6 por usuário 12345
+2025-10-03 21:10:52,037 - INFO - Gaveta 4 fechada
+2025-10-03 21:10:52,037 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-03 21:11:02,765 - INFO - Devolução registrada: 1 unidades para retirada 7
+2025-10-03 21:12:40,908 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:12:50,923 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:12:57,554 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:12:57,641 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:13:04,989 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:13:05,495 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-03 21:13:05,495 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-03 21:13:21,721 - INFO - Gaveta 2 fechada
+2025-10-03 21:13:21,721 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-03 21:13:37,650 - INFO - Devolução registrada: 1 unidades para retirada 2
+2025-10-03 21:19:00,255 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:19:00,764 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 21:19:00,764 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 21:19:17,523 - INFO - Retirada registrada: 1 unidades da peça 6 por usuário 12345
+2025-10-03 21:19:20,341 - INFO - Gaveta 4 fechada
+2025-10-03 21:19:20,341 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-03 21:19:30,653 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:19:31,159 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 21:19:31,159 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 21:19:34,349 - INFO - Retirada registrada: 1 unidades da peça 6 por usuário 12345
+2025-10-03 21:19:35,875 - INFO - Gaveta 4 fechada
+2025-10-03 21:19:35,875 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-03 21:19:40,297 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:19:40,798 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-03 21:19:40,798 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-03 21:19:50,314 - INFO - Retirada registrada: 1 unidades da peça 4 por usuário 12345
+2025-10-03 21:19:52,066 - INFO - Gaveta 2 fechada
+2025-10-03 21:19:52,066 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-03 21:22:04,509 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:22:10,178 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:22:10,275 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:23:00,863 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:23:01,372 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 21:23:01,372 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 21:27:41,542 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:27:42,043 - INFO - Gaveta 2 aberta por João Silva (12345)
+2025-10-03 21:27:42,044 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-03 21:32:00,119 - INFO - Gaveta 2 fechada
+2025-10-03 21:32:00,119 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-03 21:32:00,442 - INFO - Gaveta 4 fechada
+2025-10-03 21:32:00,442 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-03 21:32:00,497 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:32:08,457 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:32:15,158 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:32:15,258 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:32:23,594 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:32:24,098 - INFO - Gaveta 4 aberta por João Silva (12345)
+2025-10-03 21:32:24,098 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-03 21:32:35,605 - INFO - Gaveta 4 fechada
+2025-10-03 21:32:35,605 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-03 21:45:51,625 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:45:58,285 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:46:03,382 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:46:03,470 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:46:13,414 - INFO - MODO MANUTENÇÃO: Admin João Silva abrindo todas as gavetas.
+2025-10-03 21:46:30,811 - INFO - Gaveta 1 fechada
+2025-10-03 21:46:30,811 - INFO - Possível devolução de peças da Gaveta 1
+2025-10-03 21:46:31,144 - INFO - Gaveta 2 fechada
+2025-10-03 21:46:31,144 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-03 21:46:31,451 - INFO - Gaveta 3 fechada
+2025-10-03 21:46:31,451 - INFO - Possível devolução de peças da Gaveta 3
+2025-10-03 21:46:31,778 - INFO - Gaveta 4 fechada
+2025-10-03 21:46:31,778 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-03 21:46:32,111 - INFO - Gaveta 5 fechada
+2025-10-03 21:46:32,111 - INFO - Possível devolução de peças da Gaveta 5
+2025-10-03 21:46:32,173 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:46:35,998 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:46:42,221 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-03 21:46:42,300 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:49:08,224 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:49:15,017 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:49:20,598 - INFO - Cartão validado: Ana Lima (22222)
+2025-10-03 21:49:20,682 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:49:27,024 - INFO - Sistema encerrado pelo usuário.
+2025-10-03 21:49:38,458 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-03 21:49:42,978 - INFO - Cartão validado: João Silva (12345)
+2025-10-03 21:49:43,080 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'logo_senai.png'
+2025-10-03 21:55:49,457 - INFO - Sistema encerrado pelo usuário.
