@@ -16,6 +16,7 @@ from ui.abas.aba_historico import AbaHistorico
 
 class InterfaceGraficaCarrinho:
     """Classe principal que gerencia a janela, a navegação e a comunicação entre as abas."""
+    # Versão NOVA e CORRIGIDA
     def __init__(self, carrinho: CarrinhoInteligenteAvancado = None, usuario_inicial=None):
         self.carrinho = carrinho if carrinho else CarrinhoInteligenteAvancado()
         self.root = tk.Tk()
@@ -25,7 +26,6 @@ class InterfaceGraficaCarrinho:
         self.root.configure(bg=CORES["fundo_widget"])
 
         self.usuario_atual = usuario_inicial
-        self.modo_admin = False
         self.frames_conteudo = {}
         self.botoes_sidebar = {}
         self.label_usuario_header = None
@@ -41,10 +41,12 @@ class InterfaceGraficaCarrinho:
         self.root.protocol("WM_DELETE_WINDOW", self._on_close)
         self.atualizar_status_periodico()
 
-        self.configurar_acesso_por_perfil(None)
-
+        # Inicia a configuração de acesso com base no usuário que fez login
         if self.usuario_atual:
             self.configurar_acesso_por_perfil(self.usuario_atual.perfil)
+        else:
+            # Se não houver usuário, configura um acesso padrão/limitado
+            self.configurar_acesso_por_perfil(None)
 
     def abrir_tela_cadastro_rfid(self):
         tela_rfid = TelaCadastroRFID(self.carrinho, root_principal=self.root, callback_atualizar_usuarios=self.aba_usuarios.atualizar_lista_usuarios)
@@ -137,34 +139,37 @@ class InterfaceGraficaCarrinho:
         if nome_frame in self.botoes_sidebar:
             self.botoes_sidebar[nome_frame].config(bg=CORES["destaque"])
 
+    # Versão NOVA e CORRIGIDA
     def configurar_acesso_por_perfil(self, perfil):
+        # Esconde todos os botões da sidebar para começar do zero
         for btn in self.botoes_sidebar.values():
             btn.pack_forget()
 
+        # Atualiza o cabeçalho com as informações do usuário
         if self.usuario_atual:
-            self.label_usuario_header.config(text=f"Bem-vindo, {self.usuario_atual.nome} ({self.usuario_atual.cargo}) - Perfil: {self.usuario_atual.perfil}", fg=CORES["texto_claro"])
+            self.label_usuario_header.config(text=f"Bem-vindo, {self.usuario_atual.nome} ({perfil})", fg=CORES["texto_claro"])
         else:
-            self.label_usuario_header.config(text="", fg=CORES["texto_claro"])
+            self.label_usuario_header.config(text="Nenhum usuário logado", fg=CORES["texto_claro"])
         
+        # Visibilidade do botão "Abrir Todas as Gavetas" (que está na AbaPrincipal)
         if hasattr(self.aba_principal, 'botao_abrir_todas'):
             if perfil == "admin":
                 self.aba_principal.botao_abrir_todas.pack(side="left", padx=10, pady=5)
             else:
                 self.aba_principal.botao_abrir_todas.pack_forget()
         
+        # Exibe os botões da sidebar de acordo com o perfil
         if perfil == "admin":
             self.botoes_sidebar["retirada"].pack(fill="x")
             self.botoes_sidebar["inventario"].pack(fill="x")
             self.botoes_sidebar["usuarios"].pack(fill="x")
             self.botoes_sidebar["historico"].pack(fill="x")
             self.botoes_sidebar["monitor"].pack(fill="x", side="bottom", pady=(0, 20))
-
         elif perfil == "aluno":
             self.botoes_sidebar["retirada"].pack(fill="x")
-            self.botoes_sidebar["historico"].pack(fill="x") 
+            self.botoes_sidebar["historico"].pack(fill="x")
             self.botoes_sidebar["monitor"].pack(fill="x", side="bottom", pady=(0, 20))
-
-        else: 
+        else: # Se não houver usuário logado
             self.botoes_sidebar["retirada"].pack(fill="x")
 
     def atualizar_status_periodico(self):
@@ -179,16 +184,19 @@ class InterfaceGraficaCarrinho:
             self.painel_monitoramento.root.lift()
             self.painel_monitoramento.root.focus_force()
 
+    # ADICIONE a linha `self.carrinho.hardware.close()`
     def _on_close(self):
-        if messagebox.askokcancel("Sair", "Deseja realmente sair do sistema? Todas as gavetas abertas serão fechadas."):
-            for gaveta_id in self.carrinho.gavetas:
-                if self.carrinho.gavetas[gaveta_id].aberta:
-                    self.carrinho.fechar_gaveta(gaveta_id)
-            self.carrinho.sistema_ativo = False
+        if messagebox.askokcancel("Sair", "Deseja realmente sair do sistema?"):
+            logging.info("Sistema encerrado pelo usuário.")
+            
+            # Garante que a conexão com o hardware seja fechada
+            if self.carrinho and hasattr(self.carrinho.hardware, 'close'):
+                self.carrinho.hardware.close()
+                
+            # O resto do seu código de fechamento
             if hasattr(self, 'painel_monitoramento') and self.painel_monitoramento.root.winfo_exists():
                 self.painel_monitoramento.root.destroy()
             self.root.destroy()
-            logging.info("Sistema encerrado pelo usuário.")
 
     def executar(self):
         self.root.mainloop()

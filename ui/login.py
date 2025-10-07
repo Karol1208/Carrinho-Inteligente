@@ -122,25 +122,36 @@ class TelaLogin:
             self.usuario = usuario
             self.perfil = usuario.perfil
             if hasattr(self, 'after_id'): 
-                self.root.after_cancel(self.after_id)
+                self.root.after_cancel(self.after_id) # Esta linha está correta
             self.root.destroy()
         elif not self.modo_rfid:
             messagebox.showerror("Erro de Acesso", "Cartão não autorizado ou inválido.")
             self.entry_codigo.delete(0, tk.END)
 
-    def verificar_leitor_rfid_periodicamente(self):
-        if self.modo_rfid:
-            try:
-                codigo_lido = self.carrinho.hardware.ler_rfid()
-                if codigo_lido:
-                    self.processar_validacao(codigo_lido)
-            except AttributeError:
-                pass 
+    # Versão NOVA e CORRIGIDA
+    def verificar_hardware_periodicamente(self):
+        # Tenta ler um input do hardware (pode ser RFID ou PIN do teclado matricial)
+        try:
+            # Usa o nome correto do método que padronizamos: ler_input_hardware
+            codigo_lido = self.carrinho.hardware.ler_input_hardware()
+            if codigo_lido:
+                # Se algo foi lido, tenta validar o login e para o loop de verificação
+                self.processar_validacao(codigo_lido)
+                return
+        except AttributeError:
+            # Ocorre se o hardware não estiver conectado ou for o simulador
+            pass 
         
-        self.after_id = self.root.after(250, self.verificar_leitor_rfid_periodicamente)
+        # Agenda a próxima verificação apenas se nada foi lido
+        self.after_id = self.root.after(250, self.verificar_hardware_periodicamente)
 
+    # Versão NOVA e CORRIGIDA
     def executar(self):
-       
+        # Inicia o loop que "escuta" o Arduino em segundo plano
+        self.verificar_hardware_periodicamente()
         
+        # Inicia a janela da interface gráfica
         self.root.mainloop()
-        return self.usuario, self.perfil  
+        
+        # Retorna o usuário e perfil após o login ser bem-sucedido e a janela ser fechada
+        return self.usuario, self.perfil 

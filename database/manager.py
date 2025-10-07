@@ -129,7 +129,7 @@ class DatabaseManager:
         conn.commit()
         conn.close()
 
-    def obter_usuario(self, usuario_id: str) -> Optional[UsuarioCartao]:
+    def obter_usuario_por_id(self, usuario_id: str) -> Optional[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
@@ -315,19 +315,18 @@ class DatabaseManager:
         try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
-            cursor.execute('DELETE FROM eventos') # O nome da sua tabela é 'eventos'
+            cursor.execute('DELETE FROM eventos')
             conn.commit()
             conn.close()
-            # logging.info("Tabela de eventos (histórico) limpa com sucesso.")
+            logging.info("Tabela de eventos (histórico) limpa com sucesso.")
             return True
         except sqlite3.Error as e:
-            # logging.error(f"Erro ao limpar a tabela de eventos: {e}")
+            logging.error(f"Erro ao limpar a tabela de eventos: {e}")
             return False
-        
 
     def remover_peca(self, peca_id: int):
         """Desativa uma peça no banco de dados (soft delete)."""
-        conn = self._get_connection()
+        conn = sqlite3.connect(self.db_path) # Correção: Usando a conexão direta
         try:
             cursor = conn.cursor()
             cursor.execute('UPDATE pecas SET ativo = 0 WHERE id = ?', (peca_id,))
@@ -339,17 +338,16 @@ class DatabaseManager:
             conn.rollback()
             return False
         finally:
-            conn.close()        
-
+            conn.close()
 
     def obter_todas_retiradas_pendentes(self) -> List[RetiradaPeca]:
         """Retorna uma lista de todas as retiradas com status 'pendente' ou 'parcial'."""
-        conn = self._get_connection()
+        conn = sqlite3.connect(self.db_path) # Correção: Usando a conexão direta
         try:
             cursor = conn.cursor()
             cursor.execute('''
                 SELECT id, usuario_id, peca_id, quantidade_retirada, quantidade_devolvida,
-                       timestamp_retirada, timestamp_devolucao, status
+                    timestamp_retirada, timestamp_devolucao, status
                 FROM retiradas_pecas
                 WHERE status IN ('pendente', 'parcial')
                 ORDER BY timestamp_retirada ASC

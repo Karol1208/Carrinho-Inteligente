@@ -9,18 +9,34 @@ from database.manager import DatabaseManager
 from models.entities import UsuarioCartao, EventoGaveta, Peca, RetiradaPeca
 from core.drawer import GavetaAvancada
 from hardware.simulator import SimuladorHardware
+from hardware.arduino import HardwareArduino # Classe que criamos para o Arduino
+from hardware.simulator import SimuladorHardware
 
 
 
 class CarrinhoInteligenteAvancado:
-    def __init__(self, db_path: str = 'carrinho.db'):
+    # Versão NOVA e CORRIGIDA
+    def __init__(self, db_path: str = 'carrinho.db', modo_hardware: str = 'simulador', porta_serial: Optional[str] = None):
+        """
+        Inicializa o carrinho, com seleção de hardware.
+        """
         self.db = DatabaseManager(db_path=db_path)
-        self.hardware = SimuladorHardware()
+        
+        # Lógica para escolher qual classe de hardware instanciar
+        if modo_hardware == 'real' and porta_serial:
+            self.hardware = HardwareArduino(port=porta_serial)
+            if not self.hardware.is_running:
+                logging.warning("Hardware real não conectado. Recaindo para o modo simulador.")
+                self.hardware = SimuladorHardware()
+        else:
+            logging.info("Iniciando em MODO SIMULADOR.")
+            self.hardware = SimuladorHardware()
+
+        # Lógica original do projeto é mantida
         self.gavetas = {i: GavetaAvancada(i, f"Gaveta {i}") for i in range(1, 6)}
         self.sistema_ativo = True
         self.modo_manutencao = False
         self.alertas_ativos = []
-
 
         self.monitor_thread = threading.Thread(target=self.monitor_sistema, daemon=True)
         self.monitor_thread.start()
@@ -29,7 +45,7 @@ class CarrinhoInteligenteAvancado:
     def validar_cartao(self, codigo_cartao: str) -> Optional[UsuarioCartao]:
         if not codigo_cartao:
             return None
-        usuario = self.db.obter_usuario(codigo_cartao)
+        usuario = self.db.obter_usuario_por_id(codigo_cartao)
         if usuario:
             logging.info(f"Cartão validado: {usuario.nome} ({usuario.id})")
         else:
@@ -110,7 +126,7 @@ class CarrinhoInteligenteAvancado:
                     if gaveta.aberta:
                         tempo_aberta = gaveta.tempo_aberta()
                         if tempo_aberta > 600:  # 10 minutos
-                            usuario = self.db.obter_usuario(gaveta.usuario_atual) if gaveta.usuario_atual else None
+                            usuario = self.db.obter_usuario_por_id(gaveta.usuario_atual) if gaveta.usuario_atual else None
                             nome_usuario = usuario.nome if usuario else (gaveta.usuario_atual or "Desconhecido")
                             alerta_msg = f"Gaveta {gaveta_id} aberta há mais de 10 minutos por {nome_usuario}. Favor fechar!"
                             if alerta_msg not in [a['mensagem'] for a in self.alertas_ativos]:
@@ -204,9 +220,11 @@ class CarrinhoInteligenteAvancado:
         return self.db.obter_retiradas_pendentes_por_peca(peca_id)
     
 
+    # ADICIONE ESTE MÉTODO COMPLETO
     def abrir_todas_gavetas_manutencao(self, usuario_id: str) -> bool:
-        """Abre todas as gavetas, bypassando a regra de uma por vez. Requer admin."""
-        usuario = self.db.obter_usuario(usuario_id)
+        """Abre todas as gavetas para manutenção. Requer perfil de admin."""
+        # Usando o nome correto do método que já corrigimos
+        usuario = self.db.obter_usuario_por_id(usuario_id)
         if not usuario or usuario.perfil != 'admin':
             logging.warning(f"Tentativa não autorizada de abrir todas as gavetas pelo usuário ID: {usuario_id}")
             return False

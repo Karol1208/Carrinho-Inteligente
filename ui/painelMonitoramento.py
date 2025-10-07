@@ -39,7 +39,7 @@ class PainelMonitoramento:
         pendencias = self.carrinho.db.obter_todas_retiradas_pendentes()
 
         for retirada in pendencias:
-            usuario = self.carrinho.db.obter_usuario(retirada.usuario_id)
+            usuario = self.carrinho.db.obter_usuario_por_id(retirada.usuario_id)
             peca = self.carrinho.db.obter_peca_por_id(retirada.peca_id)
             
             nome_usuario = usuario.nome if usuario else "ID " + retirada.usuario_id

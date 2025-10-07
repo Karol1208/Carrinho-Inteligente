@@ -74,7 +74,7 @@ class AbaHistorico(ttk.Frame):
                 pass
             
             status = "✓ Sucesso" if evento.sucesso else "✗ Falha"
-            usuario = self.carrinho.db.obter_usuario(evento.usuario_id)
+            usuario = self.carrinho.db.obter_usuario_por_id(evento.usuario_id)
             nome_usuario = usuario.nome if usuario else evento.usuario_id
             self.tree_historico.insert('', 'end', values=(
                 timestamp, f"Gaveta {evento.gaveta_id}", nome_usuario, evento.acao.capitalize(), status
