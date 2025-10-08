@@ -5,6 +5,7 @@ class SimuladorHardware:
     def __init__(self):
         self.sensores_gavetas = {i: False for i in range(1, 6)}  # False = fechada
         self.leds_status = {i: 'verde' for i in range(1, 6)}  # verde, vermelho, amarelo
+        self.is_running = True # O simulador está sempre "rodando"
         self.leitor_cartao_ativo = True
 
     def ler_rfid(self) -> str | None:
@@ -48,3 +49,8 @@ class SimuladorHardware:
     def definir_led_status(self, gaveta_id: int, cor: str):
         if gaveta_id in self.leds_status:
             self.leds_status[gaveta_id] = cor
+
+    def close(self):
+        """Simula o encerramento do hardware."""
+        logging.info("Hardware simulado finalizado.")
+        self.is_running = False
