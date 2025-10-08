@@ -66,5 +66,5 @@ Siga os passos abaixo para configurar e executar o projeto.
 ### 1. Clonar o Repositório
 
 ```bash
-git clone [Link para o repositório]
+git clone [Ainda não público]
 cd Carrinho-Inteligente
