@@ -122,3 +122,13 @@
 2025-10-08 14:32:25,229 - INFO - Sistema inicializado com usuários de exemplo.
 2025-10-08 14:32:34,245 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
 2025-10-08 14:32:34,245 - INFO - Hardware simulado finalizado.
+2025-10-08 15:30:43,042 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 15:30:43,059 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 15:30:54,504 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 15:31:01,976 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 15:31:01,976 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 15:31:01,976 - INFO - Hardware simulado finalizado.
+2025-10-08 15:31:02,004 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 15:31:02,021 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 15:31:03,424 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 15:31:03,424 - INFO - Hardware simulado finalizado.

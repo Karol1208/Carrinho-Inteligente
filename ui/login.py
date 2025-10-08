@@ -33,7 +33,7 @@ class TelaLogin:
         main_frame.pack(expand=True, fill="both")
 
         try:
-            self.logo_senai_img = ImageTk.PhotoImage(Image.open("logo_senai.png").resize((150, 50), Image.LANCZOS))
+            self.logo_senai_img = ImageTk.PhotoImage(Image.open("assets/logo_senai.png").resize((150, 50), Image.LANCZOS))
             tk.Label(main_frame, image=self.logo_senai_img, bg=CORES["fundo_principal"]).pack(pady=(20, 10))
         except:
             tk.Label(main_frame, text="SENAI", font=("Segoe UI", 20, "bold"), fg="white", bg=CORES["fundo_principal"]).pack(pady=(20, 10))
@@ -42,10 +42,10 @@ class TelaLogin:
         frame_titulo_principal.pack(pady=20, padx=30, fill="x")
 
         try:
-            self.crdf_icon_img = ImageTk.PhotoImage(Image.open("crdf_icon.png").resize((160, 160), Image.LANCZOS))
+            self.crdf_icon_img = ImageTk.PhotoImage(Image.open("assets/crdf_icon.png").resize((160, 160), Image.LANCZOS))
             tk.Label(frame_titulo_principal, image=self.crdf_icon_img, bg=CORES["fundo_principal"]).pack(side="left", padx=5)
         except Exception as e:
-            print(f"Aviso: Não foi possível carregar 'crdf_icon.png': {e}")
+            print(f"Aviso: Não foi possível carregar 'assets/crdf_icon.png': {e}")
         
         frame_textos = tk.Frame(frame_titulo_principal, bg=CORES["fundo_principal"])
         frame_textos.pack(side="left", expand=True, fill="x", padx=10) 
@@ -59,7 +59,7 @@ class TelaLogin:
         
         self.frame_rfid_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
         try:
-            self.rfid_icon_img = ImageTk.PhotoImage(Image.open("rfid_icon.png").resize((100, 100), Image.LANCZOS))
+            self.rfid_icon_img = ImageTk.PhotoImage(Image.open("assets/rfid_icon.png").resize((100, 100), Image.LANCZOS))
             tk.Label(self.frame_rfid_prompt, image=self.rfid_icon_img, bg=CORES["fundo_principal"]).pack(pady=5)
         except: pass
         tk.Label(self.frame_rfid_prompt, text="Aproxime seu Token", font=("Segoe UI", 18, "bold"), fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=10)

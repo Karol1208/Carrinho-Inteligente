@@ -114,7 +114,7 @@ class InterfaceGraficaCarrinho:
             lbl_logo.pack(side="left", padx=20)
         except Exception as e:
             tk.Label(header, text="SENAI", font=FONTES["titulo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"]).pack(side="left", padx=20)
-            logging.warning(f"Não foi possível carregar 'logo_senai.png': {e}")
+            logging.warning(f"Não foi possível carregar 'assets/logo_senai.png': {e}")
 
         # Botão de Sair à direita
         botao_sair = tk.Button(header, text="Sair", font=FONTES["botao"], 
