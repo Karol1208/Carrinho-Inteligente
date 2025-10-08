@@ -1,0 +1,124 @@
+2025-10-08 13:50:23,860 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:50:23,875 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:50:41,258 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 13:50:54,592 - INFO - Usuário deslogado por inatividade.
+2025-10-08 13:51:00,202 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 13:51:00,202 - INFO - Hardware simulado finalizado.
+2025-10-08 13:51:00,230 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:51:00,258 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:51:06,259 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 13:51:18,809 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 13:51:19,310 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-08 13:51:19,311 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-08 13:51:36,890 - INFO - Retirada registrada: 1 unidades da peça 10 por usuário 1234
+2025-10-08 13:51:38,897 - INFO - Gaveta 4 fechada
+2025-10-08 13:51:38,898 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-08 13:51:46,831 - INFO - Usuário deslogado por inatividade.
+2025-10-08 13:51:49,080 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 13:51:49,080 - INFO - Hardware simulado finalizado.
+2025-10-08 13:51:49,121 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:51:49,157 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:51:51,851 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 13:51:51,851 - INFO - Hardware simulado finalizado.
+2025-10-08 13:55:05,892 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:55:05,906 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:55:10,576 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 13:55:21,780 - INFO - Devolução registrada: 1 unidades para retirada 21
+2025-10-08 13:55:25,982 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 13:55:25,982 - INFO - Hardware simulado finalizado.
+2025-10-08 13:55:26,028 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:55:26,065 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:56:02,213 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 13:56:15,550 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 13:56:15,550 - INFO - Hardware simulado finalizado.
+2025-10-08 13:56:15,590 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:56:15,612 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:56:47,342 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 13:56:53,819 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 13:56:53,821 - INFO - Hardware simulado finalizado.
+2025-10-08 13:56:53,854 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 13:56:53,879 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 13:58:01,847 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 13:58:01,848 - INFO - Hardware simulado finalizado.
+2025-10-08 14:06:10,074 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:06:10,087 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:06:13,166 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:06:13,267 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:08:20,958 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:08:20,973 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:09:33,970 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:09:33,982 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:09:37,225 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:09:37,318 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:09:47,206 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 14:09:47,206 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:09:47,207 - INFO - Hardware simulado finalizado.
+2025-10-08 14:09:47,257 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:09:47,289 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:09:51,612 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:09:51,718 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:10:01,779 - INFO - Usuário deslogado por inatividade.
+2025-10-08 14:10:05,578 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:10:05,579 - INFO - Hardware simulado finalizado.
+2025-10-08 14:10:05,621 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:10:05,652 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:21:42,585 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:21:42,661 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:21:48,044 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 14:21:48,045 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:21:48,045 - INFO - Hardware simulado finalizado.
+2025-10-08 14:21:48,082 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:21:48,103 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:21:49,924 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 14:21:49,924 - INFO - Hardware simulado finalizado.
+2025-10-08 14:24:58,892 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:24:58,907 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:25:02,011 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:25:02,083 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:25:12,182 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 14:25:12,182 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:25:12,183 - INFO - Hardware simulado finalizado.
+2025-10-08 14:25:12,219 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:25:12,238 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:25:15,794 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 14:25:15,795 - INFO - Hardware simulado finalizado.
+2025-10-08 14:25:45,219 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:25:45,231 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:25:47,883 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:25:47,993 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:25:52,143 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 14:25:52,144 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:25:52,145 - INFO - Hardware simulado finalizado.
+2025-10-08 14:25:52,182 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:25:52,200 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:25:53,787 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 14:25:53,787 - INFO - Hardware simulado finalizado.
+2025-10-08 14:26:59,223 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:26:59,235 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:30:28,277 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 14:30:28,278 - INFO - Hardware simulado finalizado.
+2025-10-08 14:30:30,131 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:30:30,144 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:30:33,095 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:30:33,186 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:30:43,245 - INFO - Usuário deslogado por inatividade.
+2025-10-08 14:30:45,128 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:30:45,129 - INFO - Hardware simulado finalizado.
+2025-10-08 14:30:45,166 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:30:45,197 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:30:48,134 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:30:48,239 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:31:30,981 - INFO - Usuário deslogado por inatividade.
+2025-10-08 14:31:35,609 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:31:35,609 - INFO - Hardware simulado finalizado.
+2025-10-08 14:31:35,644 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:31:35,662 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:32:07,447 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 14:32:07,525 - WARNING - Não foi possível carregar 'logo_senai.png': [Errno 2] No such file or directory: 'assets/logo_senai.png'
+2025-10-08 14:32:25,193 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 14:32:25,193 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 14:32:25,193 - INFO - Hardware simulado finalizado.
+2025-10-08 14:32:25,215 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 14:32:25,229 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 14:32:34,245 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 14:32:34,245 - INFO - Hardware simulado finalizado.

@@ -40,24 +40,23 @@ def inicializar_sistema_exemplo(db_path: str = 'carrinho.db') -> CarrinhoIntelig
 
 # Versão NOVA e CORRIGIDA
 if __name__ == "__main__":
-    carrinho = inicializar_sistema_exemplo()
-
-    tela_login = TelaLogin(carrinho)
     
-    # Inicia a "escuta" do Arduino em segundo plano
-    tela_login.verificar_hardware_periodicamente()
-
-    usuario, perfil = tela_login.executar()
-
-    if usuario:
-        # A nova interface já configura o perfil no seu __init__
-        interface = InterfaceGraficaCarrinho(carrinho=carrinho, usuario_inicial=usuario)
-        interface.executar()
+    # Inicia um loop infinito para o sistema
+    while True:
+        carrinho = inicializar_sistema_exemplo()
         
-        # Garante que a conexão com o Arduino seja fechada ao sair
-        if MODO_HARDWARE == "real":
-            carrinho.hardware.close()
-    else:
-        logging.info("Nenhum usuário autenticado. Encerrando o sistema.")
-        if MODO_HARDWARE == "real" and carrinho.hardware:
-            carrinho.hardware.close()
+        tela_login = TelaLogin(carrinho)
+        usuario, perfil = tela_login.executar()
+
+        if usuario:
+            # Se o login for bem-sucedido, abre a interface principal
+            interface = InterfaceGraficaCarrinho(carrinho=carrinho, usuario_inicial=usuario)
+            interface.executar()
+            # Quando a interface.executar() terminar (janela fechada), o loop recomeça,
+            # mostrando a tela de login novamente.
+        else:
+            # Se o usuário fechar a tela de login sem logar, o loop é quebrado e o programa fecha.
+            logging.info("Nenhum usuário autenticado. Encerrando o sistema.")
+            if carrinho and hasattr(carrinho.hardware, 'close'):
+                carrinho.hardware.close()
+            break # Sai do loop while True

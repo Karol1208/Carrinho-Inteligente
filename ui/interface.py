@@ -47,6 +47,16 @@ class InterfaceGraficaCarrinho:
         else:
             # Se não houver usuário, configura um acesso padrão/limitado
             self.configurar_acesso_por_perfil(None)
+        # --- ADICIONE ESTAS LINHAS NO FINAL DO __init__ ---
+        self.inactivity_timer_id = None
+        self.INACTIVITY_TIMEOUT = 10000  # 10 segundos em milissegundos
+
+        # Liga os "escutadores" de atividade na janela principal
+        self.root.bind_all("<Button-1>", self._on_user_activity) # Qualquer clique do mouse
+        self.root.bind_all("<Key>", self._on_user_activity)      # Qualquer tecla pressionada
+
+        # Inicia o timer pela primeira vez
+        self._resetar_timer_inatividade()
 
     def abrir_tela_cadastro_rfid(self):
         tela_rfid = TelaCadastroRFID(self.carrinho, root_principal=self.root, callback_atualizar_usuarios=self.aba_usuarios.atualizar_lista_usuarios)
@@ -89,13 +99,16 @@ class InterfaceGraficaCarrinho:
         
         self.mostrar_frame("retirada")
 
+    # Em ui/interface.py
+
     def criar_cabecalho(self):
         header = tk.Frame(self.root, bg=CORES["fundo_secundario"], height=60)
         header.grid(row=0, column=0, columnspan=2, sticky="ew")
         header.pack_propagate(False)
 
+        # Logo do SENAI à esquerda
         try:
-            logo_img = ImageTk.PhotoImage(Image.open("logo_senai.png").resize((120, 40), Image.LANCZOS))
+            logo_img = ImageTk.PhotoImage(Image.open("assets/logo_senai.png").resize((120, 40), Image.Resampling.LANCZOS))
             lbl_logo = tk.Label(header, image=logo_img, bg=CORES["fundo_secundario"])
             lbl_logo.image = logo_img 
             lbl_logo.pack(side="left", padx=20)
@@ -103,8 +116,31 @@ class InterfaceGraficaCarrinho:
             tk.Label(header, text="SENAI", font=FONTES["titulo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"]).pack(side="left", padx=20)
             logging.warning(f"Não foi possível carregar 'logo_senai.png': {e}")
 
-        self.label_usuario_header = tk.Label(header, text="", font=FONTES["corpo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"])
-        self.label_usuario_header.pack(side="right", padx=20)
+        # Botão de Sair à direita
+        botao_sair = tk.Button(header, text="Sair", font=FONTES["botao"], 
+                               bg=CORES["cancelar"], fg="white", relief="flat", 
+                               padx=20, command=self._logout_manual,
+                               activebackground=CORES["cancelar_hover"], # Cor ao clicar
+                               activeforeground="white")
+        botao_sair.pack(side="right", padx=15)
+
+        # --- LÓGICA DO HOVER ADICIONADA AQUI ---
+        # Função para quando o mouse entra no botão
+        def on_enter(event):
+            botao_sair.config(bg=CORES["cancelar_hover"])
+
+        # Função para quando o mouse sai do botão
+        def on_leave(event):
+            botao_sair.config(bg=CORES["cancelar"])
+
+        # Associa as funções aos eventos do mouse
+        botao_sair.bind("<Enter>", on_enter)
+        botao_sair.bind("<Leave>", on_leave)
+        # -----------------------------------------
+
+        # Label do usuário
+        self.label_usuario_header = tk.Label(header, text="Nenhum usuário logado", font=FONTES["corpo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"])
+        self.label_usuario_header.pack(side="right", padx=15)
 
     def criar_sidebar(self):
         sidebar = tk.Frame(self.root, bg=CORES["fundo_secundario"], width=250)
@@ -183,19 +219,48 @@ class InterfaceGraficaCarrinho:
         else:
             self.painel_monitoramento.root.lift()
             self.painel_monitoramento.root.focus_force()
+    
+    def _on_user_activity(self, event=None):
+        """Chamado sempre que o usuário clica ou digita algo."""
+        self._resetar_timer_inatividade()
 
-    # ADICIONE a linha `self.carrinho.hardware.close()`
-    def _on_close(self):
-        if messagebox.askokcancel("Sair", "Deseja realmente sair do sistema?"):
-            logging.info("Sistema encerrado pelo usuário.")
+    def _resetar_timer_inatividade(self):
+        """Cancela o timer anterior e inicia um novo."""
+        # Se já existe um timer agendado, cancele-o
+        if self.inactivity_timer_id:
+            self.root.after_cancel(self.inactivity_timer_id)
+        
+        # Agenda a função de logout para ser chamada após o tempo de inatividade
+        self.inactivity_timer_id = self.root.after(self.INACTIVITY_TIMEOUT, self._logout_por_inatividade)
+
+    def _logout_por_inatividade(self):
+        """Fecha a interface principal para retornar à tela de login."""
+        logging.info("Usuário deslogado por inatividade.")
+        messagebox.showwarning("Sessão Expirada", "Você foi desconectado por inatividade.", parent=self.root)
+        self._on_close(force_close=True) # Chama a função de fechar a janela
+
+    def _logout_manual(self):
+        """Força o logout do usuário e retorna para a tela de login."""
+        logging.info(f"Usuário {self.usuario_atual.nome} deslogou manualmente.")
+        # Reutiliza a nossa função de fechar a janela sem pedir confirmação
+        self._on_close(force_close=True)
+
+    def _on_close(self, force_close=False):
+        """Ação personalizada ao fechar a janela principal."""
+        confirmar = force_close or messagebox.askokcancel("Sair", "Deseja realmente sair do sistema?")
+        
+        if confirmar:
+            logging.info("Sistema encerrado pelo usuário ou por inatividade.")
             
+            # Cancela o timer de inatividade para não ser executado novamente
+            if self.inactivity_timer_id:
+                self.root.after_cancel(self.inactivity_timer_id)
+                self.inactivity_timer_id = None
+
             # Garante que a conexão com o hardware seja fechada
             if self.carrinho and hasattr(self.carrinho.hardware, 'close'):
                 self.carrinho.hardware.close()
-                
-            # O resto do seu código de fechamento
-            if hasattr(self, 'painel_monitoramento') and self.painel_monitoramento.root.winfo_exists():
-                self.painel_monitoramento.root.destroy()
+            
             self.root.destroy()
 
     def executar(self):
