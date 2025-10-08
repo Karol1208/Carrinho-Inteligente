@@ -132,3 +132,147 @@
 2025-10-08 15:31:02,021 - INFO - Sistema inicializado com usuários de exemplo.
 2025-10-08 15:31:03,424 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
 2025-10-08 15:31:03,424 - INFO - Hardware simulado finalizado.
+2025-10-08 19:11:01,358 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:11:02,994 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 19:11:11,394 - INFO - Usuário Samuel deslogou manualmente.
+2025-10-08 19:11:11,394 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:11:14,084 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:11:24,825 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-08 19:11:42,038 - INFO - Usuário deslogado por inatividade.
+2025-10-08 19:11:43,417 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:11:45,558 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:11:53,894 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 19:12:22,747 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-08 19:12:28,356 - INFO - Usuário deslogado por inatividade.
+2025-10-08 19:12:32,240 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:12:35,144 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:12:38,536 - WARNING - Cartão inválido/não autorizado: F2980B20
+2025-10-08 19:12:56,528 - WARNING - Cartão inválido/não autorizado: 1234]
+2025-10-08 19:12:59,226 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 19:13:06,039 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 19:13:17,360 - WARNING - Cartão inválido/não autorizado: F2980B20
+2025-10-08 19:13:40,744 - INFO - Usuário deslogado por inatividade.
+2025-10-08 19:13:41,882 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:13:44,788 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:13:46,656 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 19:14:04,811 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 19:14:04,816 - INFO - Gaveta 4 aberta por Samuel (F2980B20)
+2025-10-08 19:14:04,817 - INFO - Possível retirada de peças da Gaveta 4 por Samuel
+2025-10-08 19:14:04,930 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:14:11,226 - INFO - Retirada registrada: 1 unidades da peça 10 por usuário F2980B20
+2025-10-08 19:14:12,558 - INFO - Gaveta 4 fechada
+2025-10-08 19:14:12,558 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-08 19:14:17,908 - INFO - Usuário Samuel deslogou manualmente.
+2025-10-08 19:14:17,908 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:14:20,238 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:14:23,897 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 19:14:34,413 - INFO - Usuário Samuel deslogou manualmente.
+2025-10-08 19:14:34,413 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:14:36,605 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:14:36,689 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-08 19:15:30,908 - INFO - Devolução registrada: 1 unidades para retirada 24
+2025-10-08 19:15:40,812 - INFO - Devolução registrada: 4 unidades para retirada 24
+2025-10-08 19:15:46,419 - INFO - Devolução registrada: 1 unidades para retirada 23
+2025-10-08 19:15:50,561 - INFO - MODO MANUTENÇÃO: Admin Silvio abrindo todas as gavetas.
+2025-10-08 19:15:56,678 - INFO - MODO MANUTENÇÃO: Admin Silvio abrindo todas as gavetas.
+2025-10-08 19:15:57,033 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:15:57,034 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:15:57,035 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:15:57,035 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:15:57,035 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:16:02,374 - INFO - Usuário Silvio deslogou manualmente.
+2025-10-08 19:16:02,374 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:16:05,313 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:16:06,906 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-08 19:16:07,036 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:16:07,036 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:16:07,036 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:16:07,036 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:16:07,036 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:16:11,754 - INFO - Usuário Silvio deslogou manualmente.
+2025-10-08 19:16:11,754 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:16:13,926 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:16:14,011 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 19:16:17,037 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:16:17,038 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:16:17,038 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:16:17,038 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:16:17,039 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:16:20,694 - INFO - Devolução registrada: 1 unidades para retirada 26
+2025-10-08 19:16:23,763 - INFO - Usuário Samuel deslogou manualmente.
+2025-10-08 19:16:23,763 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:16:26,275 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:16:27,039 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:16:27,040 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:16:27,040 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:16:27,040 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:16:27,040 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:16:34,034 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 19:16:37,041 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:16:37,041 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:16:37,042 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:16:37,042 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:16:37,042 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:16:47,043 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:16:47,043 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:16:47,043 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:16:47,043 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:16:47,043 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:16:48,921 - INFO - Usuário deslogado por inatividade.
+2025-10-08 19:16:51,693 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 19:16:54,666 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 19:16:57,044 - WARNING - Status inconsistente - Gaveta 1: HW=False, SW=True
+2025-10-08 19:16:57,044 - WARNING - Status inconsistente - Gaveta 2: HW=False, SW=True
+2025-10-08 19:16:57,044 - WARNING - Status inconsistente - Gaveta 3: HW=False, SW=True
+2025-10-08 19:16:57,044 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 19:16:57,044 - WARNING - Status inconsistente - Gaveta 5: HW=False, SW=True
+2025-10-08 19:17:05,893 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 20:14:03,706 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 20:14:03,718 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:14:32,253 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 20:14:32,254 - INFO - Hardware simulado finalizado.
+2025-10-08 20:14:36,313 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:14:37,697 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 20:14:52,936 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 20:14:52,942 - INFO - Gaveta 4 aberta por Samuel (F2980B20)
+2025-10-08 20:14:52,942 - INFO - Possível retirada de peças da Gaveta 4 por Samuel
+2025-10-08 20:14:56,461 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-08 20:14:56,597 - INFO - Retirada registrada: 1 unidades da peça 10 por usuário F2980B20
+2025-10-08 20:14:57,690 - INFO - Gaveta 4 fechada
+2025-10-08 20:14:57,692 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-08 20:15:06,514 - INFO - Usuário deslogado por inatividade.
+2025-10-08 20:15:10,247 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 20:15:12,784 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:15:19,527 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 20:15:21,731 - INFO - Usuário Samuel deslogou manualmente.
+2025-10-08 20:15:21,732 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 20:15:24,329 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:15:25,424 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-08 20:15:35,559 - INFO - Usuário deslogado por inatividade.
+2025-10-08 20:15:37,862 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 20:15:40,662 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:15:51,213 - INFO - Cartão validado: Samuel (F2980B20)
+2025-10-08 20:16:23,317 - INFO - Tabela de eventos (histórico) limpa com sucesso.
+2025-10-08 20:16:37,104 - INFO - Usuário deslogado por inatividade.
+2025-10-08 20:16:39,995 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 20:16:42,282 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:17:05,088 - WARNING - Cartão inválido/não autorizado: 12347
+2025-10-08 20:17:07,037 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 20:17:19,689 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 20:17:19,689 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 20:17:21,743 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:21:42,728 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 20:31:10,356 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 20:31:10,372 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:31:42,027 - INFO - Cartão validado: João Silva (1234)
+2025-10-08 20:31:44,898 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-08 20:31:44,898 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-08 20:31:44,898 - INFO - Hardware simulado finalizado.
+2025-10-08 20:31:44,920 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 20:31:44,936 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:31:46,236 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 20:31:46,236 - INFO - Hardware simulado finalizado.
+2025-10-08 20:31:54,860 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-08 20:31:54,873 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-08 20:40:31,529 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-08 20:40:31,529 - INFO - Hardware simulado finalizado.
