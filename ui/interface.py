@@ -203,7 +203,6 @@ class InterfaceGraficaCarrinho:
             self.botoes_sidebar["monitor"].pack(fill="x", side="bottom", pady=(0, 20))
         elif perfil == "aluno":
             self.botoes_sidebar["retirada"].pack(fill="x")
-            self.botoes_sidebar["historico"].pack(fill="x")
             self.botoes_sidebar["monitor"].pack(fill="x", side="bottom", pady=(0, 20))
         else: # Se não houver usuário logado
             self.botoes_sidebar["retirada"].pack(fill="x")

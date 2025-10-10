@@ -27,60 +27,81 @@ class TelaLogin:
         x = (self.root.winfo_screenwidth() // 2) - (width // 2)
         y = (self.root.winfo_screenheight() // 2) - (height // 2)
         self.root.geometry(f'{width}x{height}+{x}+{y}')
-
+       
     def setup_interface(self):
         main_frame = tk.Frame(self.root, bg=CORES["fundo_principal"])
         main_frame.pack(expand=True, fill="both")
 
+    # Frame superior com SENAI à esquerda e CRDF à direita
+        frame_topo = tk.Frame(main_frame, bg=CORES["fundo_principal"])
+        frame_topo.pack(fill="x", pady=(20, 10), padx=20)
+
+        frame_esquerdo = tk.Frame(frame_topo, bg=CORES["fundo_principal"])
+        frame_esquerdo.pack(side="left", anchor="nw")
+
+        frame_direito = tk.Frame(frame_topo, bg=CORES["fundo_principal"])
+        frame_direito.pack(side="right", anchor="ne")
+
         try:
-            self.logo_senai_img = ImageTk.PhotoImage(Image.open("assets/logo_senai.png").resize((150, 50), Image.LANCZOS))
-            tk.Label(main_frame, image=self.logo_senai_img, bg=CORES["fundo_principal"]).pack(pady=(20, 10))
+           self.logo_senai_img = ImageTk.PhotoImage(Image.open("assets/logo_senai.png").resize((150, 50), Image.LANCZOS))
+           tk.Label(frame_esquerdo, image=self.logo_senai_img, bg=CORES["fundo_principal"]).pack()
         except:
-            tk.Label(main_frame, text="SENAI", font=("Segoe UI", 20, "bold"), fg="white", bg=CORES["fundo_principal"]).pack(pady=(20, 10))
-        
-        frame_titulo_principal = tk.Frame(main_frame, bg=CORES["fundo_principal"])
-        frame_titulo_principal.pack(pady=20, padx=30, fill="x")
+           tk.Label(frame_esquerdo, text="SENAI", font=("Segoe UI", 20, "bold"), fg="white", bg=CORES["fundo_principal"]).pack()
 
         try:
-            self.crdf_icon_img = ImageTk.PhotoImage(Image.open("assets/crdf_icon.png").resize((160, 160), Image.LANCZOS))
-            tk.Label(frame_titulo_principal, image=self.crdf_icon_img, bg=CORES["fundo_principal"]).pack(side="left", padx=5)
+           self.crdf_icon_img = ImageTk.PhotoImage(Image.open("assets/crdf_icon.png").resize((60, 60), Image.LANCZOS))
+           tk.Label(frame_direito, image=self.crdf_icon_img, bg=CORES["fundo_principal"]).pack()
         except Exception as e:
-            print(f"Aviso: Não foi possível carregar 'assets/crdf_icon.png': {e}")
-        
-        frame_textos = tk.Frame(frame_titulo_principal, bg=CORES["fundo_principal"])
-        frame_textos.pack(side="left", expand=True, fill="x", padx=10) 
-        
-        tk.Label(frame_textos, text="CRDF", font=("Segoe UI", 48, "bold"), fg="white", bg=CORES["fundo_principal"]).pack(anchor="w")
-        tk.Label(frame_textos, text="Controle de Retirada e", font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(anchor="w")
-        tk.Label(frame_textos, text="Devolução de Ferramentas", font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(anchor="w")
+           print(f"Aviso: Não foi possível carregar 'assets/crdf_icon.png': {e}")
 
+        # Frame  central com textos do título
+        frame_textos = tk.Frame(main_frame, bg=CORES["fundo_principal"])
+        frame_textos.pack(pady=(10, 20))
+
+        tk.Label(frame_textos, text="CRDF", font=("Segoe UI", 48, "bold"),
+             fg="white", bg=CORES["fundo_principal"]).pack()
+        tk.Label(frame_textos, text="Controle de Retirada e",
+             font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack()
+        tk.Label(frame_textos, text="Devolução de Ferramentas",
+             font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack()
+
+        # Entrada por RFID ou manual
         self.frame_entrada_alternavel = tk.Frame(main_frame, bg=CORES["fundo_principal"])
         self.frame_entrada_alternavel.pack(pady=20, fill="x", expand=True)
-        
+
         self.frame_rfid_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
         try:
-            self.rfid_icon_img = ImageTk.PhotoImage(Image.open("assets/rfid_icon.png").resize((100, 100), Image.LANCZOS))
-            tk.Label(self.frame_rfid_prompt, image=self.rfid_icon_img, bg=CORES["fundo_principal"]).pack(pady=5)
-        except: pass
-        tk.Label(self.frame_rfid_prompt, text="Aproxime seu Token", font=("Segoe UI", 18, "bold"), fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=10)
+           self.rfid_icon_img = ImageTk.PhotoImage(Image.open("assets/rfid_icon.png").resize((100, 100), Image.LANCZOS))
+           tk.Label(self.frame_rfid_prompt, image=self.rfid_icon_img, bg=CORES["fundo_principal"]).pack(pady=5)
+        except:
+           pass
+        tk.Label(self.frame_rfid_prompt, text="Aproxime seu Token", font=("Segoe UI", 18, "bold"),
+             fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=10)
 
         self.frame_texto_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
-        tk.Label(self.frame_texto_prompt, text="Digite o código do seu cartão", font=FONTES["corpo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=5)
+        tk.Label(self.frame_texto_prompt, text="Digite o código do seu cartão", font=FONTES["corpo"],
+             fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=5)
+
         self.entry_codigo = tk.Entry(self.frame_texto_prompt, font=FONTES["botao"], justify="center", width=25,
-                                     bg=CORES["fundo_tabela"], fg=CORES["texto_escuro"], relief="flat")
+                                 bg=CORES["fundo_tabela"], fg=CORES["texto_escuro"], relief="flat")
         self.entry_codigo.pack(pady=10, ipady=8)
         self.entry_codigo.bind("<Return>", self.validar_login_manual)
-        
-        self.btn_alternar = tk.Button(main_frame, text="", font=FONTES["corpo"], command=self.alternar_modo_entrada, relief="flat", 
-                                      bg=CORES["fundo_principal"], fg=CORES["destaque"], 
-                                      activebackground=CORES["fundo_principal"], activeforeground="white", borderwidth=0)
+
+        # Botão para alternar entre RFID e entrada manual
+        self.btn_alternar = tk.Button(main_frame, text="", font=FONTES["corpo"], command=self.alternar_modo_entrada,
+                                  relief="flat", bg=CORES["fundo_principal"], fg=CORES["destaque"],
+                                  activebackground=CORES["fundo_principal"], activeforeground="white", borderwidth=0)
         self.btn_alternar.pack()
-        
-        self.btn_login = tk.Button(main_frame, text="ENTRAR", font=FONTES["botao"], command=self.validar_login_manual, 
+
+        # Botão de login (só aparece no modo manual)
+        self.btn_login = tk.Button(main_frame, text="ENTRAR", font=FONTES["botao"], command=self.validar_login_manual,
                                bg=CORES["sucesso"], fg="white", relief="flat", padx=40, pady=10, borderwidth=0)
-        
+
+        # Atualiza modo inicial (RFID ou manual)
         self.atualizar_modo_entrada()
         self.entry_codigo.focus()
+    
+
 
     def alternar_modo_entrada(self):
         self.modo_rfid = not self.modo_rfid
