@@ -47,6 +47,7 @@ if __name__ == "__main__":
         
         tela_login = TelaLogin(carrinho)
         usuario, perfil = tela_login.executar()
+        
 
         if usuario:
             # Se o login for bem-sucedido, abre a interface principal

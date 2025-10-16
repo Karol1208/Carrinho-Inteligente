@@ -49,7 +49,8 @@ class InterfaceGraficaCarrinho:
             self.configurar_acesso_por_perfil(None)
         # --- ADICIONE ESTAS LINHAS NO FINAL DO __init__ ---
         self.inactivity_timer_id = None
-        self.INACTIVITY_TIMEOUT = 10000  # 10 segundos em milissegundos
+        self.INACTIVITY_TIMEOUT = 50000  # 10 segundos em milissegundos 
+        #mudar depois 
 
         # Liga os "escutadores" de atividade na janela principal
         self.root.bind_all("<Button-1>", self._on_user_activity) # Qualquer clique do mouse

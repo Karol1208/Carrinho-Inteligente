@@ -1,0 +1,292 @@
+2025-10-14 19:44:46,829 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 19:44:46,849 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 19:44:51,015 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 19:45:21,309 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 19:45:21,810 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 19:45:21,810 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 19:45:35,477 - INFO - Retirada registrada: 1 unidades da peça 47 por usuário 1234
+2025-10-14 19:45:38,066 - INFO - Gaveta 2 fechada
+2025-10-14 19:45:38,079 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-14 19:45:45,335 - INFO - Usuário deslogado por inatividade.
+2025-10-14 19:45:47,105 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 19:45:47,105 - INFO - Hardware simulado finalizado.
+2025-10-14 19:45:47,166 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 19:45:47,196 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 19:45:51,672 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 19:46:18,365 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 19:46:18,866 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 19:46:18,866 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 19:46:18,888 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 19:46:19,389 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 19:46:19,389 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 19:46:28,216 - INFO - Usuário deslogado por inatividade.
+2025-10-14 19:47:11,352 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 19:47:11,353 - INFO - Hardware simulado finalizado.
+2025-10-14 19:47:11,410 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 19:47:11,441 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 19:56:27,190 - WARNING - Gaveta 2 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-14 19:56:27,191 - WARNING - Gaveta 4 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-14 19:59:52,143 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-14 19:59:52,143 - INFO - Hardware simulado finalizado.
+2025-10-14 19:59:56,919 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 19:59:56,938 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:00:01,982 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:00:12,231 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:00:17,353 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:00:17,353 - INFO - Hardware simulado finalizado.
+2025-10-14 20:00:17,415 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:00:17,447 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:00:19,075 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-14 20:00:19,075 - INFO - Hardware simulado finalizado.
+2025-10-14 20:04:13,298 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:04:13,317 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:04:16,676 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:04:40,435 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:04:40,949 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:04:40,949 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:04:40,952 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:04:41,457 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:04:41,457 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:04:50,315 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:05:04,020 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:05:04,020 - INFO - Hardware simulado finalizado.
+2025-10-14 20:05:04,069 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:05:04,104 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:05:12,324 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:05:33,664 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:05:34,166 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:05:34,166 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:05:34,172 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:05:34,674 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:05:34,674 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:05:52,054 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:05:54,251 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:05:54,251 - INFO - Hardware simulado finalizado.
+2025-10-14 20:05:54,302 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:05:54,330 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:05:58,224 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:06:10,610 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:06:12,090 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:06:12,090 - INFO - Hardware simulado finalizado.
+2025-10-14 20:06:12,129 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:06:12,152 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:06:16,189 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:07:42,581 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:07:44,117 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:07:44,117 - INFO - Hardware simulado finalizado.
+2025-10-14 20:07:44,152 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:07:44,175 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:07:50,591 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-14 20:07:50,591 - INFO - Hardware simulado finalizado.
+2025-10-14 20:09:52,444 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:09:52,461 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:09:55,511 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:10:23,663 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:10:24,164 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:10:24,164 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:10:47,824 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:11:09,489 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:11:09,489 - INFO - Hardware simulado finalizado.
+2025-10-14 20:11:09,528 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:11:09,551 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:12:23,602 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:12:33,809 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:14:25,825 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:14:25,825 - INFO - Hardware simulado finalizado.
+2025-10-14 20:14:25,881 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:14:25,900 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:14:35,996 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:14:59,455 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:15:20,881 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:15:20,881 - INFO - Hardware simulado finalizado.
+2025-10-14 20:15:20,922 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:15:20,942 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:15:25,426 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:16:16,415 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:16:20,283 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:16:20,283 - INFO - Hardware simulado finalizado.
+2025-10-14 20:16:20,334 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:16:20,355 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:19:34,522 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-14 20:19:34,522 - INFO - Hardware simulado finalizado.
+2025-10-14 20:19:38,674 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:19:38,696 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:19:42,139 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:20:50,057 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:20:50,562 - INFO - Gaveta 1 aberta por João Silva (1234)
+2025-10-14 20:20:50,562 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-10-14 20:20:50,585 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:20:51,087 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:20:51,087 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:20:51,087 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:20:51,594 - INFO - Gaveta 3 aberta por João Silva (1234)
+2025-10-14 20:20:51,594 - INFO - Possível retirada de peças da Gaveta 3 por João Silva
+2025-10-14 20:20:51,613 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:20:52,115 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:20:52,115 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:20:59,955 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:22:55,887 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:22:55,887 - INFO - Hardware simulado finalizado.
+2025-10-14 20:22:55,952 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:22:55,979 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:30:42,838 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-14 20:30:42,838 - INFO - Hardware simulado finalizado.
+2025-10-14 20:30:47,225 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:30:47,247 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:30:50,759 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:31:14,883 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:31:15,384 - INFO - Gaveta 1 aberta por João Silva (1234)
+2025-10-14 20:31:15,384 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-10-14 20:31:15,397 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:31:15,904 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:31:15,904 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:31:15,904 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:31:16,412 - INFO - Gaveta 3 aberta por João Silva (1234)
+2025-10-14 20:31:16,412 - INFO - Possível retirada de peças da Gaveta 3 por João Silva
+2025-10-14 20:31:16,419 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:31:16,919 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:31:16,919 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:31:24,570 - INFO - Gaveta 1 fechada
+2025-10-14 20:31:24,570 - INFO - Possível devolução de peças da Gaveta 1
+2025-10-14 20:31:24,892 - INFO - Gaveta 2 fechada
+2025-10-14 20:31:24,892 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-14 20:31:25,220 - INFO - Gaveta 3 fechada
+2025-10-14 20:31:25,220 - INFO - Possível devolução de peças da Gaveta 3
+2025-10-14 20:31:25,528 - INFO - Gaveta 4 fechada
+2025-10-14 20:31:25,528 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-14 20:31:32,631 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:31:33,132 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:31:33,132 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:31:33,163 - INFO - Devolução registrada: 1 unidades para retirada 34
+2025-10-14 20:31:42,242 - INFO - Gaveta 2 fechada
+2025-10-14 20:31:42,242 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-14 20:31:59,022 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:32:00,383 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:32:00,383 - INFO - Hardware simulado finalizado.
+2025-10-14 20:32:00,436 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:32:00,463 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:32:05,577 - WARNING - Cartão inválido/não autorizado: 1324
+2025-10-14 20:32:09,444 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:32:42,122 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:32:42,624 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:32:42,624 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:32:42,641 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:32:43,145 - INFO - Gaveta 3 aberta por João Silva (1234)
+2025-10-14 20:32:43,145 - INFO - Possível retirada de peças da Gaveta 3 por João Silva
+2025-10-14 20:32:43,165 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:32:43,666 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:32:43,666 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:32:57,002 - INFO - Gaveta 2 fechada
+2025-10-14 20:32:57,002 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-14 20:32:57,309 - INFO - Gaveta 3 fechada
+2025-10-14 20:32:57,309 - INFO - Possível devolução de peças da Gaveta 3
+2025-10-14 20:32:57,629 - INFO - Gaveta 4 fechada
+2025-10-14 20:32:57,629 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-14 20:33:19,706 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:33:29,917 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:33:29,917 - INFO - Hardware simulado finalizado.
+2025-10-14 20:33:29,970 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:33:29,997 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:33:43,899 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:34:13,429 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:34:36,582 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:34:36,582 - INFO - Hardware simulado finalizado.
+2025-10-14 20:34:36,649 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:34:36,661 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:36:26,628 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:36:59,970 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:37:00,471 - INFO - Gaveta 1 aberta por João Silva (1234)
+2025-10-14 20:37:00,471 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-10-14 20:37:00,489 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:37:00,992 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 20:37:00,992 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 20:37:01,013 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:37:01,513 - INFO - Gaveta 3 aberta por João Silva (1234)
+2025-10-14 20:37:01,513 - INFO - Possível retirada de peças da Gaveta 3 por João Silva
+2025-10-14 20:37:01,533 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:37:02,034 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-14 20:37:02,034 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-14 20:37:29,018 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:37:56,362 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:37:56,362 - INFO - Hardware simulado finalizado.
+2025-10-14 20:37:56,439 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:37:56,463 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:38:01,128 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:38:49,596 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:38:51,071 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:38:51,071 - INFO - Hardware simulado finalizado.
+2025-10-14 20:38:51,118 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:38:51,137 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:40:13,133 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:41:02,186 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:46:41,935 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:46:41,935 - INFO - Hardware simulado finalizado.
+2025-10-14 20:46:41,989 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:46:42,013 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:47:06,674 - WARNING - Gaveta 1 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-14 20:47:06,674 - WARNING - Gaveta 2 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-14 20:47:06,674 - WARNING - Gaveta 3 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-14 20:47:06,674 - WARNING - Gaveta 4 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2025-10-14 20:47:16,684 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:47:34,177 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:47:36,530 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:47:36,530 - INFO - Hardware simulado finalizado.
+2025-10-14 20:47:36,579 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:47:36,600 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:47:41,595 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:47:57,445 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:49:10,188 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:49:10,188 - INFO - Hardware simulado finalizado.
+2025-10-14 20:49:10,248 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:49:10,273 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:49:19,071 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:49:50,800 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:50:01,388 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:50:01,388 - INFO - Hardware simulado finalizado.
+2025-10-14 20:50:01,460 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:50:01,478 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:50:05,761 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 20:50:59,744 - INFO - Usuário deslogado por inatividade.
+2025-10-14 20:51:02,195 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 20:51:02,195 - INFO - Hardware simulado finalizado.
+2025-10-14 20:51:02,254 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:51:02,274 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:59:48,180 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-14 20:59:48,180 - INFO - Hardware simulado finalizado.
+2025-10-14 20:59:51,079 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 20:59:51,103 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-14 20:59:54,767 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 21:00:12,763 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 21:00:13,268 - INFO - Gaveta 1 aberta por João Silva (1234)
+2025-10-14 21:00:13,268 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-10-14 21:00:13,312 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 21:00:13,818 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-14 21:00:13,818 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-14 21:00:13,834 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 21:00:14,336 - INFO - Gaveta 3 aberta por João Silva (1234)
+2025-10-14 21:00:14,336 - INFO - Possível retirada de peças da Gaveta 3 por João Silva
+2025-10-14 21:00:23,873 - INFO - Retirada registrada: 1 unidades da peça 5 por usuário 1234
+2025-10-14 21:00:25,661 - INFO - Gaveta 3 fechada
+2025-10-14 21:00:25,661 - INFO - Possível devolução de peças da Gaveta 3
+2025-10-14 21:00:27,415 - INFO - Retirada registrada: 1 unidades da peça 1 por usuário 1234
+2025-10-14 21:00:29,710 - INFO - Gaveta 1 fechada
+2025-10-14 21:00:29,710 - INFO - Possível devolução de peças da Gaveta 1
+2025-10-14 21:00:39,043 - INFO - Gaveta 2 fechada
+2025-10-14 21:00:39,043 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-14 21:00:50,269 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 21:00:50,781 - INFO - Gaveta 1 aberta por João Silva (1234)
+2025-10-14 21:00:50,781 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2025-10-14 21:00:50,794 - INFO - Devolução registrada: 1 unidades para retirada 36
+2025-10-14 21:00:56,227 - INFO - Gaveta 1 fechada
+2025-10-14 21:00:56,227 - INFO - Possível devolução de peças da Gaveta 1
+2025-10-14 21:01:00,287 - INFO - Cartão validado: João Silva (1234)
+2025-10-14 21:01:00,789 - INFO - Gaveta 3 aberta por João Silva (1234)
+2025-10-14 21:01:00,789 - INFO - Possível retirada de peças da Gaveta 3 por João Silva
+2025-10-14 21:01:00,799 - INFO - Devolução registrada: 1 unidades para retirada 35
+2025-10-14 21:01:03,291 - INFO - Gaveta 3 fechada
+2025-10-14 21:01:03,291 - INFO - Possível devolução de peças da Gaveta 3
+2025-10-14 21:01:12,874 - INFO - Usuário deslogado por inatividade.
+2025-10-14 21:01:26,928 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-14 21:01:26,928 - INFO - Hardware simulado finalizado.
+2025-10-14 21:01:26,984 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-14 21:01:27,005 - INFO - Sistema inicializado com usuários de exemplo.

@@ -8,10 +8,10 @@ CORES = {
     "texto_claro": "#ecf0f1",        # Quase branco para textos em fundos escuros
     "texto_escuro": "#2c3e50",        # Azul escuro para textos em fundos claros
     "borda": "#7f8c8d",             # Cinza para bordas sutis
-    "destaque": "#3498db",          # Azul mais claro para hover ou seleção
-    "sucesso": "#2ecc71",            # Verde para botões de confirmação
-    "alerta": "#f39c12",             # Laranja para alertas
-    "cancelar": "#e74c3c",            # Vermelho para botões de sair/cancelar (NOVO)
+    "destaque": "#389adb",          # Azul mais claro para hover ou seleção
+    "sucesso": "#31ce72",            # Verde para botões de confirmação
+    "alerta": "#f0b962",             # Laranja para alertas
+    "cancelar": "#f16e5f",            # Vermelho para botões de sair/cancelar (NOVO)
     "cancelar_hover": "#c0392b" 
 }
 
