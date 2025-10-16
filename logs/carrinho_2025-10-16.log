@@ -1,0 +1,58 @@
+2025-10-16 20:17:12,926 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:17:12,945 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-16 20:17:19,807 - INFO - Cartão validado: João Silva (1234)
+2025-10-16 20:17:39,981 - INFO - Cartão validado: João Silva (1234)
+2025-10-16 20:17:40,482 - INFO - Gaveta 4 aberta por João Silva (1234)
+2025-10-16 20:17:40,483 - INFO - Possível retirada de peças da Gaveta 4 por João Silva
+2025-10-16 20:17:40,513 - INFO - Retirada registrada: 1 unidades da peça 9 por usuário 1234
+2025-10-16 20:17:40,514 - INFO - Cartão validado: João Silva (1234)
+2025-10-16 20:17:41,015 - INFO - Gaveta 2 aberta por João Silva (1234)
+2025-10-16 20:17:41,016 - INFO - Possível retirada de peças da Gaveta 2 por João Silva
+2025-10-16 20:17:41,049 - WARNING - Estoque insuficiente para peça 3: disponível 0
+2025-10-16 20:18:03,072 - INFO - Gaveta 2 fechada
+2025-10-16 20:18:03,073 - INFO - Possível devolução de peças da Gaveta 2
+2025-10-16 20:18:03,401 - INFO - Gaveta 4 fechada
+2025-10-16 20:18:03,401 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-16 20:18:08,044 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-16 20:18:08,044 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-16 20:18:08,044 - INFO - Hardware simulado finalizado.
+2025-10-16 20:18:08,085 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:18:08,107 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-16 20:18:09,664 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-16 20:18:09,664 - INFO - Hardware simulado finalizado.
+2025-10-16 20:19:32,867 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:19:32,887 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-16 20:19:37,006 - INFO - Cartão validado: João Silva (1234)
+2025-10-16 20:19:56,108 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-16 20:19:56,108 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-16 20:19:56,108 - INFO - Hardware simulado finalizado.
+2025-10-16 20:19:56,163 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:19:56,186 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-16 20:19:57,286 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-16 20:19:57,286 - INFO - Hardware simulado finalizado.
+2025-10-16 20:28:24,061 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:28:48,090 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:30:30,546 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:31:31,465 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:35:44,705 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:35:57,355 - INFO - Conectado ao MySQL com sucesso.
+2025-10-16 20:35:57,361 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:35:57,368 - INFO - Usuário João Silva inserido/atualizado no MySQL.
+2025-10-16 20:35:57,375 - INFO - Usuário Maria Santos inserido/atualizado no MySQL.
+2025-10-16 20:35:57,382 - INFO - Usuário Pedro Costa inserido/atualizado no MySQL.
+2025-10-16 20:35:57,389 - INFO - Usuário Ana Lima inserido/atualizado no MySQL.
+2025-10-16 20:35:57,389 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-16 20:36:01,593 - INFO - Cartão validado: João Silva (1234)
+2025-10-16 20:36:18,992 - INFO - Usuário João Silva deslogou manualmente.
+2025-10-16 20:36:18,993 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-16 20:36:18,993 - INFO - Hardware simulado finalizado.
+2025-10-16 20:36:19,025 - INFO - Conectado ao MySQL com sucesso.
+2025-10-16 20:36:19,044 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-16 20:36:19,052 - INFO - Usuário João Silva inserido/atualizado no MySQL.
+2025-10-16 20:36:19,058 - INFO - Usuário Maria Santos inserido/atualizado no MySQL.
+2025-10-16 20:36:19,065 - INFO - Usuário Pedro Costa inserido/atualizado no MySQL.
+2025-10-16 20:36:19,072 - INFO - Usuário Ana Lima inserido/atualizado no MySQL.
+2025-10-16 20:36:19,072 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-16 20:36:20,819 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-16 20:36:20,819 - INFO - Hardware simulado finalizado.
+2025-10-16 20:36:20,819 - INFO - Conexão MySQL fechada.
