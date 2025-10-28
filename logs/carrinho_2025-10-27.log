@@ -1,0 +1,16 @@
+2025-10-27 21:16:48,759 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2025-10-27 21:16:48,772 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-27 21:17:05,147 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-27 21:17:05,148 - INFO - Hardware simulado finalizado.
+2025-10-27 21:17:09,998 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-27 21:17:13,365 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-27 21:17:19,808 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-27 21:17:19,814 - INFO - Gaveta 4 aberta por Silvio (F2C4C820)
+2025-10-27 21:17:19,814 - INFO - Possível retirada de peças da Gaveta 4 por Silvio
+2025-10-27 21:17:20,096 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-27 21:17:26,580 - INFO - Gaveta 4 fechada
+2025-10-27 21:17:26,580 - INFO - Possível devolução de peças da Gaveta 4
+2025-10-27 21:17:38,432 - INFO - Usuário deslogado por inatividade.
+2025-10-27 21:17:41,909 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-27 21:17:44,438 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-27 21:18:46,422 - INFO - Nenhum usuário autenticado. Encerrando o sistema.

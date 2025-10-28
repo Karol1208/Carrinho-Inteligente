@@ -1,0 +1,38 @@
+2025-10-24 21:18:18,308 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-24 21:18:30,956 - INFO - Cartão validado: Carlos (F2980B20)
+2025-10-24 21:18:41,099 - INFO - Usuário deslogado por inatividade.
+2025-10-24 21:18:48,074 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-24 21:18:51,086 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-24 21:18:52,832 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2025-10-24 21:19:03,449 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-24 21:19:13,937 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-24 21:19:23,193 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-24 21:19:23,199 - INFO - Gaveta 4 aberta por Silvio (F2C4C820)
+2025-10-24 21:19:23,200 - INFO - Possível retirada de peças da Gaveta 4 por Silvio
+2025-10-24 21:19:23,594 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:19:33,642 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:19:36,225 - INFO - Usuário Silvio deslogou manualmente.
+2025-10-24 21:19:36,226 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-24 21:19:38,897 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-24 21:19:43,643 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:19:44,794 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-24 21:19:53,643 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:19:57,557 - INFO - Cartão validado: Silvio (F2C4C820)
+2025-10-24 21:19:57,562 - INFO - Gaveta 4 aberta por Silvio (F2C4C820)
+2025-10-24 21:19:57,563 - INFO - Possível retirada de peças da Gaveta 4 por Silvio
+2025-10-24 21:19:59,036 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:03,644 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:07,478 - INFO - Usuário deslogado por inatividade.
+2025-10-24 21:20:09,083 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:13,645 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:19,135 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:23,646 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:29,185 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:33,650 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:39,233 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:43,652 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:49,281 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:49,696 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2025-10-24 21:20:52,522 - INFO - Sistema inicializado com usuários de exemplo.
+2025-10-24 21:20:53,652 - WARNING - Status inconsistente - Gaveta 4: HW=False, SW=True
+2025-10-24 21:20:54,183 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
