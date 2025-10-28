@@ -11,6 +11,19 @@ O sistema permite a autenticação de usuários (professores e alunos) através 
 
 ---
 
+## 🗃️ Banco de Dados MySQL
+
+1. **Instale o MySQL** (se ainda não tiver):
+   - [Download MySQL](https://dev.mysql.com/downloads/)
+
+2. **Configure o arquivo `database/init_db.py`** com seu usuário e senha MySQL.
+
+3. **Rode o script de inicialização**:
+   ```bash
+   python database/init_db.py
+   
+---
+
 ## ✨ Funcionalidades Principais
 
 * **Autenticação Dupla:** Login via tags RFID ou teclado matricial (PIN de 4 dígitos).
