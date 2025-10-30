@@ -18,11 +18,21 @@ DIYables_Keypad keypad = DIYables_Keypad(makeKeymap(keys), rowPins, colPins, ROW
 int buzzer = 11;
 String inputPin = "";
 
+// Pino da solenoide
+#define SOLENOIDE_PIN 21 
+const int TEMPO_ACIONAMENTO_SOLENOIDE = 5000; // 2 segundos
+
 void setup() {
   Serial.begin(9600);
   SPI.begin();
   mfrc522.PCD_Init();
   pinMode(buzzer, OUTPUT);
+
+  // Configurar o pino da solenoide
+  pinMode(SOLENOIDE_PIN, OUTPUT);
+  // Garante que o relé comece DESLIGADO (solenoide desenergizada, haste retraída)
+  digitalWrite(SOLENOIDE_PIN, HIGH); 
+  
   Serial.println("ARDUINO_READY");
 }
 
@@ -64,15 +74,22 @@ void loop() {
 }
 
 void processCommand(String cmd) {
-  cmd.trim(); // Remove espaços em branco
+  cmd.trim(); 
   
   if (cmd.startsWith("ABRIR:")) {
     int drawerId = cmd.substring(6).toInt();
-    // Lógica para acionar o relé/solenoide da gaveta 'drawerId'
-    Serial.print("ACK: Gaveta ");
+    
+    Serial.print("ACK: Comando para gaveta ");
     Serial.print(drawerId);
-    Serial.println(" acionada.");
+    Serial.println(" recebido. Acionando trava.");
     tone(buzzer, 1200, 200);
+
+    // Lógica de acionamento da solenoide
+    Serial.println("Destravando o carrinho...");
+    digitalWrite(SOLENOIDE_PIN, LOW);   // LIGA o relé -> Energiza a solenoide -> Haste avança
+    delay(TEMPO_ACIONAMENTO_SOLENOIDE); // Mantém a haste avançada por 2 segundos
+    digitalWrite(SOLENOIDE_PIN, HIGH);  // DESLIGA o relé -> Corta a energia -> Mola retrai a haste
+    Serial.println("Carrinho travado.");
   }
   
   // --- NOVO CÓDIGO AQUI ---
@@ -92,9 +109,7 @@ void processCommand(String cmd) {
       Serial.print(" alterado para ");
       Serial.println(color);
       
-      // **AÇÃO:** Adicione aqui a sua lógica para acender os LEDs
-      // de acordo com a gaveta e a cor recebida.
-      // Ex: if(drawerId == 1 && color == "verde") { digitalWrite(LED_GAVETA1_VERDE, HIGH); }
+      
     }
   }
 }
