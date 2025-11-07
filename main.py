@@ -10,7 +10,7 @@ from utils.config import setup_logging
 
 # --- Seção de Configuração do Hardware ---
 MODO_HARDWARE = "real"  # Mude para "simulador" para testar sem o Arduino
-PORTA_SERIAL = "COM4"   # Defina a porta COM correta do seu Arduino
+PORTA_SERIAL = "COM9"   # Defina a porta COM correta do seu Arduino
 # -----------------------------------------
 
 # Versão NOVA e CORRIGIDA
