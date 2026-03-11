@@ -1,0 +1,10 @@
+2026-03-11 20:23:50,943 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-11 20:23:50,984 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-11 20:23:55,544 - INFO - Cartão/Sessão validado: João Silva (1234)
+2026-03-11 20:24:03,359 - INFO - Usuário João Silva deslogou manualmente.
+2026-03-11 20:24:03,360 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-11 20:24:03,394 - INFO - Hardware simulado finalizado.
+2026-03-11 20:24:03,430 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-11 20:24:03,474 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-11 20:24:04,539 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2026-03-11 20:24:04,540 - INFO - Hardware simulado finalizado.
