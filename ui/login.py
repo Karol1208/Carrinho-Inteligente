@@ -83,19 +83,24 @@ class TelaLogin:
              fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=5)
 
         self.entry_codigo = tk.Entry(self.frame_texto_prompt, font=FONTES["botao"], justify="center", width=25,
-                                 bg=CORES["fundo_tabela"], fg=CORES["texto_escuro"], relief="flat")
-        self.entry_codigo.pack(pady=10, ipady=8)
+                                 bg=CORES["fundo_tabela"], fg=CORES["texto_escuro"], relief="flat", insertbackground=CORES["texto_escuro"])
+        self.entry_codigo.pack(pady=15, ipady=12)
         self.entry_codigo.bind("<Return>", self.validar_login_manual)
 
         # Botão para alternar entre RFID e entrada manual
         self.btn_alternar = tk.Button(main_frame, text="", font=FONTES["corpo"], command=self.alternar_modo_entrada,
                                   relief="flat", bg=CORES["fundo_principal"], fg=CORES["destaque"],
-                                  activebackground=CORES["fundo_principal"], activeforeground="white", borderwidth=0)
-        self.btn_alternar.pack()
+                                  activebackground=CORES["fundo_principal"], activeforeground="white", borderwidth=0, cursor="hand2")
+        self.btn_alternar.pack(pady=5)
 
         # Botão de login (só aparece no modo manual)
         self.btn_login = tk.Button(main_frame, text="ENTRAR", font=FONTES["botao"], command=self.validar_login_manual,
-                               bg=CORES["sucesso"], fg="white", relief="flat", padx=40, pady=10, borderwidth=0)
+                                bg=CORES["sucesso"], activebackground="#28b463", fg="white", activeforeground="white",
+                                relief="flat", padx=50, pady=12, borderwidth=0, cursor="hand2")
+        
+        # Hover Entrar
+        self.btn_login.bind("<Enter>", lambda e: self.btn_login.config(bg="#28b463"))
+        self.btn_login.bind("<Leave>", lambda e: self.btn_login.config(bg=CORES["sucesso"]))
 
         # Atualiza modo inicial (RFID ou manual)
         self.atualizar_modo_entrada()

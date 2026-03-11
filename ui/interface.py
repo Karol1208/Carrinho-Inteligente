@@ -66,12 +66,12 @@ class InterfaceGraficaCarrinho:
     def setup_estilos_ttk(self):
         style = ttk.Style()
         style.theme_use('clam')
-        style.configure("Treeview", background=CORES["fundo_widget"], foreground=CORES["texto_escuro"], rowheight=28, fieldbackground=CORES["fundo_widget"], font=FONTES["corpo"])
-        style.map('Treeview', background=[('selected', CORES["destaque"])])
-        style.configure("Treeview.Heading", background=CORES["fundo_secundario"], foreground=CORES["texto_claro"], font=FONTES["botao"], padding=(10, 10))
+        style.configure("Treeview", background=CORES["fundo_widget"], foreground=CORES["texto_escuro"], rowheight=35, fieldbackground=CORES["fundo_widget"], font=FONTES["corpo"], borderwidth=0)
+        style.map('Treeview', background=[('selected', CORES["destaque"])], foreground=[('selected', "#ffffff")])
+        style.configure("Treeview.Heading", background=CORES["fundo_secundario"], foreground=CORES["texto_claro"], font=FONTES["botao"], padding=(10, 15), borderwidth=0)
         style.configure('TLabel', font=FONTES["corpo"], background=CORES["fundo_widget"], foreground=CORES["texto_escuro"])
-        style.configure('TButton', font=FONTES["botao"], padding=(10, 5))
-        style.configure('TEntry', font=FONTES["corpo"])
+        style.configure('TButton', font=FONTES["botao"], padding=(10, 8), background=CORES["fundo_secundario"], foreground=CORES["texto_claro"])
+        style.configure('TEntry', font=FONTES["corpo"], fieldbackground=CORES["fundo_tabela"], foreground=CORES["texto_escuro"], insertcolor=CORES["texto_escuro"])
         style.configure('LabelFrame.TLabel', font=FONTES["subtitulo"], background=CORES["fundo_widget"], foreground=CORES["texto_escuro"])
 
     def setup_interface_principal(self):
@@ -156,10 +156,10 @@ class InterfaceGraficaCarrinho:
         }
 
         for nome, texto in botoes_nav.items():
-            btn = tk.Button(sidebar, text=texto, font=FONTES["botao"], bg=CORES["fundo_secundario"], fg=CORES["texto_claro"], relief="flat", anchor="w", padx=20, pady=15, activebackground=CORES["destaque"], activeforeground=CORES["texto_claro"], command=lambda f=nome: self.mostrar_frame(f))
+            btn = tk.Button(sidebar, text=texto, font=FONTES["botao"], bg=CORES["fundo_secundario"], fg=CORES["texto_claro"], relief="flat", anchor="w", padx=20, pady=15, activebackground=CORES["destaque"], activeforeground=CORES["texto_claro"], command=lambda f=nome: self.mostrar_frame(f), cursor="hand2")
             self.botoes_sidebar[nome] = btn
             
-        btn_monitor = tk.Button(sidebar, text="Monitor de Peças Pendentes", font=FONTES["botao"], bg=CORES["fundo_secundario"], fg=CORES["alerta"], relief="flat", anchor="w", padx=20, pady=15, activebackground=CORES["destaque"], activeforeground=CORES["texto_claro"], command=self.abrir_painel_monitoramento)
+        btn_monitor = tk.Button(sidebar, text="Monitor de Peças Pendentes", font=FONTES["botao"], bg=CORES["fundo_secundario"], fg=CORES["alerta"], relief="flat", anchor="w", padx=20, pady=15, activebackground=CORES["destaque"], activeforeground=CORES["texto_claro"], command=self.abrir_painel_monitoramento, cursor="hand2")
         self.botoes_sidebar["monitor"] = btn_monitor
 
     def mostrar_frame(self, nome_frame):

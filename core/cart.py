@@ -33,7 +33,7 @@ class CarrinhoInteligenteAvancado:
             self.hardware = SimuladorHardware()
 
         # Lógica original do projeto é mantida
-        self.gavetas = {i: GavetaAvancada(i, f"Gaveta {i}") for i in range(1, 6)}
+        self.gavetas = {i: GavetaAvancada(i, f"Gaveta {i}") for i in range(1, 8)}
         self.sistema_ativo = True
         self.modo_manutencao = False
         self.alertas_ativos = []

@@ -4,6 +4,7 @@ import datetime
 from typing import List, Optional
 
 from models.entities import EventoGaveta, Peca, RetiradaPeca, UsuarioCartao
+from utils.security import hash_credencial, gerar_uuid
 
 
 class DatabaseManager:
@@ -15,11 +16,22 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
 
+        cursor.execute("PRAGMA table_info(usuarios)")
+        columns = cursor.fetchall()
+        has_hash_col = any(col[1] == 'hash_credencial' for col in columns) if columns else True
+        
+        if columns and not has_hash_col:
+            logging.info("Migração: Formatando usuários para adicionar hash_credencial.")
+            cursor.execute('DELETE FROM retiradas_pecas WHERE status IN ("pendente", "parcial")')
+            cursor.execute('DROP TABLE IF EXISTS eventos')
+            cursor.execute('DROP TABLE IF EXISTS usuarios')
+
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS usuarios (
                 id TEXT PRIMARY KEY,
                 nome TEXT NOT NULL,
                 cargo TEXT NOT NULL,
+                hash_credencial TEXT NOT NULL,
                 perfil TEXT NOT NULL DEFAULT 'aluno',
                 ativo BOOLEAN NOT NULL DEFAULT 1,
                 data_cadastro TEXT NOT NULL
@@ -84,36 +96,138 @@ class DatabaseManager:
             ''', (i, f'Gaveta {i}', f'Conteúdo da Gaveta {i}', 1))
 
         # Inserir peças exemplo
+                # Inserir peças conforme tabela atualizada (Gavetas 01 a 07)
         pecas_exemplo = [
-            ("Multímetro - ET1002", "Multímetro", "Medição Elétrica", 1, 12, "Diagnóstico"),
-            ("Multímetro - ET1005", "Multímetro", "Medição Elétrica", 1, 1, "Diagnóstico"),
-            ("Alicate Amperímetro e Multímetro - 10684", "Alicate", "Medição Elétrica", 2, 1, "Diagnóstico"),
-            ("Termômetro - MT 350A", "Termômetro", "Medição Térmica", 2, 1, "Diagnóstico"),
-            ("Osciloscópio", "Osciloscópio", "Medição Eletrônica", 3, 1, "Diagnóstico"),
-            ("Chave T 6 mm", "Chaves", "6 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 850 mm", "Chaves", "850 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 860 mm", "Chaves", "860 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 870 mm", "Chaves", "870 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 880 mm", "Chaves", "880 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 890 mm", "Chaves", "890 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 900 mm", "Chaves", "900 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 910 mm", "Chaves", "910 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 920 mm", "Chaves", "920 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 930 mm", "Chaves", "930 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 940 mm", "Chaves", "940 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 950 mm", "Chaves", "950 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 960 mm", "Chaves", "960 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 970 mm", "Chaves", "970 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 980 mm", "Chaves", "980 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 990 mm", "Chaves", "990 mm", 4, 7, "ferramenta manual"),
-            ("Chave T 1000 mm", "Chaves", "1000 mm", 4, 7, "ferramenta manual"),
+            # GAVETA 01 – CHAVES COMBINADAS 6 A 26
+            ("CHAVE COMBINADA 6", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 7", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 8", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 9", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 10", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 11", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 12", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 13", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 14", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 15", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 16", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 17", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 18", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 19", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 20", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 21", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 22", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 23", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 24", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 25", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+            ("CHAVE COMBINADA 26", "GERAL", "Ferramenta localizada na Gaveta 01", 1, 1, "ferramenta manual"),
+
+            # GAVETA 02 – KITS DE SOQUETES E CHAVES
+            ("KIT SOQUETE SEXTAVADA /22 PEÇAS", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("KIT SOQUETE TORQUE EXTERNA", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("KIT SOQUETE TORQUE INTERNA", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("KIT CHAVE ALEN", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("CHAVE MULTIDENTADA M6", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("CHAVE MULTIDENTADA M8", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("CHAVE MULTIDENTADA M10", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+            ("CHAVE MULTIDENTADA M12", "GERAL", "Ferramenta localizada na Gaveta 02", 2, 1, "ferramenta manual"),
+
+            # GAVETA 03 – CHAVES BIELA 8 A 19
+            ("CHAVE BIELA 8", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 9", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 10", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 11", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 12", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 13", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 14", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 15", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 16", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 17", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 18", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+            ("CHAVE BIELA 19", "GERAL", "Ferramenta localizada na Gaveta 03", 3, 1, "ferramenta manual"),
+
+            # GAVETA 04 – CHAVES ESTRIADAS 6 A 36
+            ("CHAVE ESTRIADA 6", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 7", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 8", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 9", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 10", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 11", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 12", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 13", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 14", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 15", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 16", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 17", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 18", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 19", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 20", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 21", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 22", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 23", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 24", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 25", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 26", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 27", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 28", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 29", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 30", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 31", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 32", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 33", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 34", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 35", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+            ("CHAVE ESTRIADA 36", "GERAL", "Ferramenta localizada na Gaveta 04", 4, 1, "ferramenta manual"),
+
+            # GAVETA 05 – ALICATES E CHAVES DE FENDA/PHILIPS
+            ("ALICATE BICO RETO", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("ALICATE BICO TELEFONE", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("ALICATE ANEL ELASTICO EXTERNO", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("ALICATE DE CORTE", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("ALICATE UNIVERSAL", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("ALICATE BOMBA D´ÁGUA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("CHAVE DE FENDA CURTA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("CHAVE DE FENDA MÉDIA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("CHAVE DE FENDA LONGA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("CHAVE DE PHILIPS CURTA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("CHAVE DE PHILIPS MÉDIA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+            ("CHAVE DE PHILIPS LONGA", "GERAL", "Ferramenta localizada na Gaveta 05", 5, 1, "ferramenta manual"),
+
+            # GAVETA 06 – FERRAMENTAS ESPECIAIS
+            ("SACA ROLAMENTO", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("SACA PIVÔ", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("ALICATE DE ANÉIS", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("CINTA SACA FILTRO", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("SACA POLIA", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("ALICATE DE ABRAÇADEIRA", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("BRUNIDOR", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+            ("TRANSFERIDOR DE GRAU", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 06", 6, 1, "ferramenta especial"),
+
+            # GAVETA 07 – FERRAMENTAS ESPECIAIS
+            ("MARRETA DE 2 KG", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
+            ("MARRETA DE TECNIL", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
+            ("MARTELO", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
+            ("GARRA COLHEDORA DE MOLA", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
+            ("MEDIDOR DE ESPESSURA", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
+            ("SACA ARTICULAÇÃO", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
+            ("FERRAMENTA DE TRAVAR POLIA UNIVERSAL", "FERRAMENTAS ESPECIAIS", "Ferramenta localizada na Gaveta 07", 7, 1, "ferramenta especial"),
         ]
+
 
         for nome, categoria, descricao, gaveta_id, qtd, tipo in pecas_exemplo:
             cursor.execute('''
                 INSERT OR IGNORE INTO pecas (nome, categoria, descricao, gaveta_id, quantidade_disponivel, tipo)
                 VALUES (?, ?, ?, ?, ?, ?)
             ''', (nome, categoria, descricao, gaveta_id, qtd, tipo))
+
+        cursor.execute('SELECT COUNT(*) FROM usuarios')
+        if cursor.fetchone()[0] == 0:
+            admin_id = gerar_uuid()
+            admin_hash = hash_credencial('1234')
+            cursor.execute('''
+                INSERT INTO usuarios (id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (admin_id, 'Admin Padrão', 'Administrador', admin_hash, 'admin', 1, datetime.datetime.now().isoformat()))
+            logging.info("Admin padrão criado. PIN: 1234")
 
         conn.commit()
         conn.close()
@@ -122,35 +236,58 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT OR REPLACE INTO usuarios (id, nome, cargo, perfil, ativo, data_cadastro)
-            VALUES (?, ?, ?, ?, ?, ?)
-        ''', (usuario.id, usuario.nome, usuario.cargo, usuario.perfil, int(usuario.ativo),
+            INSERT OR REPLACE INTO usuarios (id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (usuario.id, usuario.nome, usuario.cargo, usuario.hash_credencial, usuario.perfil, int(usuario.ativo),
               usuario.data_cadastro or datetime.datetime.now().isoformat()))
+        conn.commit()
+        conn.close()
+
+    def atualizar_dados_usuario(self, usuario_id: str, nome: str, cargo: str, perfil: str):
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('''
+            UPDATE usuarios SET nome = ?, cargo = ?, perfil = ?
+            WHERE id = ?
+        ''', (nome, cargo, perfil, usuario_id))
         conn.commit()
         conn.close()
 
     def obter_usuario_por_id(self, usuario_id: str) -> Optional[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
+        cursor.execute('SELECT id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
         result = cursor.fetchone()
         conn.close()
         if result:
             return UsuarioCartao(
                 id=result[0], nome=result[1], cargo=result[2],
-                perfil=result[3], ativo=bool(result[4]), data_cadastro=result[5]
+                hash_credencial=result[3], perfil=result[4], ativo=bool(result[5]), data_cadastro=result[6]
+            )
+        return None
+
+    def obter_usuario_por_hash(self, hash_credencial: str) -> Optional[UsuarioCartao]:
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('SELECT id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro FROM usuarios WHERE hash_credencial = ? AND ativo = 1', (hash_credencial,))
+        result = cursor.fetchone()
+        conn.close()
+        if result:
+            return UsuarioCartao(
+                id=result[0], nome=result[1], cargo=result[2],
+                hash_credencial=result[3], perfil=result[4], ativo=bool(result[5]), data_cadastro=result[6]
             )
         return None
 
     def listar_usuarios(self) -> List[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE ativo = 1')
+        cursor.execute('SELECT id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro FROM usuarios WHERE ativo = 1')
         results = cursor.fetchall()
         conn.close()
         return [UsuarioCartao(
-            id=row[0], nome=row[1], cargo=row[2], perfil=row[3],
-            ativo=bool(row[4]), data_cadastro=row[5]
+            id=row[0], nome=row[1], cargo=row[2], hash_credencial=row[3], perfil=row[4],
+            ativo=bool(row[5]), data_cadastro=row[6]
         ) for row in results]
 
     def registrar_evento(self, evento: EventoGaveta):
@@ -166,10 +303,13 @@ class DatabaseManager:
     def obter_historico(self, limite=100) -> List[EventoGaveta]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
+        data_limite = (datetime.datetime.now() - datetime.timedelta(days=30)).isoformat()
         cursor.execute('''
             SELECT gaveta_id, usuario_id, acao, timestamp, sucesso
-            FROM eventos ORDER BY timestamp DESC LIMIT ?
-        ''', (limite,))
+            FROM eventos
+            WHERE timestamp >= ?
+            ORDER BY timestamp DESC LIMIT ?
+        ''', (data_limite, limite))
         results = cursor.fetchall()
         conn.close()
         return [EventoGaveta(
