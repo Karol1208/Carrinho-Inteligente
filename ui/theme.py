@@ -1,5 +1,5 @@
 
-# Versão NOVA E CORRIGIDA (Cores originais claras)
+# Versão NOVA E CORRIGIDA
 CORES = {
     "fundo_principal": "#2c3e50",    # Azul escuro (fundo)
     "fundo_secundario": "#34495e", # Azul um pouco mais claro (sidebar, cabeçalhos)
