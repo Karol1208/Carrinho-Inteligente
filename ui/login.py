@@ -117,16 +117,6 @@ class TelaLogin:
             self.frame_rfid_prompt.pack_forget()
             self.frame_texto_prompt.pack(pady=10)
             self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
-    def atualizar_modo_entrada(self):
-        if self.modo_rfid:
-            self.frame_texto_prompt.pack_forget()
-            self.frame_rfid_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Digitar o Código")
-            self.btn_login.pack_forget()
-        else:
-            self.frame_rfid_prompt.pack_forget()
-            self.frame_texto_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
             self.btn_login.pack(pady=20)
             self.entry_codigo.focus()
 

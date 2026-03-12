@@ -8,15 +8,15 @@ from dataclasses import dataclass
 from database.manager import DatabaseManager
 from models.entities import UsuarioCartao, EventoGaveta, Peca, RetiradaPeca
 from core.drawer import GavetaAvancada
+from hardware.arduino import HardwareArduino
 from hardware.simulator import SimuladorHardware
-from hardware.arduino import HardwareArduino # Classe que criamos para o Arduino
-from hardware.simulator import SimuladorHardware
+from utils.config import Config
 
 
 
 class CarrinhoInteligenteAvancado:
     # Versão NOVA e CORRIGIDA
-    def __init__(self, db_path: str = 'carrinho.db', modo_hardware: str = 'simulador', porta_serial: Optional[str] = None):
+    def __init__(self, db_path: str = Config.DB_PATH, modo_hardware: str = Config.MODO_HARDWARE, porta_serial: Optional[str] = Config.PORTA_SERIAL):
         """
         Inicializa o carrinho, com seleção de hardware.
         """

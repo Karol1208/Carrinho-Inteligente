@@ -1,6 +1,7 @@
 import serial
 import time
 import threading
+import logging
 
 class HardwareArduino:
     def __init__(self, port, baud_rate=9600):
@@ -9,13 +10,13 @@ class HardwareArduino:
         self.is_running = False
         try:
             self.serial_port = serial.Serial(port, baud_rate, timeout=1)
-            print(f"Conectado ao Arduino na porta {port}.")
+            logging.info(f"Conectado ao Arduino na porta {port}.")
             time.sleep(2) # Espera o Arduino reiniciar e enviar "ARDUINO_READY"
             self.is_running = True
             self.thread = threading.Thread(target=self._read_from_port, daemon=True)
             self.thread.start()
         except serial.SerialException as e:
-            print(f"Erro ao conectar com o Arduino: {e}")
+            logging.error(f"Erro ao conectar com o Arduino: {e}")
             self.is_running = False
 
     def _read_from_port(self):
@@ -70,4 +71,4 @@ class HardwareArduino:
             self.thread.join(timeout=1)
         if self.serial_port and self.serial_port.is_open:
             self.serial_port.close()
-            print("Conexão com Arduino finalizada.")
+            logging.info("Conexão com Arduino finalizada.")

@@ -12,6 +12,7 @@ from ui.abas.aba_principal import AbaPrincipal
 from ui.abas.aba_usuarios import AbaUsuarios
 from ui.abas.aba_inventario import AbaInventario
 from ui.abas.aba_historico import AbaHistorico
+from utils.config import Config
 
 
 class InterfaceGraficaCarrinho:
@@ -49,7 +50,7 @@ class InterfaceGraficaCarrinho:
             self.configurar_acesso_por_perfil(None)
         # --- ADICIONE ESTAS LINHAS NO FINAL DO __init__ ---
         self.inactivity_timer_id = None
-        self.INACTIVITY_TIMEOUT = 50000  # 10 segundos em milissegundos 
+        self.INACTIVITY_TIMEOUT = Config.INACTIVITY_TIMEOUT_MS  
         #mudar depois 
 
         # Liga os "escutadores" de atividade na janela principal

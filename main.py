@@ -6,21 +6,20 @@ from core.cart import CarrinhoInteligenteAvancado
 from ui.login import TelaLogin
 from models.entities import UsuarioCartao
 from ui.interface import InterfaceGraficaCarrinho
-from utils.config import setup_logging
+from utils.config import setup_logging, Config
 
 # --- Seção de Configuração do Hardware ---
-MODO_HARDWARE = "real"  # Mude para "simulador" para testar sem o Arduino
-PORTA_SERIAL = "COM9"   # Defina a porta COM correta do seu Arduino
+# Agora as configurações são puxadas de utils.config.Config
 # -----------------------------------------
 
-# Versão NOVA e CORRIGIDA
-def inicializar_sistema_exemplo(db_path: str = 'carrinho.db') -> CarrinhoInteligenteAvancado:
+# Versão NOVA e CORRIGIDA Atualizada para usar a classe Config e setup_logging
+def inicializar_sistema_exemplo(db_path: str = Config.DB_PATH) -> CarrinhoInteligenteAvancado:
     setup_logging()
     
-    if MODO_HARDWARE == "real":
-        carrinho = CarrinhoInteligenteAvancado(db_path=db_path, modo_hardware='real', porta_serial=PORTA_SERIAL)
+    if Config.MODO_HARDWARE == "real":
+        carrinho = CarrinhoInteligenteAvancado(db_path=db_path, modo_hardware='real', porta_serial=Config.PORTA_SERIAL)
         if not carrinho.hardware or not carrinho.hardware.is_running:
-            logging.error("Falha ao conectar com o hardware na porta %s.", PORTA_SERIAL)
+            logging.error("Falha ao conectar com o hardware na porta %s.", Config.PORTA_SERIAL)
             sys.exit("Encerrando: Hardware não detectado.")
     else:
         carrinho = CarrinhoInteligenteAvancado(db_path=db_path, modo_hardware='simulador')

@@ -1,0 +1,149 @@
+2026-03-06 20:23:45,421 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:23:45,440 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:23:50,544 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:24:57,199 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:25:11,363 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:25:11,364 - INFO - Hardware simulado finalizado.
+2026-03-06 20:25:11,394 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:25:11,416 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:25:16,089 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:26:39,929 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:26:43,566 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:26:43,566 - INFO - Hardware simulado finalizado.
+2026-03-06 20:26:43,615 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:26:43,636 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:26:47,623 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:27:20,108 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:27:20,610 - INFO - Gaveta 1 aberta por João Silva (1234)
+2026-03-06 20:27:20,610 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2026-03-06 20:27:20,634 - INFO - Retirada registrada: 1 unidades da peça 1 por usuário 1234
+2026-03-06 20:27:20,636 - WARNING - Estoque insuficiente para peça 2: disponível 0
+2026-03-06 20:27:20,636 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:27:21,137 - INFO - Gaveta 5 aberta por João Silva (1234)
+2026-03-06 20:27:21,137 - INFO - Possível retirada de peças da Gaveta 5 por João Silva
+2026-03-06 20:27:21,162 - INFO - Retirada registrada: 1 unidades da peça 75 por usuário 1234
+2026-03-06 20:27:42,358 - INFO - Usuário João Silva deslogou manualmente.
+2026-03-06 20:27:42,359 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:27:42,359 - INFO - Hardware simulado finalizado.
+2026-03-06 20:27:42,416 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:27:42,439 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:27:45,983 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:28:23,567 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:28:24,068 - INFO - Gaveta 1 aberta por João Silva (1234)
+2026-03-06 20:28:24,068 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2026-03-06 20:28:24,078 - INFO - Devolução registrada: 1 unidades para retirada 23
+2026-03-06 20:29:42,669 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:30:45,508 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:30:45,508 - INFO - Hardware simulado finalizado.
+2026-03-06 20:30:45,560 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:30:45,589 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:30:49,760 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:31:41,405 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:31:41,906 - INFO - Gaveta 5 aberta por João Silva (1234)
+2026-03-06 20:31:41,906 - INFO - Possível retirada de peças da Gaveta 5 por João Silva
+2026-03-06 20:31:41,929 - INFO - Devolução registrada: 1 unidades para retirada 24
+2026-03-06 20:31:49,990 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:31:50,490 - INFO - Gaveta 1 aberta por João Silva (1234)
+2026-03-06 20:31:50,490 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2026-03-06 20:31:50,533 - INFO - Devolução registrada: 1 unidades para retirada 14
+2026-03-06 20:31:58,150 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:31:58,151 - INFO - Gaveta 5 já está aberta ou bloqueada, não pode abrir novamente.
+2026-03-06 20:32:11,429 - INFO - Usuário João Silva deslogou manualmente.
+2026-03-06 20:32:11,429 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:32:11,429 - INFO - Hardware simulado finalizado.
+2026-03-06 20:32:11,488 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:32:11,511 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:32:17,198 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:32:24,542 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:32:25,042 - INFO - Gaveta 5 aberta por João Silva (1234)
+2026-03-06 20:32:25,042 - INFO - Possível retirada de peças da Gaveta 5 por João Silva
+2026-03-06 20:32:25,067 - INFO - Devolução registrada: 1 unidades para retirada 13
+2026-03-06 20:33:42,254 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:36:18,770 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:36:18,771 - INFO - Hardware simulado finalizado.
+2026-03-06 20:36:18,826 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:36:18,849 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:36:22,005 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:37:12,314 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:37:23,654 - WARNING - Gaveta 1 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:37:23,657 - WARNING - Gaveta 5 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:37:32,690 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:37:32,690 - INFO - Hardware simulado finalizado.
+2026-03-06 20:37:32,757 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:37:32,778 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:37:37,333 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:38:27,640 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:38:32,460 - WARNING - Gaveta 1 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:38:34,392 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:38:34,393 - INFO - Hardware simulado finalizado.
+2026-03-06 20:38:34,467 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:38:34,489 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:38:38,852 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:41:45,596 - WARNING - Gaveta 5 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:41:55,598 - WARNING - Gaveta 1 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:42:16,037 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:42:16,538 - INFO - Gaveta 1 aberta por João Silva (1234)
+2026-03-06 20:42:16,538 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2026-03-06 20:42:16,564 - INFO - Retirada registrada: 1 unidades da peça 5 por usuário 1234
+2026-03-06 20:42:31,526 - WARNING - Gaveta 5 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:42:34,259 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:42:34,759 - INFO - Gaveta 5 aberta por João Silva (1234)
+2026-03-06 20:42:34,760 - INFO - Possível retirada de peças da Gaveta 5 por João Silva
+2026-03-06 20:42:34,772 - INFO - Retirada registrada: 1 unidades da peça 73 por usuário 1234
+2026-03-06 20:42:59,105 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:42:59,105 - ERROR - Erro ao abrir gaveta 6: Gaveta inexistente no hardware
+2026-03-06 20:43:15,848 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:43:15,848 - ERROR - Erro ao abrir gaveta 7: Gaveta inexistente no hardware
+2026-03-06 20:43:26,649 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:43:26,649 - ERROR - Erro ao abrir gaveta 7: Gaveta inexistente no hardware
+2026-03-06 20:45:47,120 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:46:36,912 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:46:36,912 - INFO - Hardware simulado finalizado.
+2026-03-06 20:46:36,975 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:46:37,002 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:46:41,492 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:48:22,819 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:49:02,369 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:49:02,369 - INFO - Hardware simulado finalizado.
+2026-03-06 20:49:02,435 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:49:02,457 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:49:10,770 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 20:50:04,046 - INFO - Usuário deslogado por inatividade.
+2026-03-06 20:52:24,508 - WARNING - Gaveta 1 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:52:44,514 - WARNING - Gaveta 5 aberta há mais de 10 minutos por João Silva. Favor fechar!
+2026-03-06 20:58:11,244 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 20:58:11,245 - INFO - Hardware simulado finalizado.
+2026-03-06 20:58:11,300 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 20:58:11,323 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 20:58:15,951 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 21:00:20,480 - INFO - Usuário deslogado por inatividade.
+2026-03-06 21:03:30,492 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 21:03:30,492 - INFO - Hardware simulado finalizado.
+2026-03-06 21:03:30,569 - WARNING - Hardware real não conectado. Recaindo para o modo simulador.
+2026-03-06 21:03:30,595 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 21:07:11,750 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 21:08:55,375 - INFO - Usuário deslogado por inatividade.
+2026-03-06 21:32:55,667 - INFO - Iniciando em MODO SIMULADOR.
+2026-03-06 21:32:55,694 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 21:34:14,403 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 21:34:30,234 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 21:34:30,735 - INFO - Gaveta 1 aberta por João Silva (1234)
+2026-03-06 21:34:30,736 - INFO - Possível retirada de peças da Gaveta 1 por João Silva
+2026-03-06 21:34:30,772 - INFO - Retirada registrada: 1 unidades da peça 1 por usuário 1234
+2026-03-06 21:34:37,947 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 21:34:38,448 - INFO - Gaveta 5 aberta por João Silva (1234)
+2026-03-06 21:34:38,448 - INFO - Possível retirada de peças da Gaveta 5 por João Silva
+2026-03-06 21:34:38,473 - INFO - Devolução registrada: 1 unidades para retirada 26
+2026-03-06 21:34:50,709 - INFO - Cartão validado: João Silva (1234)
+2026-03-06 21:34:50,709 - INFO - Gaveta 1 já está aberta ou bloqueada, não pode abrir novamente.
+2026-03-06 21:34:56,986 - INFO - Usuário João Silva deslogou manualmente.
+2026-03-06 21:34:56,986 - INFO - Sistema encerrado pelo usuário ou por inatividade.
+2026-03-06 21:34:56,986 - INFO - Hardware simulado finalizado.
+2026-03-06 21:34:57,442 - INFO - Iniciando em MODO SIMULADOR.
+2026-03-06 21:34:57,463 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 21:34:59,728 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2026-03-06 21:34:59,728 - INFO - Hardware simulado finalizado.
+2026-03-06 21:35:15,713 - INFO - Iniciando em MODO SIMULADOR.
+2026-03-06 21:35:15,735 - INFO - Sistema inicializado com usuários de exemplo.
+2026-03-06 21:35:21,833 - INFO - Nenhum usuário autenticado. Encerrando o sistema.
+2026-03-06 21:35:21,833 - INFO - Hardware simulado finalizado.
