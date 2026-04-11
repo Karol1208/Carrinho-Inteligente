@@ -1,23 +1,127 @@
+import customtkinter as ctk
 
-# Versão NOVA E CORRIGIDA (Cores originais claras)
-CORES = {
-    "fundo_principal": "#2c3e50",    # Azul escuro (fundo)
-    "fundo_secundario": "#34495e", # Azul um pouco mais claro (sidebar, cabeçalhos)
-    "fundo_tabela": "#ecf0f1",      # Branco acinzentado (fundo de tabelas e entradas)
-    "fundo_widget": "#FFFFFF",      # Branco puro
-    "texto_claro": "#ecf0f1",        # Quase branco para textos em fundos escuros
-    "texto_escuro": "#2c3e50",        # Azul escuro para textos em fundos claros
-    "borda": "#7f8c8d",             # Cinza para bordas sutis
-    "destaque": "#389adb",          # Azul mais claro para hover ou seleção
-    "sucesso": "#31ce72",            # Verde para botões de confirmação
-    "alerta": "#f0b962",             # Laranja para alertas
-    "cancelar": "#f16e5f",            # Vermelho para botões de sair/cancelar (NOVO)
-    "cancelar_hover": "#c0392b" 
-}
+# ==========================================
+# 🎨 SISTEMA DE TEMA PREMIUM (ESTÉTICA FERRARI)
+# ==========================================
 
-FONTES = {
-    "titulo": ("Segoe UI", 24, "bold"),
-    "subtitulo": ("Segoe UI", 14, "bold"),
-    "corpo": ("Segoe UI", 11),
-    "botao": ("Segoe UI", 12, "bold")
-}
+class Theme:
+    CORES = {
+        # Base
+        "fundo_principal": "#1e272e",       # Mais profundo (quase black premium)
+        "fundo_secundario": "#2f3640",      # Sidebar moderna
+        "fundo_card": "#2d3436",            # Cards (efeito vidro escuro)
+
+        # Vidro / Glassmorphism
+        "glass": "#353d43",
+        "glass_borda": "#4b5258",
+
+        # Textos
+        "texto_claro": "#f5f6fa",
+        "texto_escuro": "#2f3640",
+        "texto_muted": "#8395a7",
+
+        # Destaques
+        "destaque": "#00a8ff",              # Azul neon premium
+        "destaque_hover": "#0097e6",
+
+        # Status
+        "sucesso": "#2ecc71",
+        "alerta": "#fbc531",
+        "cancelar": "#e84118",
+
+        # Gradientes
+        "gradiente_1": "#00a8ff",
+        "gradiente_2": "#9c88ff"
+    }
+
+    FONTES = {
+        "titulo": ("Segoe UI Variable", 28, "bold"),
+        "subtitulo": ("Segoe UI", 14, "bold"),
+        "corpo": ("Segoe UI", 11),
+        "botao": ("Segoe UI Semibold", 12),
+        "kpi": ("Segoe UI", 22, "bold")
+    }
+
+    @classmethod
+    def apply_button_style(cls, button: ctk.CTkButton, style="primary"):
+        """Aplica estilos pré-definidos a botões."""
+        if style == "primary":
+            button.configure(
+                fg_color=cls.CORES["destaque"],
+                hover_color=cls.CORES["destaque_hover"],
+                text_color=cls.CORES["texto_claro"],
+                font=cls.FONTES["botao"]
+            )
+        elif style == "secondary":
+            button.configure(
+                fg_color="transparent",
+                border_width=2,
+                border_color=cls.CORES["destaque"],
+                text_color=cls.CORES["destaque"],
+                hover_color=cls.CORES["fundo_secundario"],
+                font=cls.FONTES["botao"]
+            )
+        elif style == "danger":
+            button.configure(
+                fg_color=cls.CORES["cancelar"],
+                hover_color="#c0392b",
+                text_color="white",
+                font=cls.FONTES["botao"]
+            )
+
+    @classmethod
+    def apply_input_style(cls, entry: ctk.CTkEntry):
+        """Aplica estilos padrões a entradas de texto."""
+        entry.configure(
+            fg_color=cls.CORES["fundo_secundario"],
+            border_color=cls.CORES["glass_borda"],
+            border_width=1,
+            text_color=cls.CORES["texto_claro"],
+            placeholder_text_color=cls.CORES["texto_muted"],
+            font=cls.FONTES["corpo"]
+        )
+
+# Manter compatibilidade com imports antigos
+CORES = Theme.CORES
+FONTES = Theme.FONTES
+
+def configurar_estilos_ttk():
+    """Configura os estilos globais para componentes do tkinter padrão (como Treeview)."""
+    from tkinter import ttk
+    style = ttk.Style()
+    
+    style.theme_use("default")
+
+    # Configuração do corpo da Treeview
+    style.configure(
+        "Treeview",
+        background=Theme.CORES["fundo_card"],
+        foreground=Theme.CORES["texto_claro"],
+        rowheight=35,
+        fieldbackground=Theme.CORES["fundo_card"],
+        bordercolor="#444",
+        borderwidth=0,
+        font=Theme.FONTES["corpo"]
+    )
+
+    # Configuração do Cabeçalho da Treeview
+    style.configure(
+        "Treeview.Heading",
+        background=Theme.CORES["fundo_principal"],
+        foreground="#ffffff",
+        font=Theme.FONTES["subtitulo"],
+        relief="flat"
+    )
+
+    # Mapeamento de cores para seleção e hover
+    style.map(
+        "Treeview",
+        background=[("selected", Theme.CORES["destaque"])],
+        foreground=[("selected", "#ffffff")]
+    )
+    
+    # Estilo dos Cabeçalhos ao passar o mouse
+    style.map(
+        "Treeview.Heading",
+        background=[("active", Theme.CORES["fundo_secundario"])]
+    )

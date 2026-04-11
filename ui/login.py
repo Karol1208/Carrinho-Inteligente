@@ -1,7 +1,11 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
-from PIL import Image, ImageTk
+import customtkinter as ctk
+from tkinter import messagebox
+from PIL import Image
+import logging
 from ui.theme import CORES, FONTES
+from ui.components.glass_card import GlassCard
+from ui.components.primary_button import PrimaryButton
+from ui.components.modern_input import ModernInput
 
 class TelaLogin:
     def __init__(self, carrinho):
@@ -9,16 +13,37 @@ class TelaLogin:
         self.usuario = None
         self.perfil = None
         self.modo_rfid = True
+        self.after_tasks = []
+        self.pulse_val = 0
+        self.pulse_dir = 1
 
-        self.root = tk.Tk()
-        self.root.title("Login - CRDF")
-        self.root.geometry("600x650") 
-        self.root.configure(bg=CORES["fundo_principal"])
+        self.root = ctk.CTk()
+        self.root.title("Login - CRDF Premium")
+        self.root.geometry("600x750")
+        self.root.configure(fg_color=CORES["fundo_principal"])
         self.root.resizable(False, False)
+        
+        ctk.set_appearance_mode("dark")
+        
         self.centralizar_janela()
         self.setup_interface()
-        
-        # self.verificar_leitor_rfid_periodicamente()
+
+    def safe_after(self, delay, callback):
+        """Agenda uma tarefa após um delay de forma segura."""
+        if self.root.winfo_exists():
+            task_id = self.root.after(delay, callback)
+            self.after_tasks.append(task_id)
+            return task_id
+        return None
+
+    def limpar_tasks(self):
+        """Cancela todas as tarefas agendadas pendentes."""
+        for task in self.after_tasks:
+            try:
+                self.root.after_cancel(task)
+            except:
+                pass
+        self.after_tasks.clear()
 
     def centralizar_janela(self):
         self.root.update_idletasks()
@@ -29,84 +54,116 @@ class TelaLogin:
         self.root.geometry(f'{width}x{height}+{x}+{y}')
        
     def setup_interface(self):
-        main_frame = tk.Frame(self.root, bg=CORES["fundo_principal"])
-        main_frame.pack(expand=True, fill="both")
+        # Container Principal
+        self.main_container = ctk.CTkFrame(self.root, fg_color="transparent")
+        self.main_container.pack(expand=True, fill="both", padx=40, pady=40)
 
-    # Frame superior com SENAI à esquerda e CRDF à direita
-        frame_topo = tk.Frame(main_frame, bg=CORES["fundo_principal"])
-        frame_topo.pack(fill="x", pady=(20, 10), padx=20)
-
-        frame_esquerdo = tk.Frame(frame_topo, bg=CORES["fundo_principal"])
-        frame_esquerdo.pack(side="left", anchor="nw")
-
-        frame_direito = tk.Frame(frame_topo, bg=CORES["fundo_principal"])
-        frame_direito.pack(side="right", anchor="ne")
+        # Header com Logos
+        header_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
+        header_frame.pack(fill="x", pady=(0, 30))
 
         try:
-           self.logo_senai_img = ImageTk.PhotoImage(Image.open("assets/logo_senai.png").resize((150, 50), Image.LANCZOS))
-           tk.Label(frame_esquerdo, image=self.logo_senai_img, bg=CORES["fundo_principal"]).pack()
+            logo_senai_data = Image.open("assets/logo_senai.png")
+            logo_senai = ctk.CTkImage(light_image=logo_senai_data, dark_image=logo_senai_data, size=(150, 50))
+            ctk.CTkLabel(header_frame, image=logo_senai, text="").pack(side="left")
         except:
-           tk.Label(frame_esquerdo, text="SENAI", font=("Segoe UI", 20, "bold"), fg="white", bg=CORES["fundo_principal"]).pack()
+            ctk.CTkLabel(header_frame, text="SENAI", font=("Segoe UI", 24, "bold"), text_color=CORES["texto_claro"]).pack(side="left")
 
         try:
-           self.crdf_icon_img = ImageTk.PhotoImage(Image.open("assets/crdf_icon.png").resize((60, 60), Image.LANCZOS))
-           tk.Label(frame_direito, image=self.crdf_icon_img, bg=CORES["fundo_principal"]).pack()
-        except Exception as e:
-           print(f"Aviso: Não foi possível carregar 'assets/crdf_icon.png': {e}")
-
-        # Frame  central com textos do título
-        frame_textos = tk.Frame(main_frame, bg=CORES["fundo_principal"])
-        frame_textos.pack(pady=(10, 20))
-
-        tk.Label(frame_textos, text="CRDF", font=("Segoe UI", 48, "bold"),
-             fg="white", bg=CORES["fundo_principal"]).pack()
-        tk.Label(frame_textos, text="Controle de Retirada e",
-             font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack()
-        tk.Label(frame_textos, text="Devolução de Ferramentas",
-             font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack()
-
-        # Entrada por RFID ou manual
-        self.frame_entrada_alternavel = tk.Frame(main_frame, bg=CORES["fundo_principal"])
-        self.frame_entrada_alternavel.pack(pady=20, fill="x", expand=True)
-
-        self.frame_rfid_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
-        try:
-           self.rfid_icon_img = ImageTk.PhotoImage(Image.open("assets/rfid_icon.png").resize((100, 100), Image.LANCZOS))
-           tk.Label(self.frame_rfid_prompt, image=self.rfid_icon_img, bg=CORES["fundo_principal"]).pack(pady=5)
+            icon_data = Image.open("assets/crdf_icon.png")
+            icon = ctk.CTkImage(light_image=icon_data, dark_image=icon_data, size=(60, 60))
+            ctk.CTkLabel(header_frame, image=icon, text="").pack(side="right")
         except:
-           pass
-        tk.Label(self.frame_rfid_prompt, text="Aproxime seu Token", font=("Segoe UI", 18, "bold"),
-             fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=10)
+            pass
 
-        self.frame_texto_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
-        tk.Label(self.frame_texto_prompt, text="Digite o código do seu cartão", font=FONTES["corpo"],
-             fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=5)
+        # Título e Subtítulo
+        title_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
+        title_frame.pack(pady=(0, 40))
 
-        self.entry_codigo = tk.Entry(self.frame_texto_prompt, font=FONTES["botao"], justify="center", width=25,
-                                 bg=CORES["fundo_tabela"], fg=CORES["texto_escuro"], relief="flat", insertbackground=CORES["texto_escuro"])
-        self.entry_codigo.pack(pady=15, ipady=12)
-        self.entry_codigo.bind("<Return>", self.validar_login_manual)
-
-        # Botão para alternar entre RFID e entrada manual
-        self.btn_alternar = tk.Button(main_frame, text="", font=FONTES["corpo"], command=self.alternar_modo_entrada,
-                                  relief="flat", bg=CORES["fundo_principal"], fg=CORES["destaque"],
-                                  activebackground=CORES["fundo_principal"], activeforeground="white", borderwidth=0, cursor="hand2")
-        self.btn_alternar.pack(pady=5)
-
-        # Botão de login (só aparece no modo manual)
-        self.btn_login = tk.Button(main_frame, text="ENTRAR", font=FONTES["botao"], command=self.validar_login_manual,
-                                bg=CORES["sucesso"], activebackground="#28b463", fg="white", activeforeground="white",
-                                relief="flat", padx=50, pady=12, borderwidth=0, cursor="hand2")
+        ctk.CTkLabel(
+            title_frame, 
+            text="CRDF", 
+            font=FONTES["titulo"],
+            text_color=CORES["texto_claro"]
+        ).pack()
         
-        # Hover Entrar
-        self.btn_login.bind("<Enter>", lambda e: self.btn_login.config(bg="#28b463"))
-        self.btn_login.bind("<Leave>", lambda e: self.btn_login.config(bg=CORES["sucesso"]))
+        ctk.CTkLabel(
+            title_frame, 
+            text="Sistema Inteligente de Ferramentas", 
+            font=FONTES["subtitulo"], 
+            text_color=CORES["texto_muted"]
+        ).pack()
 
-        # Atualiza modo inicial (RFID ou manual)
+        # Card de Login (Glassmorphism)
+        self.login_card = GlassCard(self.main_container)
+        self.login_card.pack(fill="x", pady=10, ipady=20)
+
+        # Conteúdo do Card (Alternável)
+        self.content_frame = ctk.CTkFrame(self.login_card, fg_color="transparent")
+        self.content_frame.pack(padx=30, pady=30, fill="both")
+
+        # Ícone de Status / RFID
+        self.status_icon_label = ctk.CTkLabel(self.content_frame, text="", height=100)
+        self.status_icon_label.pack(pady=(0, 10))
+
+        self.status_text = ctk.CTkLabel(
+            self.content_frame, 
+            text="Aguardando Aproximação...", 
+            font=FONTES["subtitulo"],
+            text_color=CORES["alerta"]
+        )
+        self.status_text.pack(pady=10)
+
+        # Carrega o ícone agora que os textos estão prontos (evita AttributeError)
+        self.load_rfid_icon()
+
+        # Campo de Entrada Manual (Escondido initially)
+        self.manual_entry = ModernInput(self.content_frame, placeholder_text="Digite o código do cartão")
+        self.manual_entry.bind("<Return>", self.validar_login_manual)
+
+        # Botões de Ação
+        self.btn_entrar = PrimaryButton(self.content_frame, "ENTRAR NO SISTEMA", command=self.validar_login_manual)
+        
+        self.btn_alternar = ctk.CTkButton(
+            self.main_container,
+            text="Utilizar Entrada Manual",
+            fg_color="transparent",
+            text_color=CORES["destaque"],
+            hover_color=CORES["fundo_secundario"],
+            font=FONTES["corpo"],
+            command=self.alternar_modo_entrada
+        )
+        self.btn_alternar.pack(pady=20)
+
+        # Inicializa estado
         self.atualizar_modo_entrada()
-        self.entry_codigo.focus()
-    
 
+    def load_rfid_icon(self):
+        try:
+            icon_data = Image.open("assets/rfid_icon.png")
+            self.rfid_image = ctk.CTkImage(light_image=icon_data, dark_image=icon_data, size=(120, 120))
+            self.status_icon_label.configure(image=self.rfid_image)
+            self.iniciar_animacao_pulso()
+        except Exception as e:
+            logging.error(f"Erro ao carregar ícone RFID: {e}")
+            self.status_icon_label.configure(text="📡", font=("Segoe UI Variable", 48))
+
+    def iniciar_animacao_pulso(self):
+        if not self.root.winfo_exists() or not self.modo_rfid:
+            return
+        
+        # Efeito de pulso simples alterando o tamanho levemente (simulado)
+        # Ou mudando a cor do texto/alpha se suportado, mas CTkImage é fixo.
+        # Vamos alternar entre duas cores de texto se for fallback ou apenas manter o timer
+        self.pulse_val += 5 * self.pulse_dir
+        if self.pulse_val >= 100 or self.pulse_val <= 0:
+            self.pulse_dir *= -1
+            
+        color_val = int(150 + (self.pulse_val * 1.05)) # Oscila entre 150 e 255
+        hex_color = f"#{color_val:02x}{color_val:02x}00" # Amarelo pulsante
+        
+        self.status_text.configure(text_color=hex_color)
+        self.safe_after(50, self.iniciar_animacao_pulso)
 
     def alternar_modo_entrada(self):
         self.modo_rfid = not self.modo_rfid
@@ -114,70 +171,71 @@ class TelaLogin:
 
     def atualizar_modo_entrada(self):
         if self.modo_rfid:
-            self.frame_texto_prompt.pack_forget()
-            self.frame_rfid_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Digitar o Código")
-            self.btn_login.pack_forget()
+            self.manual_entry.pack_forget()
+            self.btn_entrar.pack_forget()
+            self.status_icon_label.pack(pady=(0, 10))
+            self.status_text.configure(text="Aproxime seu Token RFID", text_color=CORES["alerta"])
+            self.btn_alternar.configure(text="Utilizar Entrada Manual")
         else:
-            self.frame_rfid_prompt.pack_forget()
-            self.frame_texto_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
-    def atualizar_modo_entrada(self):
-        if self.modo_rfid:
-            self.frame_texto_prompt.pack_forget()
-            self.frame_rfid_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Digitar o Código")
-            self.btn_login.pack_forget()
-        else:
-            self.frame_rfid_prompt.pack_forget()
-            self.frame_texto_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
-            self.btn_login.pack(pady=20)
-            self.entry_codigo.focus()
+            self.status_icon_label.pack_forget()
+            self.status_text.configure(text="Insira suas Credenciais", text_color=CORES["texto_claro"])
+            self.manual_entry.pack(pady=20, fill="x")
+            self.btn_entrar.pack(pady=10, fill="x")
+            self.btn_alternar.configure(text="Utilizar Leitor RFID")
+            self.manual_entry.focus()
 
     def validar_login_manual(self, event=None):
-        codigo = self.entry_codigo.get().strip()
+        codigo = self.manual_entry.get().strip()
         if not codigo:
             messagebox.showwarning("Aviso", "Por favor, digite o código do cartão.")
             return
+        
+        self.status_text.configure(text="Validando Acesso...", text_color=CORES["destaque"])
+        self.root.update()
         self.processar_validacao(codigo)
 
     def processar_validacao(self, codigo):
         usuario = self.carrinho.validar_cartao(codigo)
         if usuario:
+            self.status_text.configure(text="Acesso Liberado! Bem-vindo.", text_color=CORES["sucesso"])
+            self.root.update()
+            
             self.usuario = usuario
             self.perfil = usuario.perfil
-            if hasattr(self, 'after_id'): 
-                self.root.after_cancel(self.after_id) # Esta linha está correta
-            self.root.destroy()
-        elif not self.modo_rfid:
-            messagebox.showerror("Erro de Acesso", "Cartão não autorizado ou inválido.")
-            self.entry_codigo.delete(0, tk.END)
+            
+            self.limpar_tasks()
+            
+            # Pequeno delay para o usuário ver o sucesso
+            self.safe_after(800, self.safe_destroy)
+        else:
+            if not self.modo_rfid:
+                messagebox.showerror("Erro de Acesso", "Cartão não autorizado ou inválido.")
+                self.manual_entry.delete(0, 'end')
+                self.status_text.configure(text="Insira suas Credenciais", text_color=CORES["texto_claro"])
+            else:
+                # Feedback visual de erro rápido no modo RFID
+                self.status_text.configure(text="Cartão recusado. Tente novamente.", text_color=CORES["cancelar"])
+                self.safe_after(2000, lambda: self.status_text.configure(text="Aproxime seu Token RFID", text_color=CORES["alerta"]) if self.root.winfo_exists() else None)
 
-    # Versão NOVA e CORRIGIDA
-    def verificar_hardware_periodicamente(self):
-        # Tenta ler um input do hardware (pode ser RFID ou PIN do teclado matricial)
+    def safe_destroy(self):
+        self.limpar_tasks()
+        # Remove o callback antes de destruir a janela
         try:
-            # Usa o nome correto do método que padronizamos: ler_input_hardware
-            codigo_lido = self.carrinho.hardware.ler_input_hardware()
-            if codigo_lido:
-                # Se algo foi lido, tenta validar o login e para o loop de verificação
-                self.processar_validacao(codigo_lido)
-                return
-        except AttributeError:
-            # Ocorre se o hardware não estiver conectado ou for o simulador
-            pass 
-        
-        # Agenda a próxima verificação apenas se nada foi lido
-        self.after_id = self.root.after(250, self.verificar_hardware_periodicamente)
+            self.carrinho.remover_callback_rfid(self.on_rfid_read)
+        except:
+            pass
+        self.root.destroy()
 
-    # Versão NOVA e CORRIGIDA
+    def on_rfid_read(self, codigo):
+        """Trata o evento de leitura de RFID disparado pelo backend."""
+        if not self.root.winfo_exists() or not self.modo_rfid:
+            return
+        
+        # Como o callback vem de uma thread, precisamos agendar pro loop principal do Tkinter
+        self.root.after(0, lambda: self.processar_validacao(codigo))
+
     def executar(self):
-        # Inicia o loop que "escuta" o Arduino em segundo plano
-        self.verificar_hardware_periodicamente()
-        
-        # Inicia a janela da interface gráfica
+        # Inscreve-se no evento de leitura no backend
+        self.carrinho.registrar_callback_rfid(self.on_rfid_read)
         self.root.mainloop()
-        
-        # Retorna o usuário e perfil após o login ser bem-sucedido e a janela ser fechada
-        return self.usuario, self.perfil 
+        return self.usuario, self.perfil

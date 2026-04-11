@@ -16,14 +16,15 @@ from hardware.simulator import SimuladorHardware
 
 class CarrinhoInteligenteAvancado:
     # Versão NOVA e CORRIGIDA
-    def __init__(self, db_path: str = 'carrinho.db', modo_hardware: str = 'simulador', porta_serial: Optional[str] = None):
+    def __init__(self, db_path: str = 'carrinho.db', modo_hardware: str = 'real', porta_serial: Optional[str] = None):
         """
         Inicializa o carrinho, com seleção de hardware.
         """
         self.db = DatabaseManager(db_path=db_path)
         
         # Lógica para escolher qual classe de hardware instanciar
-        if modo_hardware == 'real' and porta_serial:
+        # No modo 'real', tentamos detectar a porta se não for fornecida.
+        if modo_hardware == 'real':
             self.hardware = HardwareArduino(port=porta_serial)
             if not self.hardware.is_running:
                 logging.warning("Hardware real não conectado. Recaindo para o modo simulador.")
@@ -37,6 +38,13 @@ class CarrinhoInteligenteAvancado:
         self.sistema_ativo = True
         self.modo_manutencao = False
         self.alertas_ativos = []
+        self._rfid_callbacks = []
+        self._ultimo_estado_leds = {} # Cache de cores para evitar envios repetidos
+
+        # Controle para evitar flood de tentativas inválidas e reduzir pressão no hardware/UI
+        self._ultimo_token_invalido = None
+        self._ultimo_token_invalido_ts = 0.0
+        self._cooldown_token_invalido_s = 1.5
 
         self.monitor_thread = threading.Thread(target=self.monitor_sistema, daemon=True)
         self.monitor_thread.start()
@@ -45,12 +53,32 @@ class CarrinhoInteligenteAvancado:
     def validar_cartao(self, codigo_cartao: str) -> Optional[UsuarioCartao]:
         if not codigo_cartao:
             return None
+
+        codigo_cartao = str(codigo_cartao).strip()
+        if not codigo_cartao:
+            return None
+
         usuario = self.db.obter_usuario_por_id(codigo_cartao)
         if usuario:
             logging.info(f"Cartão validado: {usuario.nome} ({usuario.id})")
-        else:
-            logging.warning(f"Cartão inválido/não autorizado: {codigo_cartao}")
-        return usuario
+            self._ultimo_token_invalido = None
+            self._ultimo_token_invalido_ts = 0.0
+            return usuario
+
+        agora = time.time()
+        if (
+            self._ultimo_token_invalido == codigo_cartao
+            and (agora - self._ultimo_token_invalido_ts) < self._cooldown_token_invalido_s
+        ):
+            logging.debug(
+                f"Token inválido repetido em cooldown ({self._cooldown_token_invalido_s}s): {codigo_cartao}"
+            )
+            return None
+
+        self._ultimo_token_invalido = codigo_cartao
+        self._ultimo_token_invalido_ts = agora
+        logging.warning(f"Cartão inválido/não autorizado: {codigo_cartao}")
+        return None
 
 
     def abrir_gaveta(self, gaveta_id: int, codigo_cartao: str) -> bool:
@@ -119,41 +147,93 @@ class CarrinhoInteligenteAvancado:
         self.db.registrar_evento(evento)
 
 
+    def registrar_callback_rfid(self, callback):
+        """Registra uma função para ser chamada quando um cartão RFID for detectado."""
+        if callback not in self._rfid_callbacks:
+            self._rfid_callbacks.append(callback)
+
+    def remover_callback_rfid(self, callback):
+        """Remove um callback registrado."""
+        if callback in self._rfid_callbacks:
+            self._rfid_callbacks.remove(callback)
+
+    def _notificar_rfid_lido(self, codigo):
+        """Notifica todos os ouvintes sobre a leitura de um cartão."""
+        for callback in self._rfid_callbacks:
+            try:
+                callback(codigo)
+            except Exception as e:
+                logging.error(f"Erro ao executar callback de RFID: {e}")
+
     def monitor_sistema(self):
+        contador_status = 0
         while self.sistema_ativo:
             try:
                 for gaveta_id, gaveta in self.gavetas.items():
+                    cor_desejada = 'verde' # Cor padrão (Fechada)
+                    
                     if gaveta.aberta:
                         tempo_aberta = gaveta.tempo_aberta()
                         if tempo_aberta > 600:  # 10 minutos
+                            cor_desejada = 'vermelho'
                             usuario = self.db.obter_usuario_por_id(gaveta.usuario_atual) if gaveta.usuario_atual else None
                             nome_usuario = usuario.nome if usuario else (gaveta.usuario_atual or "Desconhecido")
                             alerta_msg = f"Gaveta {gaveta_id} aberta há mais de 10 minutos por {nome_usuario}. Favor fechar!"
                             if alerta_msg not in [a['mensagem'] for a in self.alertas_ativos]:
                                 self.adicionar_alerta(alerta_msg)
                                 logging.warning(alerta_msg)
-                            self.hardware.definir_led_status(gaveta_id, 'vermelho')
                         elif tempo_aberta > 300:  # 5 minutos
-                            self.hardware.definir_led_status(gaveta_id, 'amarelo')
-                        else:
-                            self.hardware.definir_led_status(gaveta_id, 'verde')
-                    else:
-                        self.hardware.definir_led_status(gaveta_id, 'verde')
+                            cor_desejada = 'amarelo'
+                    
+                    # Só envia para o hardware se o estado mudou
+                    if self._ultimo_estado_leds.get(gaveta_id) != cor_desejada:
+                        self.hardware.definir_led_status(gaveta_id, cor_desejada)
+                        self._ultimo_estado_leds[gaveta_id] = cor_desejada
 
+                # Verifica sincronia e interage com o Arduino
+                self.verificar_status_hardware(contador_status)
+                
+                # NOVO: Polling de RFID centralizado no Backend
+                try:
+                    codigo_lido = self.hardware.ler_input_hardware()
+                    if codigo_lido:
+                        self._notificar_rfid_lido(codigo_lido)
+                except Exception as e:
+                    logging.debug(f"Erro ao ler hardware: {e}")
 
-                self.verificar_status_hardware()
-                time.sleep(10)  # Verifica a cada 10 segundos
+                contador_status += 1
+                if contador_status >= 10:
+                    contador_status = 0
+                    
+                time.sleep(0.5)  # Loop hiper responsivo de meio segundo
             except Exception as e:
                 logging.error(f"Erro no monitor do sistema: {e}")
 
 
-    def verificar_status_hardware(self):
+    def verificar_status_hardware(self, contador=0):
+        # Apenas pede STATUS total a cada ~5 segundos (quando contador zera)
+        if contador == 0 and hasattr(self.hardware, 'solicitar_status_gavetas'):
+            self.hardware.solicitar_status_gavetas()
+            
         for gaveta_id in self.gavetas:
             hardware_aberta = self.hardware.gaveta_esta_aberta(gaveta_id)
             software_aberta = self.gavetas[gaveta_id].aberta
+            
             if hardware_aberta != software_aberta:
-                self.adicionar_alerta(f"Inconsistência detectada na gaveta {gaveta_id}")
-                logging.warning(f"Status inconsistente - Gaveta {gaveta_id}: HW={hardware_aberta}, SW={software_aberta}")
+                estado_fisico = "ABERTA" if hardware_aberta else "FECHADA"
+                estado_logico = "ABERTA" if software_aberta else "FECHADA"
+                
+                msg_alerta = f"[ALERTA] SENSOR GAVETA {gaveta_id}: Física={estado_fisico} | Sistema={estado_logico}. Sincronizando sistema com o hardware..."
+                
+                self.adicionar_alerta(msg_alerta)
+                logging.warning(msg_alerta)
+                print(msg_alerta)  # Print explícito no terminal para visibilidade rápida
+                
+                # Auto-sincronizar a lógica do sistema com a realidade do hardware
+                if hardware_aberta:
+                    self.gavetas[gaveta_id].aberta = True
+                else:
+                    self.gavetas[gaveta_id].fechar()
 
 
     def adicionar_alerta(self, mensagem: str):

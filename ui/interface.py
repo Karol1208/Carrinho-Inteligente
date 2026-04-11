@@ -1,95 +1,163 @@
-import tkinter as tk
-from tkinter import ttk, messagebox
+import customtkinter as ctk
+from tkinter import messagebox
 import logging
-from PIL import Image, ImageTk
+from PIL import Image
+import os
 
 from core.cart import CarrinhoInteligenteAvancado
 from ui.painelMonitoramento import PainelMonitoramento
 from ui.theme import CORES, FONTES
 from ui.cadastro import TelaCadastroRFID
+from ui.components.glass_card import GlassCard
+from ui.components.primary_button import PrimaryButton
 
 from ui.abas.aba_principal import AbaPrincipal
 from ui.abas.aba_usuarios import AbaUsuarios
 from ui.abas.aba_inventario import AbaInventario
 from ui.abas.aba_historico import AbaHistorico
+from ui.components.status_bar import StatusBar
 
 
 class InterfaceGraficaCarrinho:
     """Classe principal que gerencia a janela, a navegação e a comunicação entre as abas."""
-    # Versão NOVA e CORRIGIDA
+    
     def __init__(self, carrinho: CarrinhoInteligenteAvancado = None, usuario_inicial=None):
         self.carrinho = carrinho if carrinho else CarrinhoInteligenteAvancado()
-        self.root = tk.Tk()
-        self.root.title("CRDF - Controle de Retirada e Devolução de Ferramentas")
-        self.root.geometry("1280x720")
-        self.root.minsize(1100, 700)
-        self.root.configure(bg=CORES["fundo_widget"])
-
+        
+        # Inicialização do CustomTkinter
+        self.root = ctk.CTk()
+        self.root.title("CRDF - Painel de Controle Premium")
+        self.root.geometry("1400x850")
+        self.root.minsize(1200, 750)
+        self.root.configure(fg_color=CORES["fundo_principal"])
+        
+        ctk.set_appearance_mode("dark")
+        
         self.usuario_atual = usuario_inicial
         self.frames_conteudo = {}
         self.botoes_sidebar = {}
-        self.label_usuario_header = None
         
         self.aba_principal = None
         self.aba_usuarios = None
         self.aba_inventario = None
         self.aba_historico = None
+        self.after_tasks = []
+        self.icones = {}
+        self.carregar_icones()
 
-        self.setup_estilos_ttk()
         self.setup_interface_principal()
 
         self.root.protocol("WM_DELETE_WINDOW", self._on_close)
         self.atualizar_status_periodico()
 
-        # Inicia a configuração de acesso com base no usuário que fez login
+        # Configuração de acesso
         if self.usuario_atual:
             self.configurar_acesso_por_perfil(self.usuario_atual.perfil)
         else:
-            # Se não houver usuário, configura um acesso padrão/limitado
             self.configurar_acesso_por_perfil(None)
-        # --- ADICIONE ESTAS LINHAS NO FINAL DO __init__ ---
+
+        # Timer de Inatividade
         self.inactivity_timer_id = None
-        self.INACTIVITY_TIMEOUT = 50000  # 10 segundos em milissegundos 
-        #mudar depois 
-
-        # Liga os "escutadores" de atividade na janela principal
-        self.root.bind_all("<Button-1>", self._on_user_activity) # Qualquer clique do mouse
-        self.root.bind_all("<Key>", self._on_user_activity)      # Qualquer tecla pressionada
-
-        # Inicia o timer pela primeira vez
+        self.INACTIVITY_TIMEOUT = 300000  # 5 minutos (60000 * 5)
+        
+        self.root.bind_all("<Button-1>", self._on_user_activity)
+        self.root.bind_all("<Key>", self._on_user_activity)
         self._resetar_timer_inatividade()
 
-    def abrir_tela_cadastro_rfid(self):
-        tela_rfid = TelaCadastroRFID(self.carrinho, root_principal=self.root, callback_atualizar_usuarios=self.aba_usuarios.atualizar_lista_usuarios)
-        tela_rfid.executar()
-    
-    def setup_estilos_ttk(self):
-        style = ttk.Style()
-        style.theme_use('clam')
-        style.configure("Treeview", background=CORES["fundo_widget"], foreground=CORES["texto_escuro"], rowheight=35, fieldbackground=CORES["fundo_widget"], font=FONTES["corpo"], borderwidth=0)
-        style.map('Treeview', background=[('selected', CORES["destaque"])], foreground=[('selected', "#ffffff")])
-        style.configure("Treeview.Heading", background=CORES["fundo_secundario"], foreground=CORES["texto_claro"], font=FONTES["botao"], padding=(10, 15), borderwidth=0)
-        style.configure('TLabel', font=FONTES["corpo"], background=CORES["fundo_widget"], foreground=CORES["texto_escuro"])
-        style.configure('TButton', font=FONTES["botao"], padding=(10, 8), background=CORES["fundo_secundario"], foreground=CORES["texto_claro"])
-        style.configure('TEntry', font=FONTES["corpo"], fieldbackground=CORES["fundo_tabela"], foreground=CORES["texto_escuro"], insertcolor=CORES["texto_escuro"])
-        style.configure('LabelFrame.TLabel', font=FONTES["subtitulo"], background=CORES["fundo_widget"], foreground=CORES["texto_escuro"])
+    def safe_after(self, delay, callback):
+        """Agenda uma tarefa após um delay de forma segura."""
+        if self.root.winfo_exists():
+            task_id = self.root.after(delay, callback)
+            self.after_tasks.append(task_id)
+            return task_id
+        return None
+
+    def limpar_tasks(self):
+        """Cancela todas as tarefas agendadas pendentes."""
+        for task in self.after_tasks:
+            try:
+                self.root.after_cancel(task)
+            except:
+                pass
+        self.after_tasks.clear()
 
     def setup_interface_principal(self):
-        self.root.grid_rowconfigure(1, weight=1)
-        self.root.grid_columnconfigure(1, weight=1)
+        # 1. Sidebar (Esquerda)
+        self.sidebar = ctk.CTkFrame(self.root, width=280, corner_radius=0, fg_color=CORES["fundo_secundario"])
+        self.sidebar.pack(side="left", fill="y")
+        self.sidebar.pack_propagate(False)
 
-        self.criar_cabecalho()
-        self.criar_sidebar()
+        # Logo no Topo da Sidebar
+        logo_frame = ctk.CTkFrame(self.sidebar, fg_color="transparent")
+        logo_frame.pack(pady=40, padx=20, fill="x")
+        
+        try:
+            logo_data = Image.open("assets/logo_senai.png")
+            logo_img = ctk.CTkImage(light_image=logo_data, dark_image=logo_data, size=(180, 60))
+            ctk.CTkLabel(logo_frame, image=logo_img, text="").pack()
+        except:
+            ctk.CTkLabel(logo_frame, text="CRDF PREMIUM", font=FONTES["titulo"], text_color=CORES["texto_claro"]).pack()
 
-        self.frame_conteudo_principal = tk.Frame(self.root, bg=CORES["fundo_widget"])
-        self.frame_conteudo_principal.grid(row=1, column=1, sticky="nsew", padx=20, pady=20)
-        self.frame_conteudo_principal.grid_rowconfigure(0, weight=1)
-        self.frame_conteudo_principal.grid_columnconfigure(0, weight=1)
+        # Botões de Navegação
+        self.nav_frame = ctk.CTkFrame(self.sidebar, fg_color="transparent")
+        self.nav_frame.pack(fill="both", expand=True, padx=10)
 
-        self.aba_principal = AbaPrincipal(self.frame_conteudo_principal, self.carrinho, self)
-        self.aba_usuarios = AbaUsuarios(self.frame_conteudo_principal, self.carrinho, self)
-        self.aba_historico = AbaHistorico(self.frame_conteudo_principal, self.carrinho, self)
-        self.aba_inventario = AbaInventario(self.frame_conteudo_principal, self.carrinho, self)
+        # Layout Principal (Direita)
+        self.main_layout = ctk.CTkFrame(self.root, corner_radius=0, fg_color="transparent")
+        self.main_layout.pack(side="right", fill="both", expand=True)
+
+        # 2. Header (Topo do Layout Principal)
+        self.header = ctk.CTkFrame(self.main_layout, height=80, corner_radius=0, fg_color="transparent")
+        self.header.pack(side="top", fill="x", padx=30, pady=(20, 0))
+        
+        self.lbl_page_title = ctk.CTkLabel(
+            self.header, 
+            text="Painel de Retirada", 
+            font=FONTES["titulo"],
+            text_color=CORES["texto_claro"]
+        )
+        self.lbl_page_title.pack(side="left")
+
+        # Info Usuário e Botão Sair no Header
+        user_info_frame = ctk.CTkFrame(self.header, fg_color="transparent")
+        user_info_frame.pack(side="right")
+
+        self.label_usuario_header = ctk.CTkLabel(
+            user_info_frame, 
+            text="Nenhum usuário logado", 
+            font=FONTES["corpo"],
+            text_color=CORES["texto_muted"]
+        )
+        self.label_usuario_header.pack(side="left", padx=20)
+
+        self.btn_sair = ctk.CTkButton(
+            user_info_frame,
+            text="SAIR",
+            width=100,
+            height=35,
+            fg_color=CORES["cancelar"],
+            hover_color="#c0392b",
+            font=FONTES["botao"],
+            command=self._logout_manual
+        )
+        self.btn_sair.pack(side="right")
+
+        # 3. Área de Conteúdo
+        self.content_container = GlassCard(self.main_layout)
+        self.content_container.pack(fill="both", expand=True, padx=30, pady=(10, 20))
+        
+        # 4. Barra de Status (Bottom)
+        self.status_bar = StatusBar(self.main_layout)
+        self.status_bar.pack(side="bottom", fill="x")
+        
+        self.content_container.grid_rowconfigure(0, weight=1)
+        self.content_container.grid_columnconfigure(0, weight=1)
+
+        # Inicialização das Abas
+        self.aba_principal = AbaPrincipal(self.content_container, self.carrinho, self)
+        self.aba_usuarios = AbaUsuarios(self.content_container, self.carrinho, self)
+        self.aba_historico = AbaHistorico(self.content_container, self.carrinho, self)
+        self.aba_inventario = AbaInventario(self.content_container, self.carrinho, self)
         
         self.frames_conteudo = {
             "retirada": self.aba_principal,
@@ -97,121 +165,131 @@ class InterfaceGraficaCarrinho:
             "historico": self.aba_historico,
             "inventario": self.aba_inventario
         }
+
+        # Criação dos Botões da Sidebar
+        self.criar_botoes_nav()
         
         self.mostrar_frame("retirada")
 
-    # Em ui/interface.py
+    def abrir_tela_cadastro_rfid(self):
+        tela_rfid = TelaCadastroRFID(
+            self.carrinho, 
+            root_principal=self.root, 
+            callback_atualizar_usuarios=self.aba_usuarios.atualizar_lista_usuarios
+        )
+        tela_rfid.executar()
 
-    def criar_cabecalho(self):
-        header = tk.Frame(self.root, bg=CORES["fundo_secundario"], height=60)
-        header.grid(row=0, column=0, columnspan=2, sticky="ew")
-        header.pack_propagate(False)
+    def carregar_icones(self):
+        icon_map = {
+            "retirada": "icon_home.png",
+            "inventario": "icon_inventory.png",
+            "usuarios": "icon_users.png",
+            "historico": "icon_history.png",
+            "monitor": "icon_alert.png"
+        }
+        for name, path in icon_map.items():
+            try:
+                full_path = os.path.join("assets", path)
+                image = Image.open(full_path)
+                self.icones[name] = ctk.CTkImage(image, image, size=(32, 32))
+            except Exception as e:
+                logging.warning(f"Erro ao carregar ícone {path}: {e}")
+                self.icones[name] = None
 
-        # Logo do SENAI à esquerda
-        try:
-            logo_img = ImageTk.PhotoImage(Image.open("assets/logo_senai.png").resize((120, 40), Image.Resampling.LANCZOS))
-            lbl_logo = tk.Label(header, image=logo_img, bg=CORES["fundo_secundario"])
-            lbl_logo.image = logo_img 
-            lbl_logo.pack(side="left", padx=20)
-        except Exception as e:
-            tk.Label(header, text="SENAI", font=FONTES["titulo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"]).pack(side="left", padx=20)
-            logging.warning(f"Não foi possível carregar 'assets/logo_senai.png': {e}")
-
-        # Botão de Sair à direita
-        botao_sair = tk.Button(header, text="Sair", font=FONTES["botao"], 
-                               bg=CORES["cancelar"], fg="white", relief="flat", 
-                               padx=20, command=self._logout_manual,
-                               activebackground=CORES["cancelar_hover"], # Cor ao clicar
-                               activeforeground="white")
-        botao_sair.pack(side="right", padx=15)
-
-        # --- LÓGICA DO HOVER ADICIONADA AQUI ---
-        # Função para quando o mouse entra no botão
-        def on_enter(event):
-            botao_sair.config(bg=CORES["cancelar_hover"])
-
-        # Função para quando o mouse sai do botão
-        def on_leave(event):
-            botao_sair.config(bg=CORES["cancelar"])
-
-        # Associa as funções aos eventos do mouse
-        botao_sair.bind("<Enter>", on_enter)
-        botao_sair.bind("<Leave>", on_leave)
-        # -----------------------------------------
-
-        # Label do usuário
-        self.label_usuario_header = tk.Label(header, text="Nenhum usuário logado", font=FONTES["corpo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"])
-        self.label_usuario_header.pack(side="right", padx=15)
-
-    def criar_sidebar(self):
-        sidebar = tk.Frame(self.root, bg=CORES["fundo_secundario"], width=250)
-        sidebar.grid(row=1, column=0, sticky="nsw")
-        sidebar.pack_propagate(False)
-        
+    def criar_botoes_nav(self):
         botoes_nav = {
-            "retirada": "Painel de Retirada",
+            "retirada": "Dashboard / Retirada",
             "inventario": "Inventário",
             "usuarios": "Gerenciar Usuários",
-            "historico": "Histórico"
+            "historico": "Histórico Geral"
         }
 
-        for nome, texto in botoes_nav.items():
-            btn = tk.Button(sidebar, text=texto, font=FONTES["botao"], bg=CORES["fundo_secundario"], fg=CORES["texto_claro"], relief="flat", anchor="w", padx=20, pady=15, activebackground=CORES["destaque"], activeforeground=CORES["texto_claro"], command=lambda f=nome: self.mostrar_frame(f), cursor="hand2")
-            self.botoes_sidebar[nome] = btn
-            
-        btn_monitor = tk.Button(sidebar, text="Monitor de Peças Pendentes", font=FONTES["botao"], bg=CORES["fundo_secundario"], fg=CORES["alerta"], relief="flat", anchor="w", padx=20, pady=15, activebackground=CORES["destaque"], activeforeground=CORES["texto_claro"], command=self.abrir_painel_monitoramento, cursor="hand2")
-        self.botoes_sidebar["monitor"] = btn_monitor
+        for id_nome, texto in botoes_nav.items():
+            btn = ctk.CTkButton(
+                self.nav_frame,
+                text=f"  {texto}",
+                image=self.icones.get(id_nome),
+                font=FONTES["botao"],
+                anchor="w",
+                height=55,
+                fg_color="transparent",
+                text_color=CORES["texto_claro"],
+                hover_color=CORES["glass_borda"],
+                command=lambda f=id_nome: self.mostrar_frame(f)
+            )
+            self.botoes_sidebar[id_nome] = btn
+
+        # Botão Especial de Monitoramento (sempre visível ou admin)
+        self.btn_monitor = ctk.CTkButton(
+            self.sidebar,
+            text="  Monitor de Pendências",
+            image=self.icones.get("monitor"),
+            font=FONTES["botao"],
+            anchor="w",
+            height=55,
+            fg_color="transparent",
+            text_color=CORES["alerta"],
+            hover_color=CORES["glass_borda"],
+            command=self.abrir_painel_monitoramento
+        )
+        self.botoes_sidebar["monitor"] = self.btn_monitor
+        self.btn_monitor.pack(side="bottom", fill="x", padx=10, pady=20)
 
     def mostrar_frame(self, nome_frame):
+        # Atualiza título da página
+        titulos = {
+            "retirada": "Painel de Retirada",
+            "usuarios": "Gerenciamento de Usuários",
+            "historico": "Histórico de Transações",
+            "inventario": "Inventário de Ferramentas"
+        }
+        self.lbl_page_title.configure(text=titulos.get(nome_frame, "Dashboard"))
+
+        # Alterna visibilidade
         for frame in self.frames_conteudo.values():
             frame.grid_remove()
         
-        frame_ativo = self.frames_conteudo[nome_frame]
-        frame_ativo.grid(row=0, column=0, sticky="nsew")
+        frame_ativo = self.frames_conteudo.get(nome_frame)
+        if frame_ativo:
+            frame_ativo.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
         
+        # Realça botão ativo na sidebar
         for nome, btn in self.botoes_sidebar.items():
             if nome != 'monitor':
-                btn.config(bg=CORES["fundo_secundario"])
-        
-        if nome_frame in self.botoes_sidebar:
-            self.botoes_sidebar[nome_frame].config(bg=CORES["destaque"])
+                if nome == nome_frame:
+                    btn.configure(fg_color=CORES["destaque"], text_color="white")
+                else:
+                    btn.configure(fg_color="transparent", text_color=CORES["texto_claro"])
 
-    # Versão NOVA e CORRIGIDA
     def configurar_acesso_por_perfil(self, perfil):
-        # Esconde todos os botões da sidebar para começar do zero
+        # Esconde todos primeiro
         for btn in self.botoes_sidebar.values():
-            btn.pack_forget()
+            if btn != self.btn_monitor:
+                btn.pack_forget()
 
-        # Atualiza o cabeçalho com as informações do usuário
+        # Atualiza cabeçalho
         if self.usuario_atual:
-            self.label_usuario_header.config(text=f"Bem-vindo, {self.usuario_atual.nome} ({perfil})", fg=CORES["texto_claro"])
+            self.label_usuario_header.configure(text=f"Autenticado: {self.usuario_atual.nome} ({perfil.upper()})")
         else:
-            self.label_usuario_header.config(text="Nenhum usuário logado", fg=CORES["texto_claro"])
-        
-        # Visibilidade do botão "Abrir Todas as Gavetas" (que está na AbaPrincipal)
-        if hasattr(self.aba_principal, 'botao_abrir_todas'):
-            if perfil == "admin":
-                self.aba_principal.botao_abrir_todas.pack(side="left", padx=10, pady=5)
-            else:
-                self.aba_principal.botao_abrir_todas.pack_forget()
-        
-        # Exibe os botões da sidebar de acordo com o perfil
+            self.label_usuario_header.configure(text="Sessão não identificada")
+
+        # Define visibilidade por perfil
         if perfil == "admin":
-            self.botoes_sidebar["retirada"].pack(fill="x")
-            self.botoes_sidebar["inventario"].pack(fill="x")
-            self.botoes_sidebar["usuarios"].pack(fill="x")
-            self.botoes_sidebar["historico"].pack(fill="x")
-            self.botoes_sidebar["monitor"].pack(fill="x", side="bottom", pady=(0, 20))
+            self.botoes_sidebar["retirada"].pack(fill="x", pady=5)
+            self.botoes_sidebar["inventario"].pack(fill="x", pady=5)
+            self.botoes_sidebar["usuarios"].pack(fill="x", pady=5)
+            self.botoes_sidebar["historico"].pack(fill="x", pady=5)
         elif perfil == "aluno":
-            self.botoes_sidebar["retirada"].pack(fill="x")
-            self.botoes_sidebar["monitor"].pack(fill="x", side="bottom", pady=(0, 20))
-        else: # Se não houver usuário logado
-            self.botoes_sidebar["retirada"].pack(fill="x")
+            self.botoes_sidebar["retirada"].pack(fill="x", pady=5)
+        else:
+            self.botoes_sidebar["retirada"].pack(fill="x", pady=5)
 
     def atualizar_status_periodico(self):
+        if not self.root.winfo_exists():
+            return
         if self.aba_principal:
             self.aba_principal.atualizar_status_gavetas()
-        self.root.after(2000, self.atualizar_status_periodico)
+        self.safe_after(1000, self.atualizar_status_periodico)
 
     def abrir_painel_monitoramento(self):
         if not hasattr(self, 'painel_monitoramento') or not self.painel_monitoramento.root.winfo_exists():
@@ -219,45 +297,34 @@ class InterfaceGraficaCarrinho:
         else:
             self.painel_monitoramento.root.lift()
             self.painel_monitoramento.root.focus_force()
-    
+
     def _on_user_activity(self, event=None):
-        """Chamado sempre que o usuário clica ou digita algo."""
         self._resetar_timer_inatividade()
 
     def _resetar_timer_inatividade(self):
-        """Cancela o timer anterior e inicia um novo."""
-        # Se já existe um timer agendado, cancele-o
         if self.inactivity_timer_id:
-            self.root.after_cancel(self.inactivity_timer_id)
-        
-        # Agenda a função de logout para ser chamada após o tempo de inatividade
-        self.inactivity_timer_id = self.root.after(self.INACTIVITY_TIMEOUT, self._logout_por_inatividade)
+            try: self.root.after_cancel(self.inactivity_timer_id)
+            except: pass
+        self.inactivity_timer_id = self.safe_after(self.INACTIVITY_TIMEOUT, self._logout_por_inatividade)
+        if self.inactivity_timer_id in self.after_tasks:
+            self.after_tasks.remove(self.inactivity_timer_id) # Timers de inatividade são gerenciados manualmente
 
     def _logout_por_inatividade(self):
-        """Fecha a interface principal para retornar à tela de login."""
-        logging.info("Usuário deslogado por inatividade.")
-        messagebox.showwarning("Sessão Expirada", "Você foi desconectado por inatividade.", parent=self.root)
-        self._on_close(force_close=True) # Chama a função de fechar a janela
+        logging.info("Sessão expirada por inatividade.")
+        messagebox.showwarning("Sessão Expirada", "Você foi desconectado automaticamente por inatividade.", parent=self.root)
+        self._on_close(force_close=True)
 
     def _logout_manual(self):
-        """Força o logout do usuário e retorna para a tela de login."""
-        logging.info(f"Usuário {self.usuario_atual.nome} deslogou manualmente.")
-        # Reutiliza a nossa função de fechar a janela sem pedir confirmação
         self._on_close(force_close=True)
 
     def _on_close(self, force_close=False):
-        """Ação personalizada ao fechar a janela principal."""
         confirmar = force_close or messagebox.askokcancel("Sair", "Deseja realmente sair do sistema?")
-        
         if confirmar:
-            logging.info("Sistema encerrado pelo usuário ou por inatividade.")
-            
-            # Cancela o timer de inatividade para não ser executado novamente
+            self.limpar_tasks()
             if self.inactivity_timer_id:
-                self.root.after_cancel(self.inactivity_timer_id)
-                self.inactivity_timer_id = None
-
-            # Garante que a conexão com o hardware seja fechada
+                try: self.root.after_cancel(self.inactivity_timer_id)
+                except: pass
+            
             if self.carrinho and hasattr(self.carrinho.hardware, 'close'):
                 self.carrinho.hardware.close()
             

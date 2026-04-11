@@ -4,7 +4,6 @@ import datetime
 from typing import List, Optional
 
 from models.entities import EventoGaveta, Peca, RetiradaPeca, UsuarioCartao
-from utils.security import hash_credencial, gerar_uuid
 
 
 class DatabaseManager:
@@ -16,22 +15,11 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
 
-        cursor.execute("PRAGMA table_info(usuarios)")
-        columns = cursor.fetchall()
-        has_hash_col = any(col[1] == 'hash_credencial' for col in columns) if columns else True
-        
-        if columns and not has_hash_col:
-            logging.info("Migração: Formatando usuários para adicionar hash_credencial.")
-            cursor.execute('DELETE FROM retiradas_pecas WHERE status IN ("pendente", "parcial")')
-            cursor.execute('DROP TABLE IF EXISTS eventos')
-            cursor.execute('DROP TABLE IF EXISTS usuarios')
-
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS usuarios (
                 id TEXT PRIMARY KEY,
                 nome TEXT NOT NULL,
                 cargo TEXT NOT NULL,
-                hash_credencial TEXT NOT NULL,
                 perfil TEXT NOT NULL DEFAULT 'aluno',
                 ativo BOOLEAN NOT NULL DEFAULT 1,
                 data_cadastro TEXT NOT NULL
@@ -219,16 +207,6 @@ class DatabaseManager:
                 VALUES (?, ?, ?, ?, ?, ?)
             ''', (nome, categoria, descricao, gaveta_id, qtd, tipo))
 
-        cursor.execute('SELECT COUNT(*) FROM usuarios')
-        if cursor.fetchone()[0] == 0:
-            admin_id = gerar_uuid()
-            admin_hash = hash_credencial('1234')
-            cursor.execute('''
-                INSERT INTO usuarios (id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (admin_id, 'Admin Padrão', 'Administrador', admin_hash, 'admin', 1, datetime.datetime.now().isoformat()))
-            logging.info("Admin padrão criado. PIN: 1234")
-
         conn.commit()
         conn.close()
 
@@ -236,58 +214,35 @@ class DatabaseManager:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
         cursor.execute('''
-            INSERT OR REPLACE INTO usuarios (id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (usuario.id, usuario.nome, usuario.cargo, usuario.hash_credencial, usuario.perfil, int(usuario.ativo),
+            INSERT OR REPLACE INTO usuarios (id, nome, cargo, perfil, ativo, data_cadastro)
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (usuario.id, usuario.nome, usuario.cargo, usuario.perfil, int(usuario.ativo),
               usuario.data_cadastro or datetime.datetime.now().isoformat()))
-        conn.commit()
-        conn.close()
-
-    def atualizar_dados_usuario(self, usuario_id: str, nome: str, cargo: str, perfil: str):
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.execute('''
-            UPDATE usuarios SET nome = ?, cargo = ?, perfil = ?
-            WHERE id = ?
-        ''', (nome, cargo, perfil, usuario_id))
         conn.commit()
         conn.close()
 
     def obter_usuario_por_id(self, usuario_id: str) -> Optional[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
+        cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE id = ? AND ativo = 1', (usuario_id,))
         result = cursor.fetchone()
         conn.close()
         if result:
             return UsuarioCartao(
                 id=result[0], nome=result[1], cargo=result[2],
-                hash_credencial=result[3], perfil=result[4], ativo=bool(result[5]), data_cadastro=result[6]
-            )
-        return None
-
-    def obter_usuario_por_hash(self, hash_credencial: str) -> Optional[UsuarioCartao]:
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro FROM usuarios WHERE hash_credencial = ? AND ativo = 1', (hash_credencial,))
-        result = cursor.fetchone()
-        conn.close()
-        if result:
-            return UsuarioCartao(
-                id=result[0], nome=result[1], cargo=result[2],
-                hash_credencial=result[3], perfil=result[4], ativo=bool(result[5]), data_cadastro=result[6]
+                perfil=result[3], ativo=bool(result[4]), data_cadastro=result[5]
             )
         return None
 
     def listar_usuarios(self) -> List[UsuarioCartao]:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
-        cursor.execute('SELECT id, nome, cargo, hash_credencial, perfil, ativo, data_cadastro FROM usuarios WHERE ativo = 1')
+        cursor.execute('SELECT id, nome, cargo, perfil, ativo, data_cadastro FROM usuarios WHERE ativo = 1')
         results = cursor.fetchall()
         conn.close()
         return [UsuarioCartao(
-            id=row[0], nome=row[1], cargo=row[2], hash_credencial=row[3], perfil=row[4],
-            ativo=bool(row[5]), data_cadastro=row[6]
+            id=row[0], nome=row[1], cargo=row[2], perfil=row[3],
+            ativo=bool(row[4]), data_cadastro=row[5]
         ) for row in results]
 
     def registrar_evento(self, evento: EventoGaveta):
@@ -448,7 +403,7 @@ class DatabaseManager:
             quantidade_devolvida=row[4], timestamp_retirada=row[5],
             timestamp_devolucao=row[6], status=row[7]
         ) for row in rows]
-    
+   
 
     def limpar_historico(self):
         """Apaga todos os registros da tabela de histórico."""
@@ -466,7 +421,7 @@ class DatabaseManager:
 
     def remover_peca(self, peca_id: int):
         """Desativa uma peça no banco de dados (soft delete)."""
-        conn = sqlite3.connect(self.db_path) # Correção: Usando a conexão direta
+        conn = sqlite3.connect(self.db_path) 
         try:
             cursor = conn.cursor()
             cursor.execute('UPDATE pecas SET ativo = 0 WHERE id = ?', (peca_id,))
@@ -500,4 +455,3 @@ class DatabaseManager:
             ) for row in results]
         finally:
             conn.close()
-

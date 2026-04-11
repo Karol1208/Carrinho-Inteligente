@@ -8,16 +8,21 @@ class SimuladorHardware:
         self.is_running = True # O simulador está sempre "rodando"
         self.leitor_cartao_ativo = True
 
+    def ler_input_hardware(self) -> str | None:
+        """Alias para ler_rfid para manter compatibilidade com interface real."""
+        return self.ler_rfid()
+
     def ler_rfid(self) -> str | None:
         """
         Simula a leitura do RFID.
         Retorna código RFID ou None se nada lido.
-        PARA TESTES: Descomente a linha abaixo para retornar um código fixo (ex.: "12345" para admin).
         """
-        # logging.info("Simulando leitura RFID...")
-        # time.sleep(0.1)  # Delay simulado
-        # return "12345"  # ← DESCOMENTE PARA SIMULAR LEITURA AUTOMÁTICA DE ADMIN
-        return None  # Simulação: Nada lido (use manual para testes)
+        # return "1234"  # Descomente para simular login automático do João Silva
+        return None
+
+    def solicitar_status_gavetas(self):
+        """Simula a solicitação de status (não faz nada no simulador)."""
+        pass
 
     def abrir_gaveta_hardware(self, gaveta_id: int) -> bool:
         try:

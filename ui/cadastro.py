@@ -1,14 +1,11 @@
-# Em ui/cadastro.py (Versão Final Mesclada)
-
-import tkinter as tk
-from tkinter import ttk, messagebox
+import customtkinter as ctk
+from tkinter import messagebox, ttk
 import logging
 import datetime
-from PIL import Image, ImageTk
-
-# Importações absolutas para consistência
+from PIL import Image
 from ui.theme import CORES, FONTES
 from models.entities import UsuarioCartao
+from ui.components.glass_card import GlassCard
 
 class TelaCadastroRFID:
     def __init__(self, carrinho, root_principal=None, callback_atualizar_usuarios=None):
@@ -16,200 +13,210 @@ class TelaCadastroRFID:
         self.root_principal = root_principal
         self.callback_atualizar_usuarios = callback_atualizar_usuarios
         self.id_cartao_lido = None
-        self.modo_rfid = True # Inicia no modo RFID por padrão
+        self.modo_rfid = True 
+        self.after_tasks = []
 
-        # Usa Toplevel para funcionar como um pop-up sobre a janela principal
-        self.root = tk.Toplevel(self.root_principal)
+        # Janela Modal com CustomTkinter
+        self.root = ctk.CTkToplevel(self.root_principal)
         self.root.title("Cadastro de Usuário - CRDF")
-        self.root.geometry("600x650")
-        self.root.configure(bg=CORES["fundo_principal"])
-        self.root.resizable(False, False)
+        self.root.geometry("600x700")
+        self.root.configure(fg_color=CORES["fundo_principal"])
         
-        # Comandos para tornar a janela um modal verdadeiro
         self.root.transient(self.root_principal)
         self.root.grab_set()
 
-        self.centralizar_janela()
         self.setup_interface()
-        
-        # Inicia a verificação do hardware em segundo plano
-        self.verificar_hardware_periodicamente()
 
-    def centralizar_janela(self):
-        self.root.update_idletasks()
-        width = self.root.winfo_width()
-        height = self.root.winfo_height()
-        x = (self.root_principal.winfo_x() + (self.root_principal.winfo_width() // 2)) - (width // 2)
-        y = (self.root_principal.winfo_y() + (self.root_principal.winfo_height() // 2)) - (height // 2)
-        self.root.geometry(f'{width}x{height}+{x}+{y}')
+    def safe_after(self, delay, callback):
+        """Agenda uma tarefa após um delay de forma segura."""
+        if self.root.winfo_exists():
+            task_id = self.root.after(delay, callback)
+            self.after_tasks.append(task_id)
+            return task_id
+        return None
+
+    def limpar_tasks(self):
+        """Cancela todas as tarefas agendadas pendentes."""
+        for task in self.after_tasks:
+            try:
+                self.root.after_cancel(task)
+            except:
+                pass
+        self.after_tasks.clear()
 
     def setup_interface(self):
-        # Interface completa da versão do seu colega
-        main_frame = tk.Frame(self.root, bg=CORES["fundo_principal"])
-        main_frame.pack(expand=True, fill="both")
+        # Container Principal
+        container = ctk.CTkFrame(self.root, fg_color="transparent")
+        container.pack(expand=True, fill="both", padx=30, pady=30)
 
-        # Layout superior
-        tk.Label(main_frame, text="SENAI", font=("Segoe UI", 20, "bold"), fg="white", bg=CORES["fundo_principal"]).pack(pady=(20, 10))
-        
-        frame_titulo_principal = tk.Frame(main_frame, bg=CORES["fundo_principal"])
-        frame_titulo_principal.pack(pady=20, padx=30, fill="x")
-        
-        frame_textos = tk.Frame(frame_titulo_principal, bg=CORES["fundo_principal"])
-        frame_textos.pack(side="left", expand=True, fill="x", padx=10)
-        
-        tk.Label(frame_textos, text="CRDF", font=("Segoe UI", 48, "bold"), fg="white", bg=CORES["fundo_principal"]).pack(anchor="w")
-        tk.Label(frame_textos, text="Cadastro de Novo Usuário", font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(anchor="w")
+        # Cabeçalho
+        ctk.CTkLabel(container, text="SENAI", font=FONTES["titulo"], text_color=CORES["texto_claro"]).pack()
+        ctk.CTkLabel(container, text="NOVO COLABORADOR", font=FONTES["subtitulo"], text_color=CORES["destaque"]).pack(pady=(0, 20))
 
-        self.frame_entrada_alternavel = tk.Frame(main_frame, bg=CORES["fundo_principal"])
-        self.frame_entrada_alternavel.pack(pady=20, fill="x", expand=True)
-        
-        # Frame para o modo RFID
-        self.frame_rfid_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
-        tk.Label(self.frame_rfid_prompt, text="Aproxime a nova TAG", font=("Segoe UI", 18, "bold"), fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=10)
-        
-        self.label_status_leitura = tk.Label(self.frame_rfid_prompt, text="Aguardando leitura...", font=FONTES["corpo"], fg=CORES["destaque"], bg=CORES["fundo_principal"])
-        self.label_status_leitura.pack(pady=5)
+        # Card de Entrada
+        self.input_card = GlassCard(container)
+        self.input_card.pack(fill="x", pady=20)
 
-        # Frame para o modo de digitação manual
-        self.frame_texto_prompt = tk.Frame(self.frame_entrada_alternavel, bg=CORES["fundo_principal"])
-        tk.Label(self.frame_texto_prompt, text="Digite o código do cartão para cadastro", font=FONTES["corpo"], fg=CORES["texto_claro"], bg=CORES["fundo_principal"]).pack(pady=5)
-        self.entry_codigo = tk.Entry(self.frame_texto_prompt, font=FONTES["botao"], justify="center", width=25,
-                                     bg=CORES["fundo_tabela"], fg=CORES["texto_escuro"], relief="flat")
-        self.entry_codigo.pack(pady=10, ipady=8)
-        self.entry_codigo.bind("<Return>", self.validar_cadastro_manual)
-        
-        # Botões de controle
-        self.btn_alternar = tk.Button(main_frame, text="", font=FONTES["corpo"], command=self.alternar_modo_entrada, relief="flat", 
-                                       bg=CORES["fundo_principal"], fg=CORES["destaque"], 
-                                       activebackground=CORES["fundo_principal"], activeforeground="white", borderwidth=0)
-        self.btn_alternar.pack()
-        
-        self.btn_cadastro = tk.Button(main_frame, text="CADASTRAR", font=FONTES["botao"], command=self.validar_cadastro_manual, 
-                                      bg=CORES["sucesso"], fg="white", relief="flat", padx=40, pady=10, borderwidth=0)
-        
-        self.atualizar_modo_entrada()
+        self.label_instrucao = ctk.CTkLabel(
+            self.input_card, 
+            text="Aproxime a Tag RFID", 
+            font=FONTES["subtitulo"],
+            text_color="white"
+        )
+        self.label_instrucao.pack(pady=(20, 5))
 
-    def alternar_modo_entrada(self):
+        self.label_status = ctk.CTkLabel(
+            self.input_card, 
+            text="Aguardando leitura do sensor...", 
+            font=FONTES["corpo"],
+            text_color=CORES["texto_muted"]
+        )
+        self.label_status.pack(pady=(0, 20))
+
+        # Campo de Entrada Manual (Escondido initially)
+        self.entry_codigo = ctk.CTkEntry(
+            self.input_card, 
+            placeholder_text="Ou digite o código manualmente",
+            width=300,
+            height=45,
+            font=FONTES["corpo"],
+            justify="center"
+        )
+        self.entry_codigo.bind("<Return>", lambda e: self.validar_cadastro_manual())
+
+        # Botões de Alternância
+        self.btn_alternar = ctk.CTkButton(
+            container,
+            text="⌨️ Digitar Código Manualmente",
+            fg_color="transparent",
+            text_color=CORES["destaque"],
+            hover_color=CORES["glass_borda"],
+            command=self.alternar_modo
+        )
+        self.btn_alternar.pack(pady=10)
+
+        # Botão Cadastrar (Aparece no modo manual)
+        self.btn_confirmar = ctk.CTkButton(
+            container,
+            text="PROSSEGUIR COM CADASTRO",
+            fg_color=CORES["sucesso"],
+            font=FONTES["botao"],
+            height=50,
+            command=self.validar_cadastro_manual
+        )
+
+    def alternar_modo(self):
         self.modo_rfid = not self.modo_rfid
-        self.atualizar_modo_entrada()
-
-    def atualizar_modo_entrada(self):
         if self.modo_rfid:
-            self.frame_texto_prompt.pack_forget()
-            self.frame_rfid_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Digitar o Código")
-            self.btn_cadastro.pack_forget()
+            self.entry_codigo.pack_forget()
+            self.btn_confirmar.pack_forget()
+            self.label_instrucao.configure(text="Aproxime a Tag RFID")
+            self.btn_alternar.configure(text="⌨️ Digitar Código Manualmente")
         else:
-            self.frame_rfid_prompt.pack_forget()
-            self.frame_texto_prompt.pack(pady=10)
-            self.btn_alternar.config(text="Ou, clique para Usar o Leitor RFID")
-            self.btn_cadastro.pack(pady=20)
+            self.entry_codigo.pack(pady=10)
+            self.btn_confirmar.pack(pady=20, fill="x")
+            self.label_instrucao.configure(text="Entrada Manual")
+            self.btn_alternar.configure(text="📡 Usar Leitor RFID")
             self.entry_codigo.focus()
 
-    def validar_cadastro_manual(self, event=None):
-        codigo = self.entry_codigo.get().strip()
-        if not codigo:
-            messagebox.showwarning("Aviso", "Por favor, digite o código do cartão para cadastro.", parent=self.root)
+    def safe_destroy(self):
+        self.limpar_tasks()
+        # Remove o callback antes de fechar
+        try:
+            self.carrinho.remover_callback_rfid(self.on_rfid_read)
+        except:
+            pass
+        self.root.destroy()
+
+    def on_rfid_read(self, codigo):
+        """Trata o evento de leitura de RFID disparado pelo backend."""
+        if not self.root.winfo_exists() or not self.modo_rfid:
             return
+        
+        # Agenda para o loop principal do Tkinter
+        self.root.after(0, lambda: self.processar_leitura_rfid(codigo))
+
+    def processar_leitura_rfid(self, codigo):
+        self.label_status.configure(text=f"ID Detectado: {codigo}", text_color=CORES["sucesso"])
         self.processar_cadastro(codigo)
 
-    def verificar_hardware_periodicamente(self):
-        if self.modo_rfid:
-            try:
-                codigo_lido = self.carrinho.hardware.ler_input_hardware()
-                if codigo_lido:
-                    self.label_status_leitura.config(text=f"Tag lida: {codigo_lido}", fg="lightgreen")
-                    self.processar_cadastro(codigo_lido)
-                    return
-            except AttributeError:
-                self.label_status_leitura.config(text="Hardware não compatível.", fg="red")
-                return
-        
-        self.after_id = self.root.after(250, self.verificar_hardware_periodicamente)
-
     def processar_cadastro(self, codigo):
-        if hasattr(self, 'after_id'):
-            self.root.after_cancel(self.after_id)
-
-        usuario_existente = self.carrinho.validar_cartao(codigo)
-        if usuario_existente:
-            messagebox.showerror("Erro de Cadastro", f"A tag '{codigo}' já está cadastrada para o usuário '{usuario_existente.nome}'.", parent=self.root)
-            self.root.destroy()
+        existente = self.carrinho.validar_cartao(codigo)
+        if existente:
+            messagebox.showerror("Erro", f"Tag {codigo} já pertence a {existente.nome}")
+            self.safe_destroy()
             return
         
         self.id_cartao_lido = codigo
-        self.mostrar_popup_detalhes_usuario()
+        self.mostrar_popup_detalhes()
 
-    def mostrar_popup_detalhes_usuario(self):
-        popup = tk.Toplevel(self.root)
-        popup.title("Detalhes do Novo Usuário")
-        popup.geometry("450x450")
-        popup.resizable(False, False)
-        popup.transient(self.root)
-        popup.grab_set()
-        popup.configure(bg=CORES["fundo_secundario"])
+    def validar_cadastro_manual(self):
+        cod = self.entry_codigo.get().strip()
+        if not cod:
+            messagebox.showwarning("Aviso", "Digite um código válido")
+            return
+        self.processar_cadastro(cod)
 
-        tk.Label(popup, text="SENAI", font=("Segoe UI", 24, "bold"), fg=CORES["texto_claro"], bg=CORES["fundo_secundario"]).pack(pady=(20, 0))
-        tk.Label(popup, text="DETALHES DO USUÁRIO", font=FONTES["subtitulo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"]).pack(pady=(0, 20))
+    def mostrar_popup_detalhes(self):
+        # Reutiliza a janela atual ou cria um novo card por cima
+        for child in self.root.winfo_children(): child.destroy()
+        
+        container = ctk.CTkFrame(self.root, fg_color="transparent")
+        container.pack(expand=True, fill="both", padx=40, pady=30)
 
-        form_frame = tk.Frame(popup, bg=CORES["fundo_secundario"])
-        form_frame.pack(padx=30, pady=10)
+        ctk.CTkLabel(container, text="DETALHES DO COLABORADOR", font=FONTES["subtitulo"]).pack(pady=20)
+        
+        form_card = GlassCard(container)
+        form_card.pack(fill="both", expand=True, pady=10)
 
-        campos = ["ID do Cartão:", "Nome:", "Cargo:", "Perfil:"]
-        entries = {}
+        campos = ["ID Cartão", "Nome Completo", "Cargo", "Perfil"]
+        self.entries = {}
 
-        for i, campo in enumerate(campos):
-            lbl = tk.Label(form_frame, text=campo, font=FONTES["corpo"], fg=CORES["texto_claro"], bg=CORES["fundo_secundario"])
-            lbl.grid(row=i, column=0, sticky="w", pady=8, padx=5)
-            
-            if campo == "Perfil:":
-                combo_perfil = ttk.Combobox(form_frame, values=["admin", "aluno"], width=23, state="readonly", font=FONTES["corpo"])
-                combo_perfil.grid(row=i, column=1, sticky="ew", pady=8, padx=5)
-                combo_perfil.set("aluno")
-                entries[campo] = combo_perfil
+        for campo in campos:
+            ctk.CTkLabel(form_card, text=campo, font=FONTES["corpo"], text_color=CORES["texto_muted"]).pack(anchor="w", padx=25, pady=(15, 0))
+            if campo == "Perfil":
+                entry = ctk.CTkComboBox(form_card, values=["admin", "aluno"], height=40)
+                entry.set("aluno")
             else:
-                entry = ttk.Entry(form_frame, width=25, font=FONTES["corpo"])
-                entry.grid(row=i, column=1, sticky="ew", pady=8, padx=5)
-                entries[campo] = entry
+                entry = ctk.CTkEntry(form_card, height=40)
+                if campo == "ID Cartão":
+                    entry.insert(0, self.id_cartao_lido)
+                    entry.configure(state="readonly")
+            
+            entry.pack(fill="x", padx=20, pady=(5, 5))
+            self.entries[campo] = entry
 
-        if self.id_cartao_lido:
-            entries["ID do Cartão:"].insert(0, self.id_cartao_lido)
-            entries["ID do Cartão:"].config(state="readonly")
+        def salvar():
+            nome = self.entries["Nome Completo"].get()
+            cargo = self.entries["Cargo"].get()
+            perfil = self.entries["Perfil"].get()
 
-        def salvar_novo_usuario():
-            id_cartao = entries["ID do Cartão:"].get().strip()
-            nome = entries["Nome:"].get().strip()
-            cargo = entries["Cargo:"].get().strip()
-            perfil = entries["Perfil:"].get().strip()
-
-            if not all([id_cartao, nome, cargo, perfil]):
-                messagebox.showerror("Erro de Validação", "Todos os campos são obrigatórios!", parent=popup)
+            if not nome or not cargo:
+                messagebox.showwarning("Aviso", "Preencha todos os campos")
                 return
 
-            usuario = UsuarioCartao(id=id_cartao, nome=nome, cargo=cargo, perfil=perfil,
-                                      data_cadastro=datetime.datetime.now().isoformat(), ativo=True)
+            u = UsuarioCartao(
+                id=self.id_cartao_lido, 
+                nome=nome, 
+                cargo=cargo, 
+                perfil=perfil,
+                data_cadastro=datetime.datetime.now().isoformat(), 
+                ativo=True
+            )
             try:
-                self.carrinho.db.adicionar_usuario(usuario)
-                messagebox.showinfo("Cadastro Concluído!", f"Usuário '{nome}' cadastrado com sucesso!", parent=self.root)
-                popup.destroy()
-                self.root.destroy()
-                
-                if self.callback_atualizar_usuarios:
-                    self.callback_atualizar_usuarios()
+                self.carrinho.db.adicionar_usuario(u)
+                messagebox.showinfo("Sucesso", f"Usuário {nome} cadastrado!")
+                if self.callback_atualizar_usuarios: self.callback_atualizar_usuarios()
+                self.safe_destroy()
             except Exception as e:
-                messagebox.showerror("Erro no Cadastro", f"Falha ao salvar usuário: {e}", parent=popup)
-                logging.error(f"Erro ao cadastrar usuário {nome}: {e}")
+                messagebox.showerror("Erro", str(e))
 
-        frame_botoes = tk.Frame(popup, bg=CORES["fundo_secundario"])
-        frame_botoes.pack(pady=30)
-
-        btn_salvar = tk.Button(frame_botoes, text="Salvar Usuário", font=FONTES["botao"], bg=CORES["sucesso"],
-                               fg="white", relief="flat", padx=20, pady=8, borderwidth=0, command=salvar_novo_usuario)
-        btn_salvar.pack(side="left", padx=10)
-
-        btn_cancelar = tk.Button(frame_botoes, text="Cancelar", font=FONTES["botao"], bg=CORES["cancelar"],
-                                 fg="white", relief="flat", padx=20, pady=8, borderwidth=0, command=popup.destroy)
-        btn_cancelar.pack(side="left", padx=10)
+        btn_row = ctk.CTkFrame(container, fg_color="transparent")
+        btn_row.pack(pady=30)
+        ctk.CTkButton(btn_row, text="SALVAR", fg_color=CORES["sucesso"], height=45, command=salvar).pack(side="left", padx=10)
+        ctk.CTkButton(btn_row, text="CANCELAR", fg_color="transparent", border_width=1, height=45, command=self.safe_destroy).pack(side="left", padx=10)
 
     def executar(self):
+        # Inscreve-se no evento de leitura no backend
+        self.carrinho.registrar_callback_rfid(self.on_rfid_read)
         self.root.wait_window(self.root)
