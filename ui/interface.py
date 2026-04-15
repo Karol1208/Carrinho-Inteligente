@@ -50,6 +50,10 @@ class InterfaceGraficaCarrinho:
         self.root.protocol("WM_DELETE_WINDOW", self._on_close)
         self.atualizar_status_periodico()
 
+        # Atualiza status bar com estado real do hardware
+        hw_online = hasattr(self.carrinho, 'hardware') and getattr(self.carrinho.hardware, 'is_running', False)
+        self.status_bar.set_hw_status(hw_online)
+
         # Configuração de acesso
         if self.usuario_atual:
             self.configurar_acesso_por_perfil(self.usuario_atual.perfil)
@@ -191,7 +195,8 @@ class InterfaceGraficaCarrinho:
             try:
                 full_path = os.path.join("assets", path)
                 image = Image.open(full_path)
-                self.icones[name] = ctk.CTkImage(image, image, size=(32, 32))
+                self.icones[name] = ctk.CTkImage(image, image, size=(32, 32
+                ))
             except Exception as e:
                 logging.warning(f"Erro ao carregar ícone {path}: {e}")
                 self.icones[name] = None
@@ -217,9 +222,12 @@ class InterfaceGraficaCarrinho:
                 hover_color=CORES["glass_borda"],
                 command=lambda f=id_nome: self.mostrar_frame(f)
             )
+            # CORREÇÃO: Empacota o botão imediatamente no nav_frame
+            # configurar_acesso_por_perfil vai esconder/mostrar conforme o perfil
+            btn.pack(fill="x", pady=2, padx=5)
             self.botoes_sidebar[id_nome] = btn
 
-        # Botão Especial de Monitoramento (sempre visível ou admin)
+        # Botão Especial de Monitoramento (parte inferior da sidebar)
         self.btn_monitor = ctk.CTkButton(
             self.sidebar,
             text="  Monitor de Pendências",
@@ -262,7 +270,7 @@ class InterfaceGraficaCarrinho:
                     btn.configure(fg_color="transparent", text_color=CORES["texto_claro"])
 
     def configurar_acesso_por_perfil(self, perfil):
-        # Esconde todos primeiro
+        # Esconde todos os botões de navegação primeiro
         for btn in self.botoes_sidebar.values():
             if btn != self.btn_monitor:
                 btn.pack_forget()
@@ -275,20 +283,24 @@ class InterfaceGraficaCarrinho:
 
         # Define visibilidade por perfil
         if perfil == "admin":
-            self.botoes_sidebar["retirada"].pack(fill="x", pady=5)
-            self.botoes_sidebar["inventario"].pack(fill="x", pady=5)
-            self.botoes_sidebar["usuarios"].pack(fill="x", pady=5)
-            self.botoes_sidebar["historico"].pack(fill="x", pady=5)
+            self.botoes_sidebar["retirada"].pack(fill="x", padx=5, pady=2)
+            self.botoes_sidebar["inventario"].pack(fill="x", padx=5, pady=2)
+            self.botoes_sidebar["usuarios"].pack(fill="x", padx=5, pady=2)
+            self.botoes_sidebar["historico"].pack(fill="x", padx=5, pady=2)
         elif perfil == "aluno":
-            self.botoes_sidebar["retirada"].pack(fill="x", pady=5)
+            self.botoes_sidebar["retirada"].pack(fill="x", padx=5, pady=2)
         else:
-            self.botoes_sidebar["retirada"].pack(fill="x", pady=5)
+            self.botoes_sidebar["retirada"].pack(fill="x", padx=5, pady=2)
 
     def atualizar_status_periodico(self):
         if not self.root.winfo_exists():
             return
         if self.aba_principal:
             self.aba_principal.atualizar_status_gavetas()
+        # Atualiza status bar com o estado atual do hardware
+        hw_online = hasattr(self.carrinho, 'hardware') and getattr(self.carrinho.hardware, 'is_running', False)
+        if hasattr(self, 'status_bar'):
+            self.status_bar.set_hw_status(hw_online)
         self.safe_after(1000, self.atualizar_status_periodico)
 
     def abrir_painel_monitoramento(self):

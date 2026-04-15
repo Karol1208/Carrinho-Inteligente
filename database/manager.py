@@ -50,7 +50,7 @@ class DatabaseManager:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS pecas (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome TEXT NOT NULL,
+                nome TEXT NOT NULL UNIQUE,
                 categoria TEXT,
                 descricao TEXT,
                 gaveta_id INTEGER NOT NULL,
@@ -76,8 +76,8 @@ class DatabaseManager:
             )
         ''')
 
-        # Inserir gavetas padrão
-        for i in range(1, 6):
+        # Inserir gavetas padrão (7 gavetas conforme o hardware)
+        for i in range(1, 8):
             cursor.execute('''
                 INSERT OR IGNORE INTO gavetas_config (id, nome, descricao, ativo)
                 VALUES (?, ?, ?, ?)

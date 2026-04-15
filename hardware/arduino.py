@@ -20,54 +20,28 @@ class HardwareArduino:
         self.serial_port = None
         self.last_hardware_input = None
         self.is_running = False
-        
+
         self.port = port if port else self.detectar_porta_arduino()
         self.baud_rate = baud_rate
         self.lock = threading.Lock()
-        
+
+        # Armazena o último estado conhecido de cada gaveta (1 a 7)
         self.estado_gavetas = {i: "FECHADA" for i in range(1, 8)}
 
         if self.port:
-            self._connect()
-        else:
-            logging.warning("Nenhuma porta serial informada ou detectada para o Arduino.")
-            self.is_running = False
-
-    def _connect(self):
-        """Tenta estabelecer a conexão com a porta serial."""
-        with self.lock:
             try:
-                # Adicionamos write_timeout para evitar travamentos em falhas de buffer
-                self.serial_port = serial.Serial(
-                    self.port, 
-                    self.baud_rate, 
-                    timeout=1, 
-                    write_timeout=2
-                )
+                self.serial_port = serial.Serial(self.port, self.baud_rate, timeout=1)
                 logging.info(f"Conectado ao Arduino na porta {self.port} (Baud: {self.baud_rate}).")
-                
-                # Se for um Arduino original, ele reinicia no DTR. Esperamos o boot.
-                time.sleep(2) 
-                
+                time.sleep(2)  # Aguarda o Arduino reiniciar e enviar "ARDUINO_READY"
                 self.is_running = True
                 self.thread = threading.Thread(target=self._read_from_port, daemon=True)
                 self.thread.start()
-                return True
-            except (serial.SerialException, OSError) as e:
+            except serial.SerialException as e:
                 logging.error(f"Erro ao conectar com o Arduino na porta {self.port}: {e}")
                 self.is_running = False
-                return False
-
-    def _reconnect(self):
-        """Tenta fechar e reabrir a conexão em caso de falha crítica."""
-        logging.info(f"Tentando reconectar ao Arduino na porta {self.port}...")
-        self.is_running = False
-        if self.serial_port and self.serial_port.is_open:
-            try: self.serial_port.close()
-            except: pass
-        
-        time.sleep(1) # Aguarda o SO liberar a porta
-        return self._connect()
+        else:
+            logging.warning("Nenhuma porta serial informada ou detectada para o Arduino.")
+            self.is_running = False
 
     def _read_from_port(self):
         while self.is_running and self.serial_port and self.serial_port.is_open:
@@ -82,6 +56,7 @@ class HardwareArduino:
                     with self.lock:
                         self.last_hardware_input = line
                 elif line.startswith("GAVETA_"):
+                    # Exemplo esperado: GAVETA_3:ABERTA ou GAVETA_3:FECHADA
                     try:
                         partes = line.split(":")
                         if len(partes) >= 2:
@@ -92,7 +67,7 @@ class HardwareArduino:
                                 self.estado_gavetas[id_gaveta] = estado
                             logging.debug(f"Hardware Arduino: Gaveta {id_gaveta} -> {estado}")
                     except (IndexError, ValueError) as ve:
-                        logging.warning(f"Erro ao parsear estado da gaveta: {line}")
+                        logging.warning(f"Erro ao parsear estado da gaveta '{line}': {ve}")
                 elif line.startswith("OK:"):
                     if "ABRIR" in line:
                         logging.info(f"CONFIRMAÇÃO ARDUINO: {line}")
@@ -100,36 +75,13 @@ class HardwareArduino:
                         logging.debug(f"CONFIRMAÇÃO ARDUINO (Rotina): {line}")
 
             except (serial.SerialException, TypeError, UnicodeDecodeError, OSError) as e:
-                logging.warning(f"Falha na leitura serial: {e}")
+                logging.warning(f"Falha na leitura serial do Arduino: {e}")
+                self.is_running = False
                 break
             except Exception as e:
-                logging.error(f"Erro inesperado na thread de leitura: {e}")
+                logging.error(f"Erro inesperado na thread de leitura serial: {e}")
+                self.is_running = False
                 break
-        
-        self.is_running = False
-
-    def _write_to_hardware(self, command: str):
-        """Método seguro de escrita com flush e reconexão básica."""
-        if not self.serial_port or not self.serial_port.is_open:
-            if not self._reconnect(): return False
-
-        try:
-            with self.lock:
-                msg = f"{command}\n".encode('utf-8')
-                self.serial_port.write(msg)
-                self.serial_port.flush()
-                logging.debug(f"SERIAL SEND: {command}")
-            return True
-        except (serial.SerialException, serial.SerialTimeoutException, OSError) as e:
-            logging.error(f"Erro ao enviar comando '{command}': {e}")
-            # Se for falha de porta, tenta reconectar uma vez
-            if self._reconnect():
-                try: 
-                    self.serial_port.write(f"{command}\n".encode('utf-8'))
-                    self.serial_port.flush()
-                    return True
-                except: pass
-            return False
 
     def ler_input_hardware(self):
         with self.lock:
@@ -141,23 +93,42 @@ class HardwareArduino:
                     return partes[1]
         return None
 
-    def abrir_gaveta_hardware(self, gaveta_id):
+    def abrir_gaveta_hardware(self, gaveta_id: int) -> bool:
         """Envia comando para o Arduino abrir uma gaveta."""
-        return self._write_to_hardware(f"ABRIR:{gaveta_id}")
+        if self.serial_port and self.is_running:
+            try:
+                self.serial_port.write(f"ABRIR:{gaveta_id}\n".encode('utf-8'))
+                logging.debug(f"SERIAL SEND: ABRIR:{gaveta_id}")
+                return True
+            except (serial.SerialException, OSError) as e:
+                logging.error(f"Falha ao enviar comando de abrir gaveta {gaveta_id}: {e}")
+                self.is_running = False
+                return False
+        return False
 
-    def fechar_gaveta_hardware(self, gaveta_id):
-        """Simula o fechamento. Em hardware real, isso geralmente é mecânico."""
+    def fechar_gaveta_hardware(self, gaveta_id: int) -> bool:
+        """Fechamento é mecânico (empurrar a gaveta). Sem comando ativo."""
         return True
 
-    def definir_led_status(self, gaveta_id, status):
+    def definir_led_status(self, gaveta_id: int, status: str):
         """Envia comando para o Arduino alterar o status de um LED."""
-        self._write_to_hardware(f"LED:{gaveta_id}:{status}")
+        if self.serial_port and self.is_running:
+            try:
+                self.serial_port.write(f"LED:{gaveta_id}:{status}\n".encode('utf-8'))
+            except (serial.SerialException, OSError) as e:
+                logging.warning(f"Falha ao enviar status LED da gaveta {gaveta_id}: {e}")
+                self.is_running = False
 
     def solicitar_status_gavetas(self):
         """Solicita ao Arduino que envie o estado de todas as gavetas (comando STATUS)."""
-        self._write_to_hardware("STATUS")
+        if self.serial_port and self.is_running:
+            try:
+                self.serial_port.write(b"STATUS\n")
+            except (serial.SerialException, OSError) as e:
+                logging.warning(f"Falha ao enviar comando STATUS: {e}")
+                self.is_running = False
 
-    def gaveta_esta_aberta(self, gaveta_id):
+    def gaveta_esta_aberta(self, gaveta_id: int) -> bool:
         """Verifica o status de um sensor de gaveta."""
         with self.lock:
             return self.estado_gavetas.get(gaveta_id) == "ABERTA"

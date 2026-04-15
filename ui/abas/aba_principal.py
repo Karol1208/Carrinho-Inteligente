@@ -5,7 +5,6 @@ from ui.components.glass_card import GlassCard
 from ui.components.search_results import SearchResultsList
 from PIL import Image
 import os
-import svg
 
 class AbaPrincipal(ctk.CTkFrame):
     def __init__(self, parent, carrinho_controller, app_controller):
@@ -101,6 +100,9 @@ class AbaPrincipal(ctk.CTkFrame):
             font=FONTES["botao"],
             command=self.abrir_todas_gavetas_admin
         )
+        # Exibe o botão de manutenção apenas para admins
+        if hasattr(self.app, 'usuario_atual') and self.app.usuario_atual and self.app.usuario_atual.perfil == 'admin':
+            self.botao_abrir_todas.pack(side="left", padx=5)
 
         # --- STATUS DAS GAVETAS ---
         status_card = GlassCard(self.main_container)
@@ -134,9 +136,10 @@ class AbaPrincipal(ctk.CTkFrame):
 
     def carregar_icones(self):
         try:
-            icon_p = svg.SVG("assets/icon_home.svg") # Reusando home como placeholder ou específica
-            self.icones["gaveta"] = ctk.CTkImage(light_image=icon_p, dark_image=icon_p, size=(20, 20))
-        except: pass
+            icon_data = Image.open("assets/icon_home.png")
+            self.icones["gaveta"] = ctk.CTkImage(light_image=icon_data, dark_image=icon_data, size=(20, 20))
+        except Exception:
+            pass
 
     def _atualizar_sugestoes(self, event=None):
         texto = self.entry_busca_peca.get().strip().lower()
