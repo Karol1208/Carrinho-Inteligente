@@ -89,39 +89,41 @@ def configurar_estilos_ttk():
     """Configura os estilos globais para componentes do tkinter padrão (como Treeview)."""
     from tkinter import ttk
     style = ttk.Style()
-    
+
     style.theme_use("default")
 
-    # Configuração do corpo da Treeview
+    # 🌑 Corpo da tabela — design moderno, mais respiro
     style.configure(
         "Treeview",
         background=Theme.CORES["fundo_card"],
         foreground=Theme.CORES["texto_claro"],
-        rowheight=35,
+        rowheight=50,           # 🔥 Mais respiro premium (era 42)
         fieldbackground=Theme.CORES["fundo_card"],
-        bordercolor="#444",
         borderwidth=0,
-        font=Theme.FONTES["corpo"]
+        relief="flat",
+        font=("Segoe UI", 11)
     )
 
-    # Configuração do Cabeçalho da Treeview
+    # 🧠 Cabeçalho estilo SaaS premium
     style.configure(
         "Treeview.Heading",
-        background=Theme.CORES["fundo_principal"],
-        foreground="#ffffff",
-        font=Theme.FONTES["subtitulo"],
-        relief="flat"
+        background=Theme.CORES["fundo_secundario"],
+        foreground=Theme.CORES["texto_claro"],
+        font=("Segoe UI Semibold", 12),
+        borderwidth=0,
+        relief="flat",
+        padding=(10, 10)
     )
 
-    # Mapeamento de cores para seleção e hover
+    # 🎯 Seleção — destaque neon
     style.map(
         "Treeview",
         background=[("selected", Theme.CORES["destaque"])],
         foreground=[("selected", "#ffffff")]
     )
-    
-    # Estilo dos Cabeçalhos ao passar o mouse
+
+    # Hover no cabeçalho
     style.map(
         "Treeview.Heading",
-        background=[("active", Theme.CORES["fundo_secundario"])]
+        background=[("active", Theme.CORES["glass"])]
     )
