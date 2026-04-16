@@ -14,8 +14,20 @@ MODO_HARDWARE = "real"  # Mude para "simulador" para testar sem o Arduino
 PORTA_SERIAL = None     # Deixe None para detecção automática
 # -----------------------------------------
 
-def inicializar_sistema_exemplo(db_path: str = 'carrinho.db') -> CarrinhoInteligenteAvancado:
+def obter_db_path_producao():
+    import os, sys
+    if getattr(sys, 'frozen', False):
+        app_data = os.getenv('APPDATA')
+        if not app_data: app_data = os.path.expanduser('~')
+        base_dir = os.path.join(app_data, "CRDF_Premium")
+        os.makedirs(base_dir, exist_ok=True)
+        return os.path.join(base_dir, 'carrinho.db')
+    return 'carrinho.db'
+
+def inicializar_sistema_exemplo() -> CarrinhoInteligenteAvancado:
     setup_logging()
+    
+    db_path = obter_db_path_producao()
     
     if MODO_HARDWARE == "real":
         carrinho = CarrinhoInteligenteAvancado(db_path=db_path, modo_hardware='real', porta_serial=PORTA_SERIAL)
@@ -40,8 +52,9 @@ def carregar_branding(root):
     try:
         # Tenta carregar o ícone (.ico no windows, .png em outros)
         if sys.platform.startswith('win'):
-            if os.path.exists("assets/favicon.ico"):
-                root.iconbitmap("assets/favicon.ico")
+            ico_path = os.path.abspath(os.path.join("assets", "crdf_icon.ico"))
+            if os.path.exists(ico_path):
+                root.iconbitmap(default=ico_path)
         else:
             from tkinter import PhotoImage
             if os.path.exists("assets/logo.png"):
@@ -53,7 +66,12 @@ def carregar_branding(root):
 # Versão NOVA e CORRIGIDA
 if __name__ == "__main__":
     from ui.theme import configurar_estilos_ttk
+    import sys, os
     
+    # Se rodando PyInstaller, o diretório de execução real muda para pacotes _MEIPASS temporários
+    if getattr(sys, 'frozen', False):
+        os.chdir(sys._MEIPASS)
+        
     # Inicia um loop infinito para o sistema
     while True:
         carrinho = inicializar_sistema_exemplo()
