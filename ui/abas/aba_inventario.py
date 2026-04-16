@@ -98,6 +98,15 @@ class AbaInventario(ctk.CTkFrame):
         self.combo_usuario_pendencias = ctk.CTkComboBox(
             filter_row,
             width=300,
+            height=35,
+            font=FONTES["corpo"],
+            dropdown_font=FONTES["corpo"],
+            fg_color=CORES["fundo_secundario"],
+            border_color=CORES["glass_borda"],
+            button_color=CORES["destaque"],
+            button_hover_color=CORES["destaque_hover"],
+            dropdown_fg_color=CORES["fundo_secundario"],
+            dropdown_hover_color=CORES["destaque"],
             command=lambda _: self.atualizar_pendencias_usuario(),
         )
         self.combo_usuario_pendencias.pack(side="left")
@@ -174,6 +183,13 @@ class AbaInventario(ctk.CTkFrame):
         popup.title("Cadastro de Peça")
         popup.geometry("500x600")
         popup.configure(fg_color=CORES["fundo_principal"])
+        
+        try:
+            import os
+            ico_path = os.path.abspath("assets/crdf_icon.ico")
+            popup.after(100, lambda: popup.iconbitmap(ico_path))
+        except: pass
+        
         popup.grab_set()
 
         ctk.CTkLabel(popup, text="DADOS DA FERRAMENTA", font=FONTES["subtitulo"]).pack(pady=20)

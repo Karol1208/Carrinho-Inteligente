@@ -5,6 +5,7 @@ import sqlite3
 import logging
 from ui.theme import CORES, FONTES
 from ui.components.glass_card import GlassCard
+from ui.components.tabela_pro import TabelaPRO
 
 class AbaUsuarios(ctk.CTkFrame):
     """Frame que gerencia o cadastro e listagem de usuários."""
@@ -60,40 +61,43 @@ class AbaUsuarios(ctk.CTkFrame):
             command=self.atualizar_lista_usuarios
         ).pack(side="right", padx=5)
 
-        # Treeview (Estilo herdado pelo Header do Tkinter, mas com as cores ajustadas)
-        columns = ('ID', 'Nome', 'Cargo', 'Perfil', 'Data Cadastro')
-        self.tree_usuarios = ttk.Treeview(lista_card, columns=columns, show='headings')
+        # TabelaPRO - Layout global sofisticado
+        self.tabela_usuarios = TabelaPRO(
+            lista_card,
+            columns=['ID', 'Nome', 'Cargo', 'Perfil', 'Data Cadastro'],
+            col_widths=[1, 3, 2, 2, 2],
+            show_actions=False,
+            on_select=self._on_usuario_select
+        )
+        self.tabela_usuarios.pack(fill='both', expand=True, padx=20, pady=20)
+        
+        self._usuario_selecionado = None
 
-        for col in columns:
-            self.tree_usuarios.heading(col, text=col)
-            self.tree_usuarios.column(col, width=150)
-
-        self.tree_usuarios.pack(fill='both', expand=True, padx=20, pady=20)
+    def _on_usuario_select(self, row_data):
+        self._usuario_selecionado = row_data
 
     def atualizar_lista_usuarios(self):
-        for item in self.tree_usuarios.get_children():
-            self.tree_usuarios.delete(item)
-
         usuarios = self.carrinho.db.listar_usuarios()
+        data = []
         for usuario in usuarios:
             data_cadastro = usuario.data_cadastro or "N/A"
             try:
                 data_cadastro = datetime.datetime.fromisoformat(data_cadastro).strftime("%d/%m/%Y %H:%M")
             except:
                 pass
-            self.tree_usuarios.insert('', 'end', values=(
+            data.append([
                 usuario.id, usuario.nome, usuario.cargo, usuario.perfil, data_cadastro
-            ))
+            ])
+        self.tabela_usuarios.carregar(data)
+        self._usuario_selecionado = None
 
     def remover_usuario_selecionado(self):
-        selection = self.tree_usuarios.selection()
-        if not selection:
-            messagebox.showwarning("Aviso", "Selecione um usuário para remover!")
+        if not self._usuario_selecionado:
+            messagebox.showwarning("Aviso", "Selecione um usuário para remover clicando na tabela!")
             return
 
-        item = self.tree_usuarios.item(selection[0])
-        usuario_id = item['values'][0]
-        nome_usuario = item['values'][1]
+        usuario_id = self._usuario_selecionado[0]
+        nome_usuario = self._usuario_selecionado[1]
 
         if messagebox.askyesno("Confirmar", f"Deseja realmente desativar o usuário {nome_usuario}?"):
             try:

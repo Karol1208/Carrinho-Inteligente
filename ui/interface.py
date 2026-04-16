@@ -1,11 +1,11 @@
 import customtkinter as ctk
 from tkinter import messagebox
 import logging
-from PIL import Image
+from PIL import Image, ImageTk
 import os
 
 from core.cart import CarrinhoInteligenteAvancado
-from ui.painelMonitoramento import PainelMonitoramento
+from ui.abas.aba_monitoramento import AbaMonitoramento
 from ui.theme import CORES, FONTES
 from ui.cadastro import TelaCadastroRFID
 from ui.components.glass_card import GlassCard
@@ -32,6 +32,19 @@ class InterfaceGraficaCarrinho:
         self.root.configure(fg_color=CORES["fundo_principal"])
         
         ctk.set_appearance_mode("dark")
+        
+        # Inserindo o Favicon NATIVO no Windows convertendo para .ico
+        try:
+            icon_png_path = os.path.join("assets", "crdf_icon.png")
+            icon_ico_path = os.path.join("assets", "crdf_icon.ico")
+            if os.path.exists(icon_png_path):
+                img = Image.open(icon_png_path)
+                img.save(icon_ico_path, format="ICO", sizes=[(32, 32), (64, 64)])
+                self.root.iconbitmap(icon_ico_path)
+            else:
+                logging.warning("Favicon 'crdf_icon.png' não encontrado nativamente.")
+        except Exception as e:
+            logging.warning(f"Erro ao compilar favicon .ico: {e}")
         
         self.usuario_atual = usuario_inicial
         self.frames_conteudo = {}
@@ -162,12 +175,14 @@ class InterfaceGraficaCarrinho:
         self.aba_usuarios = AbaUsuarios(self.content_container, self.carrinho, self)
         self.aba_historico = AbaHistorico(self.content_container, self.carrinho, self)
         self.aba_inventario = AbaInventario(self.content_container, self.carrinho, self)
+        self.aba_monitoramento = AbaMonitoramento(self.content_container, self.carrinho, self)
         
         self.frames_conteudo = {
             "retirada": self.aba_principal,
             "usuarios": self.aba_usuarios,
             "historico": self.aba_historico,
-            "inventario": self.aba_inventario
+            "inventario": self.aba_inventario,
+            "monitor": self.aba_monitoramento
         }
 
         # Criação dos Botões da Sidebar
@@ -217,7 +232,7 @@ class InterfaceGraficaCarrinho:
                 font=FONTES["botao"],
                 anchor="w",
                 height=55,
-                fg_color="transparent",
+                fg_color="#CFD0D1",
                 text_color=CORES["texto_claro"],
                 hover_color=CORES["glass_borda"],
                 command=lambda f=id_nome: self.mostrar_frame(f)
@@ -238,7 +253,7 @@ class InterfaceGraficaCarrinho:
             fg_color="transparent",
             text_color=CORES["alerta"],
             hover_color=CORES["glass_borda"],
-            command=self.abrir_painel_monitoramento
+            command=lambda f="monitor": self.mostrar_frame(f)
         )
         self.botoes_sidebar["monitor"] = self.btn_monitor
         self.btn_monitor.pack(side="bottom", fill="x", padx=10, pady=20)
@@ -249,17 +264,26 @@ class InterfaceGraficaCarrinho:
             "retirada": "Painel de Retirada",
             "usuarios": "Gerenciamento de Usuários",
             "historico": "Histórico de Transações",
-            "inventario": "Inventário de Ferramentas"
+            "inventario": "Inventário de Ferramentas",
+            "monitor": "Análise de Pendências"
         }
         self.lbl_page_title.configure(text=titulos.get(nome_frame, "Dashboard"))
 
-        # Alterna visibilidade
-        for frame in self.frames_conteudo.values():
-            frame.grid_remove()
+        # Isolamento absoluto: Em vez de destruir grid, esconde e limpa o frame desativo
+        for nome, frame in self.frames_conteudo.items():
+            if nome != nome_frame:
+                frame.place_forget()
+                # UX: Força a parada e deleção da busca ativa para não vazar search results (fantasmas)
+                if hasattr(frame, 'limpar_selecao'):
+                    frame.limpar_selecao()
         
         frame_ativo = self.frames_conteudo.get(nome_frame)
         if frame_ativo:
-            frame_ativo.grid(row=0, column=0, sticky="nsew", padx=20, pady=20)
+            # Overlap direto com place
+            frame_ativo.place(in_=self.content_container, relx=0, rely=0, relwidth=1, relheight=1)
+            frame_ativo.lift()  # Puxa para a frente absoluto na camada OS
+            if hasattr(frame_ativo, "main_container"):
+                frame_ativo.main_container._parent_canvas.yview_moveto(0)
         
         # Realça botão ativo na sidebar
         for nome, btn in self.botoes_sidebar.items():
@@ -267,13 +291,12 @@ class InterfaceGraficaCarrinho:
                 if nome == nome_frame:
                     btn.configure(fg_color=CORES["destaque"], text_color="white")
                 else:
-                    btn.configure(fg_color="transparent", text_color=CORES["texto_claro"])
+                    btn.configure(fg_color="#12537A", text_color=CORES["texto_claro"])
 
     def configurar_acesso_por_perfil(self, perfil):
         # Esconde todos os botões de navegação primeiro
         for btn in self.botoes_sidebar.values():
-            if btn != self.btn_monitor:
-                btn.pack_forget()
+            btn.pack_forget()
 
         # Atualiza cabeçalho
         if self.usuario_atual:
@@ -287,6 +310,7 @@ class InterfaceGraficaCarrinho:
             self.botoes_sidebar["inventario"].pack(fill="x", padx=5, pady=2)
             self.botoes_sidebar["usuarios"].pack(fill="x", padx=5, pady=2)
             self.botoes_sidebar["historico"].pack(fill="x", padx=5, pady=2)
+            self.botoes_sidebar["monitor"].pack(side="bottom", fill="x", padx=10, pady=20)
         elif perfil == "aluno":
             self.botoes_sidebar["retirada"].pack(fill="x", padx=5, pady=2)
         else:
@@ -303,12 +327,7 @@ class InterfaceGraficaCarrinho:
             self.status_bar.set_hw_status(hw_online)
         self.safe_after(1000, self.atualizar_status_periodico)
 
-    def abrir_painel_monitoramento(self):
-        if not hasattr(self, 'painel_monitoramento') or not self.painel_monitoramento.root.winfo_exists():
-            self.painel_monitoramento = PainelMonitoramento(self.carrinho)
-        else:
-            self.painel_monitoramento.root.lift()
-            self.painel_monitoramento.root.focus_force()
+    # Painel Monitoramento substituido por aba no main_loop
 
     def _on_user_activity(self, event=None):
         self._resetar_timer_inatividade()
@@ -340,7 +359,12 @@ class InterfaceGraficaCarrinho:
             if self.carrinho and hasattr(self.carrinho.hardware, 'close'):
                 self.carrinho.hardware.close()
             
-            self.root.destroy()
+            # Limpa binds globais para não conflitar com a nova janela de login (quando o loop do main.py recriar)
+            self.root.unbind_all("<Button-1>")
+            self.root.unbind_all("<Key>")
+            
+            # Use 'after' para não interromper bruscamente a animação de clique do botão SAIR
+            self.root.after(150, self.root.destroy)
 
     def executar(self):
         self.root.mainloop()

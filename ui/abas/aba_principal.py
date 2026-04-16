@@ -131,9 +131,6 @@ class AbaPrincipal(ctk.CTkFrame):
         )
         self.label_sensor_ir.pack(pady=10)
 
-        # Monitoramento via Hardware
-        self.monitorar_sensores_infravermelho()
-
     def carregar_icones(self):
         try:
             icon_data = Image.open("assets/icon_home.png")
@@ -148,7 +145,11 @@ class AbaPrincipal(ctk.CTkFrame):
             return
         
         pecas = self.carrinho.listar_todas_pecas()
-        sugestoes = [p.nome for p in pecas if texto in p.nome.lower() and p.nome not in self.pecas_selecionadas]
+        sugestoes = []
+        for p in pecas:
+            if texto in p.nome.lower() and p.nome not in self.pecas_selecionadas:
+                if p.nome not in sugestoes:
+                    sugestoes.append(p.nome)
         
         if sugestoes:
             self.results_list.atualizar_resultados(sugestoes[:5])
@@ -236,6 +237,13 @@ class AbaPrincipal(ctk.CTkFrame):
         popup.title("Devolução Múltipla")
         popup.geometry("600x550")
         popup.configure(fg_color=CORES["fundo_principal"])
+        
+        try:
+            import os
+            ico_path = os.path.abspath("assets/crdf_icon.ico")
+            popup.after(100, lambda: popup.iconbitmap(ico_path))
+        except: pass
+        
         popup.grab_set()
 
         ctk.CTkLabel(popup, text="Selecione os itens para devolver", font=FONTES["subtitulo"]).pack(pady=20)
@@ -308,13 +316,3 @@ class AbaPrincipal(ctk.CTkFrame):
                 lbl.configure(text=f"Gaveta {gid}: ⚠ ABERTA", text_color=CORES["alerta"])
             else:
                 lbl.configure(text=f"Gaveta {gid}: ✅ FECHADA", text_color=CORES["sucesso"])
-
-    def monitorar_sensores_infravermelho(self):
-        # A lógica real seria ler do hardware aqui
-        self.atualizar_status_gavetas()
-        if hasattr(self.app, 'safe_after'):
-            self.app.safe_after(2000, self.monitorar_sensores_infravermelho)
-        else:
-            self.after(2000, self.monitorar_sensores_infravermelho)
-
-               

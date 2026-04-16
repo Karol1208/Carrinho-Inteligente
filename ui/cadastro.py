@@ -22,6 +22,12 @@ class TelaCadastroRFID:
         self.root.geometry("600x700")
         self.root.configure(fg_color=CORES["fundo_principal"])
         
+        try:
+            import os
+            ico_path = os.path.abspath("assets/crdf_icon.ico")
+            self.root.after(100, lambda: self.root.iconbitmap(ico_path))
+        except: pass
+        
         self.root.transient(self.root_principal)
         self.root.grab_set()
 

@@ -7,7 +7,7 @@ import customtkinter as ctk
 class Theme:
     CORES = {
         # Base
-        "fundo_principal": "#1e272e",       # Mais profundo (quase black premium)
+        "fundo_principal": "#1E272E",       # Mais profundo (quase black premium)
         "fundo_secundario": "#2f3640",      # Sidebar moderna
         "fundo_card": "#2d3436",            # Cards (efeito vidro escuro)
 

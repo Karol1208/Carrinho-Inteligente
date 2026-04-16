@@ -23,18 +23,20 @@ STATUS_CORES = {
 }
 
 
-def _badge(parent: ctk.CTkFrame, texto: str) -> ctk.CTkFrame:
-    """Cria um badge colorido baseado no texto do status."""
+def _badge(parent: ctk.CTkFrame, texto: str) -> ctk.CTkLabel:
+    """Cria um badge colorido baseado no texto do status (Pílula suave)."""
     key = texto.upper() if texto.upper() in STATUS_CORES else "default"
-    bg, fg = STATUS_CORES[key]
-    badge = ctk.CTkFrame(parent, fg_color=bg, corner_radius=8)
-    ctk.CTkLabel(
-        badge,
+    bg, fg = STATUS_CORES.get(key, ("#8395a7", "#1a1f24"))
+    
+    badge = ctk.CTkLabel(
+        parent,
         text=texto,
-        font=("Segoe UI Semibold", 11),
+        fg_color=bg,
         text_color=fg,
-        padx=8, pady=2,
-    ).pack()
+        corner_radius=12,  # Borda perfeitamente arredondada sem pontas
+        font=("Segoe UI Semibold", 11),
+        padx=12, pady=4,
+    )
     return badge
 
 
@@ -255,28 +257,31 @@ class TabelaPRO(ctk.CTkFrame):
             self._rows[index].configure(fg_color=CORES["destaque"])
 
     # ── Tooltip ───────────────────────────────────────────
+    def _init_tooltip(self):
+        if not getattr(self, "_tooltip_win", None):
+            self._tooltip_win = ctk.CTkToplevel(self)
+            self._tooltip_win.overrideredirect(True)
+            self._tooltip_win.attributes("-topmost", True)
+            self._tooltip_win.withdraw()
+            self._tooltip_label = ctk.CTkLabel(
+                self._tooltip_win,
+                text="",
+                fg_color=CORES["fundo_secundario"],
+                text_color=CORES["texto_claro"],
+                corner_radius=6,
+                padx=12, pady=6,
+                font=FONTES["corpo"],
+            )
+            self._tooltip_label.pack()
+            # Oculta se a aba for escondida
+            self.bind("<Unmap>", lambda e: self._hide_tooltip(), add="+")
 
     def _show_tooltip(self, event, texto: str):
-        self._hide_tooltip()
-        tip = ctk.CTkToplevel(self)
-        tip.overrideredirect(True)
-        tip.attributes("-topmost", True)
-        tip.geometry(f"+{event.x_root + 14}+{event.y_root + 14}")
-        ctk.CTkLabel(
-            tip,
-            text=texto,
-            fg_color=CORES["fundo_secundario"],
-            text_color=CORES["texto_claro"],
-            corner_radius=6,
-            padx=12, pady=6,
-            font=FONTES["corpo"],
-        ).pack()
-        self._tooltip_win = tip
+        self._init_tooltip()
+        self._tooltip_label.configure(text=texto)
+        self._tooltip_win.geometry(f"+{event.x_root + 14}+{event.y_root + 14}")
+        self._tooltip_win.deiconify()
 
     def _hide_tooltip(self):
-        if self._tooltip_win:
-            try:
-                self._tooltip_win.destroy()
-            except Exception:
-                pass
-            self._tooltip_win = None
+        if getattr(self, "_tooltip_win", None):
+            self._tooltip_win.withdraw()
