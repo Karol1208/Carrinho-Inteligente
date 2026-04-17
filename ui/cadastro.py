@@ -24,9 +24,20 @@ class TelaCadastroRFID:
         
         try:
             import os
-            ico_path = os.path.abspath("assets/crdf_icon.ico")
-            self.root.after(100, lambda: self.root.iconbitmap(ico_path))
-        except: pass
+            icon_png_path = os.path.join("assets", "crdf_icon.png")
+            icon_ico_path = os.path.join("assets", "crdf_icon.ico")
+            
+            # Converte apenas se o arquivo .ico não existir ainda
+            if not os.path.exists(icon_ico_path) and os.path.exists(icon_png_path):
+                img = Image.open(icon_png_path)
+                img.save(icon_ico_path, format="ICO", sizes=[(32, 32), (64, 64)])
+                
+            # Aplica o ícone na janela correta (self.root)
+            if os.path.exists(icon_ico_path):
+                self.root.after(200, lambda: self.root.iconbitmap(icon_ico_path))
+                
+        except Exception as e:
+            logging.warning(f"Erro ao setar favicon: {e}")
         
         self.root.transient(self.root_principal)
         self.root.grab_set()

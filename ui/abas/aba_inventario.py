@@ -1,5 +1,7 @@
 import customtkinter as ctk
 from tkinter import messagebox
+import logging
+from PIL import Image
 from ui.theme import CORES, FONTES
 from models.entities import Peca
 from ui.components.glass_card import GlassCard
@@ -181,14 +183,31 @@ class AbaInventario(ctk.CTkFrame):
     def mostrar_popup_cadastro_peca(self):
         popup = ctk.CTkToplevel(self)
         popup.title("Cadastro de Peça")
-        popup.geometry("500x600")
+        popup.geometry("500x700")
         popup.configure(fg_color=CORES["fundo_principal"])
         
+        # try:
+        #     import os
+        #     ico_path = os.path.abspath("assets/crdf_icon.ico")
+        #     popup.after(100, lambda: popup.iconbitmap(ico_path))
+        # except: pass
+
         try:
             import os
-            ico_path = os.path.abspath("assets/crdf_icon.ico")
-            popup.after(100, lambda: popup.iconbitmap(ico_path))
-        except: pass
+            icon_png_path = os.path.join("assets", "crdf_icon.png")
+            icon_ico_path = os.path.join("assets", "crdf_icon.ico")
+            
+            # Converte apenas se o arquivo .ico não existir ainda
+            if not os.path.exists(icon_ico_path) and os.path.exists(icon_png_path):
+                img = Image.open(icon_png_path)
+                img.save(icon_ico_path, format="ICO", sizes=[(32, 32), (64, 64)])
+                
+            # Aplica o ícone no popup com um pequeno atraso (evita TclError)
+            if os.path.exists(icon_ico_path):
+                popup.after(200, lambda: popup.iconbitmap(icon_ico_path))
+                
+        except Exception as e:
+            logging.warning(f"Erro ao setar favicon: {e}")
         
         popup.grab_set()
 
@@ -205,23 +224,56 @@ class AbaInventario(ctk.CTkFrame):
             entry.pack(fill="x", pady=(5, 0))
             self.entries[campo] = entry
 
+        # def salvar():
+        #     try:
+        #         p = Peca(
+        #             id=0,
+        #             nome=self.entries["Nome"].get(),
+        #             categoria=self.entries["Categoria"].get(),
+        #             descricao=self.entries["Descrição"].get(),
+        #             tipo=self.entries["Tipo"].get(),
+        #             gaveta_id=int(self.entries["Gaveta ID"].get()),
+        #             quantidade_disponivel=int(self.entries["Qtd Inicial"].get()),
+        #         )
+        #         if self.carrinho.adicionar_peca(p):
+        #             messagebox.showinfo("Sucesso", "Peça cadastrada!")
+        #             popup.destroy()
+        #             self.atualizar_lista_pecas()
+        #     except Exception as e:
+        #         messagebox.showerror("Erro", str(e))
+
         def salvar():
+            nome_val = self.entries["Nome"].get().strip()
+            gaveta_val = self.entries["Gaveta ID"].get().strip()
+            qtd_val = self.entries["Qtd Inicial"].get().strip()
+
+            # 1. Validação de campos obrigatórios
+            if not nome_val:
+                messagebox.showwarning("Aviso", "O campo 'Nome' é obrigatório.")
+                return
+
+            # 2. Validação de tipagem
+            if not gaveta_val.isdigit() or not qtd_val.isdigit():
+                messagebox.showwarning("Aviso", "Gaveta e Quantidade devem conter apenas números inteiros.")
+                return
+
             try:
                 p = Peca(
                     id=0,
-                    nome=self.entries["Nome"].get(),
-                    categoria=self.entries["Categoria"].get(),
-                    descricao=self.entries["Descrição"].get(),
-                    tipo=self.entries["Tipo"].get(),
-                    gaveta_id=int(self.entries["Gaveta ID"].get()),
-                    quantidade_disponivel=int(self.entries["Qtd Inicial"].get()),
+                    nome=nome_val,
+                    categoria=self.entries["Categoria"].get().strip(),
+                    descricao=self.entries["Descrição"].get().strip(),
+                    tipo=self.entries["Tipo"].get().strip(),
+                    gaveta_id=int(gaveta_val),
+                    quantidade_disponivel=int(qtd_val),
                 )
                 if self.carrinho.adicionar_peca(p):
-                    messagebox.showinfo("Sucesso", "Peça cadastrada!")
+                    messagebox.showinfo("Sucesso", "Ferramenta cadastrada com sucesso!")
                     popup.destroy()
                     self.atualizar_lista_pecas()
             except Exception as e:
-                messagebox.showerror("Erro", str(e))
+                logging.error(f"Erro ao salvar peça: {e}")
+                messagebox.showerror("Erro de Banco de Dados", "Não foi possível salvar a peça. Tente novamente.")
 
         btn_f = ctk.CTkFrame(popup, fg_color="transparent")
         btn_f.pack(pady=30)
